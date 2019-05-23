@@ -41,26 +41,27 @@
             this.badAddressError = new System.Windows.Forms.ErrorProvider(this.components);
             this.badLoginError = new System.Windows.Forms.ErrorProvider(this.components);
             this.badPasswordError = new System.Windows.Forms.ErrorProvider(this.components);
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.prefLayoutPane.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.badAddressError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.badLoginError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.badPasswordError)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // prefLayoutPane
             // 
             this.prefLayoutPane.ColumnCount = 3;
-            this.prefLayoutPane.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47F));
-            this.prefLayoutPane.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47F));
+            this.prefLayoutPane.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 37F));
+            this.prefLayoutPane.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 57F));
             this.prefLayoutPane.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 6F));
-            this.prefLayoutPane.Controls.Add(this.saveBtn, 0, 3);
-            this.prefLayoutPane.Controls.Add(this.cancelBtn, 1, 3);
             this.prefLayoutPane.Controls.Add(this.addressLabel, 0, 0);
             this.prefLayoutPane.Controls.Add(this.loginLabel, 0, 1);
             this.prefLayoutPane.Controls.Add(this.passwdLabel, 0, 2);
             this.prefLayoutPane.Controls.Add(this.collabAddrRtb, 1, 0);
             this.prefLayoutPane.Controls.Add(this.loginRtb, 1, 1);
             this.prefLayoutPane.Controls.Add(this.passwordRtb, 1, 2);
+            this.prefLayoutPane.Controls.Add(this.tableLayoutPanel1, 1, 3);
             this.prefLayoutPane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.prefLayoutPane.Location = new System.Drawing.Point(0, 0);
             this.prefLayoutPane.Name = "prefLayoutPane";
@@ -69,13 +70,13 @@
             this.prefLayoutPane.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.prefLayoutPane.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.prefLayoutPane.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.prefLayoutPane.Size = new System.Drawing.Size(511, 162);
+            this.prefLayoutPane.Size = new System.Drawing.Size(484, 192);
             this.prefLayoutPane.TabIndex = 0;
             // 
             // saveBtn
             // 
             this.saveBtn.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.saveBtn.Location = new System.Drawing.Point(137, 126);
+            this.saveBtn.Location = new System.Drawing.Point(31, 6);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.saveBtn.Size = new System.Drawing.Size(100, 30);
@@ -87,7 +88,7 @@
             // cancelBtn
             // 
             this.cancelBtn.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cancelBtn.Location = new System.Drawing.Point(243, 126);
+            this.cancelBtn.Location = new System.Drawing.Point(137, 6);
             this.cancelBtn.Name = "cancelBtn";
             this.cancelBtn.Size = new System.Drawing.Size(100, 30);
             this.cancelBtn.TabIndex = 1;
@@ -99,9 +100,10 @@
             // 
             this.addressLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.addressLabel.AutoSize = true;
-            this.addressLabel.Location = new System.Drawing.Point(3, 13);
+            this.addressLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addressLabel.Location = new System.Drawing.Point(3, 16);
             this.addressLabel.Name = "addressLabel";
-            this.addressLabel.Size = new System.Drawing.Size(109, 13);
+            this.addressLabel.Size = new System.Drawing.Size(163, 16);
             this.addressLabel.TabIndex = 2;
             this.addressLabel.Text = "Collaboration Address";
             // 
@@ -109,9 +111,10 @@
             // 
             this.loginLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.loginLabel.AutoSize = true;
-            this.loginLabel.Location = new System.Drawing.Point(3, 53);
+            this.loginLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.loginLabel.Location = new System.Drawing.Point(3, 64);
             this.loginLabel.Name = "loginLabel";
-            this.loginLabel.Size = new System.Drawing.Size(33, 13);
+            this.loginLabel.Size = new System.Drawing.Size(46, 16);
             this.loginLabel.TabIndex = 3;
             this.loginLabel.Text = "Login";
             // 
@@ -119,25 +122,26 @@
             // 
             this.passwdLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.passwdLabel.AutoSize = true;
-            this.passwdLabel.Location = new System.Drawing.Point(3, 93);
+            this.passwdLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.passwdLabel.Location = new System.Drawing.Point(3, 112);
             this.passwdLabel.Name = "passwdLabel";
-            this.passwdLabel.Size = new System.Drawing.Size(53, 13);
+            this.passwdLabel.Size = new System.Drawing.Size(76, 16);
             this.passwdLabel.TabIndex = 4;
             this.passwdLabel.Text = "Password";
             // 
             // collabAddrRtb
             // 
             this.collabAddrRtb.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.collabAddrRtb.Location = new System.Drawing.Point(243, 10);
+            this.collabAddrRtb.Location = new System.Drawing.Point(182, 14);
             this.collabAddrRtb.Name = "collabAddrRtb";
-            this.collabAddrRtb.Size = new System.Drawing.Size(234, 20);
+            this.collabAddrRtb.Size = new System.Drawing.Size(242, 20);
             this.collabAddrRtb.TabIndex = 5;
             this.collabAddrRtb.Validating += new System.ComponentModel.CancelEventHandler(this.XowlAddressValidating);
             // 
             // loginRtb
             // 
             this.loginRtb.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.loginRtb.Location = new System.Drawing.Point(243, 50);
+            this.loginRtb.Location = new System.Drawing.Point(182, 62);
             this.loginRtb.Name = "loginRtb";
             this.loginRtb.Size = new System.Drawing.Size(100, 20);
             this.loginRtb.TabIndex = 6;
@@ -146,7 +150,7 @@
             // passwordRtb
             // 
             this.passwordRtb.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.passwordRtb.Location = new System.Drawing.Point(243, 90);
+            this.passwordRtb.Location = new System.Drawing.Point(182, 110);
             this.passwordRtb.Name = "passwordRtb";
             this.passwordRtb.PasswordChar = '*';
             this.passwordRtb.Size = new System.Drawing.Size(100, 20);
@@ -165,12 +169,28 @@
             // 
             this.badPasswordError.ContainerControl = this;
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.saveBtn, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.cancelBtn, 1, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(182, 147);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(269, 42);
+            this.tableLayoutPanel1.TabIndex = 8;
+            // 
             // PrefForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
-            this.ClientSize = new System.Drawing.Size(511, 162);
+            this.ClientSize = new System.Drawing.Size(484, 192);
             this.Controls.Add(this.prefLayoutPane);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -183,6 +203,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.badAddressError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.badLoginError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.badPasswordError)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -201,5 +222,6 @@
         private System.Windows.Forms.ErrorProvider badAddressError;
         private System.Windows.Forms.ErrorProvider badLoginError;
         private System.Windows.Forms.ErrorProvider badPasswordError;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }

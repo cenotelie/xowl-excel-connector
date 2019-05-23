@@ -156,6 +156,12 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="PushWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PushWizard.Designer.cs">
+      <DependentUpon>PushWizard.cs</DependentUpon>
+    </Compile>
     <Compile Include="Preferences.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -165,6 +171,9 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <EmbeddedResource Include="PushWizard.resx">
+      <DependentUpon>PushWizard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Preferences.resx">
       <DependentUpon>Preferences.cs</DependentUpon>
     </EmbeddedResource>

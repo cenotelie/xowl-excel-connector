@@ -36,13 +36,11 @@
         {
             this.xowl = this.Factory.CreateRibbonTab();
             this.connexionGroup = this.Factory.CreateRibbonGroup();
+            this.collaborationGroup = this.Factory.CreateRibbonGroup();
             this.prefBtn = this.Factory.CreateRibbonButton();
             this.connectBtn = this.Factory.CreateRibbonButton();
-            this.collaborationGroup = this.Factory.CreateRibbonGroup();
-            this.pullMenu = this.Factory.CreateRibbonMenu();
-            this.pullPersonBtn = this.Factory.CreateRibbonButton();
-            this.pushMenu = this.Factory.CreateRibbonMenu();
-            this.pushPersonBtn = this.Factory.CreateRibbonButton();
+            this.pullBtn = this.Factory.CreateRibbonButton();
+            this.pushBtn = this.Factory.CreateRibbonButton();
             this.xowl.SuspendLayout();
             this.connexionGroup.SuspendLayout();
             this.collaborationGroup.SuspendLayout();
@@ -63,6 +61,13 @@
             this.connexionGroup.Label = "Connexion";
             this.connexionGroup.Name = "connexionGroup";
             // 
+            // collaborationGroup
+            // 
+            this.collaborationGroup.Items.Add(this.pushBtn);
+            this.collaborationGroup.Items.Add(this.pullBtn);
+            this.collaborationGroup.Label = "Collaboration";
+            this.collaborationGroup.Name = "collaborationGroup";
+            // 
             // prefBtn
             // 
             this.prefBtn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -81,43 +86,22 @@
             this.connectBtn.ShowImage = true;
             this.connectBtn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.ConnectBtn_Click);
             // 
-            // collaborationGroup
+            // pullBtn
             // 
-            this.collaborationGroup.Items.Add(this.pullMenu);
-            this.collaborationGroup.Items.Add(this.pushMenu);
-            this.collaborationGroup.Label = "Collaboration";
-            this.collaborationGroup.Name = "collaborationGroup";
+            this.pullBtn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.pullBtn.Label = "Pull";
+            this.pullBtn.Name = "pullBtn";
+            this.pullBtn.OfficeImageId = "ImportHtmlDocument";
+            this.pullBtn.ShowImage = true;
             // 
-            // pullMenu
+            // pushBtn
             // 
-            this.pullMenu.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.pullMenu.Items.Add(this.pullPersonBtn);
-            this.pullMenu.Label = "Pull";
-            this.pullMenu.Name = "pullMenu";
-            this.pullMenu.OfficeImageId = "ImportHtmlDocument";
-            this.pullMenu.ShowImage = true;
-            // 
-            // pullPersonBtn
-            // 
-            this.pullPersonBtn.Label = "Pull Person";
-            this.pullPersonBtn.Name = "pullPersonBtn";
-            this.pullPersonBtn.ShowImage = true;
-            // 
-            // pushMenu
-            // 
-            this.pushMenu.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.pushMenu.Items.Add(this.pushPersonBtn);
-            this.pushMenu.Label = "Push";
-            this.pushMenu.Name = "pushMenu";
-            this.pushMenu.OfficeImageId = "ExportHtmlDocument";
-            this.pushMenu.ShowImage = true;
-            // 
-            // pushPersonBtn
-            // 
-            this.pushPersonBtn.Label = "Push Person";
-            this.pushPersonBtn.Name = "pushPersonBtn";
-            this.pushPersonBtn.ShowImage = true;
-            this.pushPersonBtn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.PushPersonBtn_Click);
+            this.pushBtn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.pushBtn.Label = "Push";
+            this.pushBtn.Name = "pushBtn";
+            this.pushBtn.OfficeImageId = "ExportHtmlDocument";
+            this.pushBtn.ShowImage = true;
+            this.pushBtn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.PushArtifact_Click);
             // 
             // XOWLRibbon
             // 
@@ -141,11 +125,9 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup connexionGroup;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup collaborationGroup;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton prefBtn;
-        internal Microsoft.Office.Tools.Ribbon.RibbonMenu pullMenu;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton pullPersonBtn;
-        internal Microsoft.Office.Tools.Ribbon.RibbonMenu pushMenu;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton pushPersonBtn;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton connectBtn;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton pushBtn;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton pullBtn;
     }
 
     partial class ThisRibbonCollection
