@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.452
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xOwl Excel Connector", "xOwl Excel Connector\xOwl Excel Connector.csproj", "{17D065F9-D141-4286-BBAE-3374EE3A8232}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{17D065F9-D141-4286-BBAE-3374EE3A8232}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17D065F9-D141-4286-BBAE-3374EE3A8232}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17D065F9-D141-4286-BBAE-3374EE3A8232}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17D065F9-D141-4286-BBAE-3374EE3A8232}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {225620B7-C374-47CE-B914-4976AD7CE62F}
+	EndGlobalSection
+EndGlobal
