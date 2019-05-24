@@ -1,6 +1,6 @@
 # xowl-excel-connector
 
-Excel connector for the collaborative platform [xOWL] (https://cenotelie.fr/projects/xowl/index.html) which supports:
+Excel connector for the collaborative platform [xOWL](https://cenotelie.fr/projects/xowl/index.html) which supports:
 * Sharing data
 * Sharing meaning
 * Editing consistency and inference rules
