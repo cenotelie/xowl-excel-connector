@@ -59,22 +59,12 @@ namespace xOwl_Excel_Connector
                 System.Diagnostics.Debug.WriteLine(r);
                 this.isConnected = true;
                 this.connectBtn.Enabled = false; //deactivate button once connected
-                //TODO: retrieve info for all existing artifacts
             }
             catch (WebException ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.Message);
                 this.isConnected = false;
             }
-        }
-
-        private void PushPersonBtn_Click(object sender, RibbonControlEventArgs e)
-        {
-            if (!isConnected)
-            {
-                return;
-            }
-            
         }
 
         private void PushArtifact_Click(object sender, RibbonControlEventArgs e)

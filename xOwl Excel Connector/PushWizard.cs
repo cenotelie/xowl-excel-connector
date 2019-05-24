@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using Newtonsoft.Json;
 using System.Windows.Forms;
 
 namespace xOwl_Excel_Connector
@@ -16,15 +17,45 @@ namespace xOwl_Excel_Connector
 
         private bool isConnected = false;
         private CookieContainer cookies;
-
-        private readonly Dictionary<string, string> archetypes = new Dictionary<string, string>();
+        private List<Artifact> artifacts;
 
         public PushWizard(bool isConnected, CookieContainer cookies)
         {
             InitializeComponent();
             this.isConnected = isConnected;
             this.cookies = cookies;
-            this.archetypes.Add("Requirements", "com.holonshub.marketplace.domains.syseng.SysEngArchetypeRequirements");
+            this.RetrieveArtifacts();
+            //TODO collect all bases as a set
+            this.baseArtifactsLB.DataSource = this.artifacts.ConvertAll(new Converter<Artifact, string>(ArtifactToString));
+            //this.baseArtifactsLB.DisplayMember = "Name";
+            //this.baseArtifactsLB.ValueMember = "Identifier";
+        }
+        
+        public static string ArtifactToString(Artifact a)
+        {
+            //TODO: maybe set into a partial class
+            return a.Base;
+        }
+
+        private void RetrieveArtifacts()
+        {
+            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XOWLRibbon.api + "services/storage/artifacts"));
+            req.CookieContainer = this.cookies;
+            req.ContentType = "application/json";
+            req.Method = "GET";
+            try
+            {
+                HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+                this.cookies.Add(resp.Cookies);
+                System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
+                string json = sr.ReadToEnd().Trim();
+                this.artifacts = JsonConvert.DeserializeObject<List<Artifact>>(json);
+            }
+            catch (WebException ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                this.isConnected = false;
+            }
         }
 
         private void ArtifactNameValidating(object sender, CancelEventArgs e)
@@ -67,28 +98,15 @@ namespace xOwl_Excel_Connector
         private void DoPushArtifact()
         {
             System.Diagnostics.Debug.WriteLine("Pushing data to collaboration");
+
             string name = this.artifactNameTB.Text.Trim();
+            string type = this.archetypesLB.Text; //TODO: process type
+            string archetype = "org.xowl.platform.kernel.artifacts.ArtifactArchetypeFree";
+            string baseArtifact = Uri.EscapeDataString(this.baseArtifactsLB.Text);
+            string superseded = this.supersededLB.Text;
             string version = this.artifactVersionTB.Text.Trim();
-            string k = this.archetypesLB.Text;
-            string archetype;
-            if (this.archetypes.ContainsKey(k))
-            {
-                archetype = this.archetypes[k];
-            } else
-            {
-                archetype = "org.xowl.platform.kernel.artifacts.ArtifactArchetypeFree";
-            }
-            string parameters;
-            string b = this.artifactsLB.Text;
-            if (string.IsNullOrEmpty(b))
-            {
-                string baseArtifact = Uri.EscapeDataString(b);
-                parameters = $"name={name}&base={baseArtifact}&version={version}&archetype={archetype}";
-            } else
-            {
-                //FIXME: it seems that missing base parameter fails the creation of the archetype
-                parameters = $"name={name}&version={version}&archetype={archetype}";
-            }
+
+            string parameters = $"name={name}&base={baseArtifact}&version={version}&archetype={archetype}";
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XOWLRibbon.api + "connectors/generics/sw?" + parameters));
             req.CookieContainer = this.cookies;
             req.ContentType = "application/ld+json";
