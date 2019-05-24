@@ -1,4 +1,4 @@
-# xowl-excel-connector
+# xOwl Excel Connector
 
 Excel connector for the collaborative platform [xOWL](https://cenotelie.fr/projects/xowl/index.html) which supports:
 * Sharing data
