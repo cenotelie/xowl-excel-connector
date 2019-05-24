@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
-using Newtonsoft.Json;
 using System.Windows.Forms;
 
 namespace xOwl_Excel_Connector
@@ -25,37 +24,7 @@ namespace xOwl_Excel_Connector
             this.isConnected = isConnected;
             this.cookies = cookies;
             this.RetrieveArtifacts();
-            //TODO collect all bases as a set
-            this.baseArtifactsLB.DataSource = this.artifacts.ConvertAll(new Converter<Artifact, string>(ArtifactToString));
-            //this.baseArtifactsLB.DisplayMember = "Name";
-            //this.baseArtifactsLB.ValueMember = "Identifier";
-        }
-        
-        public static string ArtifactToString(Artifact a)
-        {
-            //TODO: maybe set into a partial class
-            return a.Base;
-        }
-
-        private void RetrieveArtifacts()
-        {
-            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XOWLRibbon.api + "services/storage/artifacts"));
-            req.CookieContainer = this.cookies;
-            req.ContentType = "application/json";
-            req.Method = "GET";
-            try
-            {
-                HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
-                this.cookies.Add(resp.Cookies);
-                System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
-                string json = sr.ReadToEnd().Trim();
-                this.artifacts = JsonConvert.DeserializeObject<List<Artifact>>(json);
-            }
-            catch (WebException ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-                this.isConnected = false;
-            }
+            this.baseArtifactsLB.DataSource = new List<string>(new HashSet<string>(this.artifacts.ConvertAll(new Converter<Artifact, string>(ArtifactToString))));
         }
 
         private void ArtifactNameValidating(object sender, CancelEventArgs e)
@@ -134,6 +103,18 @@ namespace xOwl_Excel_Connector
         private void Cancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void ExistingBase_Click(object sender, MouseEventArgs e)
+        {
+            this.baseArtifactsLB.Enabled = true;
+            this.newBATB.Enabled = false;
+        }
+
+        private void NewBase_Click(object sender, EventArgs e)
+        {
+            this.baseArtifactsLB.Enabled = false;
+            this.newBATB.Enabled = true;
         }
     }
 }
