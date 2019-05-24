@@ -5,6 +5,7 @@ Excel connector for the collaborative platform [xOWL] (https://cenotelie.fr/proj
 * Sharing meaning
 * Editing consistency and inference rules
 * Reasoning and inference based on rules
+
 This Excel add-on provides an addition ribbon with several capabilities
 * Login to the password
 * Push and pull data
