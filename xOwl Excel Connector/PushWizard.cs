@@ -13,7 +13,6 @@ namespace xOwl_Excel_Connector
 
         private bool isConnected = false;
         private CookieContainer cookies;
-        private List<Artifact> artifacts;
 
         public PushWizard(bool isConnected, CookieContainer cookies)
         {
@@ -86,7 +85,7 @@ namespace xOwl_Excel_Connector
             req.CookieContainer = this.cookies;
             req.ContentType = "application/ld+json";
             req.Method = "POST";
-            string body = "{ \"@graph\": [{ \"@id\":\"http://xowl.org/requirements#REQ001\", \"http://xowl.org/requirements#description\": \"REQ001 description\"}]}";
+            string body = this.JsonFromSelectecCells();
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(body);
             req.ContentLength = bytes.Length;
             System.IO.Stream os = req.GetRequestStream();
@@ -133,6 +132,12 @@ namespace xOwl_Excel_Connector
             this.supersededLB.DisplayMember = "supersededDisplay";
             this.supersededLB.ValueMember = "identifier";
             this.supersededLB.Enabled = true;
+        }
+
+        private string JsonFromSelectecCells()
+        {
+            //TODO: use delegators to produce quads
+            return "{ \"@graph\": [{ \"@id\":\"http://xowl.org/requirements#REQ001\", \"http://xowl.org/requirements#description\": \"REQ001 description\"}]}";
         }
     }
 }

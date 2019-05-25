@@ -11,6 +11,7 @@ namespace xOwl_Excel_Connector
 {
     public partial class PushWizard : Form
     {
+        private List<Artifact> artifacts;
         private void RetrieveArtifacts()
         {
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XOWLRibbon.api + "services/storage/artifacts"));
