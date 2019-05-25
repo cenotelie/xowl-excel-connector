@@ -71,6 +71,7 @@ namespace xOwl_Excel_Connector
 
         private void PushArtifact_Click(object sender, RibbonControlEventArgs e)
         {
+            //Worksheet sheet = Globals.ThisAddIn.Application.ActiveSheet;
             new PushWizard(this.isConnected, this.cookies).Show();
         }
     }

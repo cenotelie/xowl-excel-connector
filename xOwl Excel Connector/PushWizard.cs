@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Windows.Forms;
+using Microsoft.Office.Interop.Excel;
 
 namespace xOwl_Excel_Connector
 {
@@ -110,7 +112,7 @@ namespace xOwl_Excel_Connector
             this.Close();
         }
 
-        private void ExistingBase_Click(object sender, MouseEventArgs e)
+        private void ExistingBase_Click(object sender, EventArgs e)
         {
             this.baseArtifactsLB.Enabled = true;
             this.newBATB.Enabled = false;
@@ -137,7 +139,20 @@ namespace xOwl_Excel_Connector
         private string JsonFromSelectecCells()
         {
             //TODO: use delegators to produce quads
-            return "{ \"@graph\": [{ \"@id\":\"http://xowl.org/requirements#REQ001\", \"http://xowl.org/requirements#description\": \"REQ001 description\"}]}";
+            Range selection = Globals.ThisAddIn.Application.ActiveWindow.RangeSelection;
+            List<Requirement> requirements = RequirementsDelegate.GetRequirementsFromRange(selection);
+            StringBuilder sb = new StringBuilder();
+            //TODO: use polymorphisme to simplify the process
+            sb.Append("{\"@graph\":[");
+            foreach (Requirement req in requirements)
+            {
+                sb.Append(req.ToJsonLD());
+                sb.Append(",");
+            }
+            sb.Length--;
+            sb.Append("]}");
+            return sb.ToString();
+            //return "{ \"@graph\": [{ \"@id\":\"http://xowl.org/requirements#REQ001\", \"http://xowl.org/requirements#description\": \"REQ001 description\"}]}";
         }
     }
 }

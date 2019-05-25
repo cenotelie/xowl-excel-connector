@@ -113,7 +113,7 @@
             this.collabAddrRtb.Location = new System.Drawing.Point(182, 9);
             this.collabAddrRtb.Name = "collabAddrRtb";
             this.collabAddrRtb.Size = new System.Drawing.Size(269, 22);
-            this.collabAddrRtb.TabIndex = 5;
+            this.collabAddrRtb.TabIndex = 0;
             this.collabAddrRtb.Validating += new System.ComponentModel.CancelEventHandler(this.XowlAddressValidating);
             // 
             // loginRtb
@@ -123,7 +123,7 @@
             this.loginRtb.Location = new System.Drawing.Point(182, 49);
             this.loginRtb.Name = "loginRtb";
             this.loginRtb.Size = new System.Drawing.Size(131, 22);
-            this.loginRtb.TabIndex = 6;
+            this.loginRtb.TabIndex = 1;
             this.loginRtb.Validating += new System.ComponentModel.CancelEventHandler(this.XowlLoginValidating);
             // 
             // passwordRtb
@@ -134,7 +134,7 @@
             this.passwordRtb.Name = "passwordRtb";
             this.passwordRtb.PasswordChar = '*';
             this.passwordRtb.Size = new System.Drawing.Size(131, 22);
-            this.passwordRtb.TabIndex = 7;
+            this.passwordRtb.TabIndex = 2;
             this.passwordRtb.Validating += new System.ComponentModel.CancelEventHandler(this.XowlPasswordValidating);
             // 
             // tableLayoutPanel1
@@ -160,7 +160,7 @@
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.saveBtn.Size = new System.Drawing.Size(100, 30);
-            this.saveBtn.TabIndex = 0;
+            this.saveBtn.TabIndex = 3;
             this.saveBtn.Text = "Save";
             this.saveBtn.UseVisualStyleBackColor = true;
             this.saveBtn.Click += new System.EventHandler(this.Save_Click);
@@ -171,7 +171,7 @@
             this.cancelBtn.Location = new System.Drawing.Point(137, 3);
             this.cancelBtn.Name = "cancelBtn";
             this.cancelBtn.Size = new System.Drawing.Size(100, 30);
-            this.cancelBtn.TabIndex = 1;
+            this.cancelBtn.TabIndex = 4;
             this.cancelBtn.Text = "Cancel";
             this.cancelBtn.UseVisualStyleBackColor = true;
             this.cancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
