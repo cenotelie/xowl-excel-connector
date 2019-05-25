@@ -13,7 +13,6 @@ namespace xOwl_Excel_Connector
 
         private bool isConnected = false;
         private CookieContainer cookies;
-        private List<Artifact> artifacts;
 
         public PushWizard(bool isConnected, CookieContainer cookies)
         {
@@ -22,7 +21,6 @@ namespace xOwl_Excel_Connector
             this.cookies = cookies;
             this.RetrieveArtifacts();
             this.archetypesLB.SelectedIndex = 0;
-            this.baseArtifactsLB.DataSource = new List<string>(new HashSet<string>(this.artifacts.ConvertAll(new Converter<Artifact, string>(ArtifactToString))));
         }
 
         private void ArtifactNameValidating(object sender, CancelEventArgs e)
@@ -65,28 +63,27 @@ namespace xOwl_Excel_Connector
         private void DoPushArtifact()
         {
             System.Diagnostics.Debug.WriteLine("Pushing data to collaboration");
-
+            //retrieve parameters
             string name = this.artifactNameTB.Text.Trim();
-            string type = this.archetypesLB.Text; //TODO: process type
+            string type = this.archetypesLB.SelectedItem.ToString(); //TODO: process type
             string archetype = "org.xowl.platform.kernel.artifacts.ArtifactArchetypeFree";
             string version = this.artifactVersionTB.Text.Trim();
-            string baseArtifact, superseded, parameters;
-            if (this.existingBABtn.Checked)
+            string baseArtifact = Uri.EscapeDataString("http://xowl.org/data/" + type);
+            string parameters;
+            if (this.supersededLB.Items.Count == 0)
             {
-                baseArtifact = Uri.EscapeDataString(this.baseArtifactsLB.SelectedItem.ToString());
-                superseded = this.supersededLB.SelectedItem.ToString();
+                parameters = $"name={name}&base={baseArtifact}&version={version}&archetype={archetype}";
+            } else
+            {
+                string superseded = this.supersededLB.SelectedItem.ToString();
                 parameters = $"name={name}&base={baseArtifact}&version={version}&archetype={archetype}&superseded={superseded}";
             }
-            else
-            {
-                baseArtifact = Uri.EscapeDataString(this.newBATB.Text);
-                parameters = $"name={name}&base={baseArtifact}&version={version}&archetype={archetype}";
-            }
+            //make the request
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XOWLRibbon.api + "connectors/generics/sw?" + parameters));
             req.CookieContainer = this.cookies;
             req.ContentType = "application/ld+json";
             req.Method = "POST";
-            string body = "{ \"@graph\": [{ \"@id\":\"http://xowl.org/requirements#REQ001\", \"http://xowl.org/requirements#description\": \"REQ001 description\"}]}";
+            string body = this.generateJsonLD();
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(body);
             req.ContentLength = bytes.Length;
             System.IO.Stream os = req.GetRequestStream();
@@ -111,28 +108,17 @@ namespace xOwl_Excel_Connector
             this.Close();
         }
 
-        private void ExistingBase_Click(object sender, MouseEventArgs e)
+        private void Archetype_Selected(object sender, EventArgs e)
         {
-            this.baseArtifactsLB.Enabled = true;
-            this.newBATB.Enabled = false;
-            this.supersededLB.Enabled = false;
+            string type = this.archetypesLB.SelectedItem.ToString();
+            string baseArtifact = Uri.EscapeDataString("http://xowl.org/data/" + type);
+            this.supersededLB.DataSource = this.artifacts.Where<Artifact>(a => string.Equals(a.Base, baseArtifact)).ToList<Artifact>();
         }
 
-        private void NewBase_Click(object sender, EventArgs e)
+        private String generateJsonLD()
         {
-            this.baseArtifactsLB.Enabled = false;
-            this.newBATB.Enabled = true;
-            this.supersededLB.Enabled = false;
-        }
-
-        private void BaseArtifact_Selected(object sender, EventArgs e)
-        {
-            string selectedBA = this.baseArtifactsLB.Text;
-            List<Artifact> filteredArtifacts = this.artifacts.Where<Artifact>(a => string.Equals(a.Base, selectedBA)).ToList<Artifact>();
-            this.supersededLB.DataSource = filteredArtifacts;
-            this.supersededLB.DisplayMember = "supersededDisplay";
-            this.supersededLB.ValueMember = "identifier";
-            this.supersededLB.Enabled = true;
+            //TODO: process cells to generate json ld => delegate cells to dedicated delegator
+            return "{ \"@graph\": [{ \"@id\":\"http://xowl.org/requirements#REQ001\", \"http://xowl.org/requirements#description\": \"REQ001 description\"}]}";
         }
     }
 }

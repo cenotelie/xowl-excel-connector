@@ -11,6 +11,8 @@ namespace xOwl_Excel_Connector
 {
     public partial class PushWizard : Form
     {
+        private List<Artifact> artifacts;
+
         private void RetrieveArtifacts()
         {
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XOWLRibbon.api + "services/storage/artifacts"));
@@ -30,11 +32,6 @@ namespace xOwl_Excel_Connector
                 System.Diagnostics.Debug.WriteLine(ex.Message);
                 this.isConnected = false;
             }
-        }
-
-        public static string ArtifactToString(Artifact a)
-        {
-            return a.Base;
         }
     }
 }
