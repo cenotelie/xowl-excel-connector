@@ -59,6 +59,8 @@ namespace xOwl_Excel_Connector
                 System.Diagnostics.Debug.WriteLine(r);
                 this.isConnected = true;
                 this.connectBtn.Enabled = false; //deactivate button once connected
+                this.pushBtn.Enabled = true;
+                this.pullBtn.Enabled = true;
             }
             catch (WebException ex)
             {

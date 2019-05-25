@@ -31,6 +31,14 @@ namespace xOwl_Excel_Connector
         public string archetype { get; set; }
         public string superseded { get; set; }
 
+        public string supersededDisplay
+        {
+            get
+            {
+                return this.name + "-" + this.version;
+            }
+        }
+
     }
 
 }

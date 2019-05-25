@@ -42,20 +42,20 @@
             this.baseArtifactLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.supersededLB = new System.Windows.Forms.ListBox();
-            this.nameError = new System.Windows.Forms.ErrorProvider(this.components);
-            this.versionError = new System.Windows.Forms.ErrorProvider(this.components);
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.newBABtn = new System.Windows.Forms.RadioButton();
+            this.existingBABtn = new System.Windows.Forms.RadioButton();
             this.baseArtifactsLB = new System.Windows.Forms.ListBox();
             this.newBATB = new System.Windows.Forms.TextBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.existingBABtn = new System.Windows.Forms.RadioButton();
-            this.newBABtn = new System.Windows.Forms.RadioButton();
+            this.nameError = new System.Windows.Forms.ErrorProvider(this.components);
+            this.versionError = new System.Windows.Forms.ErrorProvider(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nameError)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.versionError)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nameError)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.versionError)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -153,7 +153,7 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(498, 30);
             this.tableLayoutPanel3.TabIndex = 9;
             // 
@@ -238,14 +238,6 @@
             this.supersededLB.Size = new System.Drawing.Size(499, 36);
             this.supersededLB.TabIndex = 11;
             // 
-            // nameError
-            // 
-            this.nameError.ContainerControl = this;
-            // 
-            // versionError
-            // 
-            this.versionError.ContainerControl = this;
-            // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.panel1);
@@ -257,26 +249,6 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(500, 138);
             this.flowLayoutPanel1.TabIndex = 12;
             // 
-            // baseArtifactsLB
-            // 
-            this.baseArtifactsLB.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.baseArtifactsLB.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.baseArtifactsLB.FormattingEnabled = true;
-            this.baseArtifactsLB.ItemHeight = 16;
-            this.baseArtifactsLB.Location = new System.Drawing.Point(4, 57);
-            this.baseArtifactsLB.Margin = new System.Windows.Forms.Padding(4);
-            this.baseArtifactsLB.Name = "baseArtifactsLB";
-            this.baseArtifactsLB.Size = new System.Drawing.Size(495, 36);
-            this.baseArtifactsLB.TabIndex = 8;
-            // 
-            // newBATB
-            // 
-            this.newBATB.Enabled = false;
-            this.newBATB.Location = new System.Drawing.Point(3, 100);
-            this.newBATB.Name = "newBATB";
-            this.newBATB.Size = new System.Drawing.Size(497, 22);
-            this.newBATB.TabIndex = 11;
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.newBABtn);
@@ -285,6 +257,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(496, 47);
             this.panel1.TabIndex = 12;
+            // 
+            // newBABtn
+            // 
+            this.newBABtn.AutoSize = true;
+            this.newBABtn.Location = new System.Drawing.Point(119, 10);
+            this.newBABtn.Name = "newBABtn";
+            this.newBABtn.Size = new System.Drawing.Size(88, 20);
+            this.newBABtn.TabIndex = 1;
+            this.newBABtn.Text = "New Base";
+            this.newBABtn.UseVisualStyleBackColor = true;
+            this.newBABtn.Click += new System.EventHandler(this.NewBase_Click);
             // 
             // existingBABtn
             // 
@@ -299,16 +282,34 @@
             this.existingBABtn.UseVisualStyleBackColor = true;
             this.existingBABtn.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ExistingBase_Click);
             // 
-            // newBABtn
+            // baseArtifactsLB
             // 
-            this.newBABtn.AutoSize = true;
-            this.newBABtn.Location = new System.Drawing.Point(119, 10);
-            this.newBABtn.Name = "newBABtn";
-            this.newBABtn.Size = new System.Drawing.Size(88, 20);
-            this.newBABtn.TabIndex = 1;
-            this.newBABtn.Text = "New Base";
-            this.newBABtn.UseVisualStyleBackColor = true;
-            this.newBABtn.Click += new System.EventHandler(this.NewBase_Click);
+            this.baseArtifactsLB.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.baseArtifactsLB.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.baseArtifactsLB.FormattingEnabled = true;
+            this.baseArtifactsLB.ItemHeight = 16;
+            this.baseArtifactsLB.Location = new System.Drawing.Point(4, 57);
+            this.baseArtifactsLB.Margin = new System.Windows.Forms.Padding(4);
+            this.baseArtifactsLB.Name = "baseArtifactsLB";
+            this.baseArtifactsLB.Size = new System.Drawing.Size(495, 36);
+            this.baseArtifactsLB.TabIndex = 8;
+            this.baseArtifactsLB.SelectedIndexChanged += new System.EventHandler(this.BaseArtifact_Selected);
+            // 
+            // newBATB
+            // 
+            this.newBATB.Enabled = false;
+            this.newBATB.Location = new System.Drawing.Point(3, 100);
+            this.newBATB.Name = "newBATB";
+            this.newBATB.Size = new System.Drawing.Size(497, 22);
+            this.newBATB.TabIndex = 11;
+            // 
+            // nameError
+            // 
+            this.nameError.ContainerControl = this;
+            // 
+            // versionError
+            // 
+            this.versionError.ContainerControl = this;
             // 
             // PushWizard
             // 
@@ -325,12 +326,12 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.nameError)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.versionError)).EndInit();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nameError)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.versionError)).EndInit();
             this.ResumeLayout(false);
 
         }

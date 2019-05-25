@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Net;
 using System.Windows.Forms;
 
@@ -24,6 +21,7 @@ namespace xOwl_Excel_Connector
             this.isConnected = isConnected;
             this.cookies = cookies;
             this.RetrieveArtifacts();
+            this.archetypesLB.SelectedIndex = 0;
             this.baseArtifactsLB.DataSource = new List<string>(new HashSet<string>(this.artifacts.ConvertAll(new Converter<Artifact, string>(ArtifactToString))));
         }
 
@@ -71,11 +69,19 @@ namespace xOwl_Excel_Connector
             string name = this.artifactNameTB.Text.Trim();
             string type = this.archetypesLB.Text; //TODO: process type
             string archetype = "org.xowl.platform.kernel.artifacts.ArtifactArchetypeFree";
-            string baseArtifact = Uri.EscapeDataString(this.baseArtifactsLB.Text);
-            string superseded = this.supersededLB.Text;
             string version = this.artifactVersionTB.Text.Trim();
-
-            string parameters = $"name={name}&base={baseArtifact}&version={version}&archetype={archetype}";
+            string baseArtifact, superseded, parameters;
+            if (this.existingBABtn.Checked)
+            {
+                baseArtifact = Uri.EscapeDataString(this.baseArtifactsLB.SelectedItem.ToString());
+                superseded = this.supersededLB.SelectedItem.ToString();
+                parameters = $"name={name}&base={baseArtifact}&version={version}&archetype={archetype}&superseded={superseded}";
+            }
+            else
+            {
+                baseArtifact = Uri.EscapeDataString(this.newBATB.Text);
+                parameters = $"name={name}&base={baseArtifact}&version={version}&archetype={archetype}";
+            }
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XOWLRibbon.api + "connectors/generics/sw?" + parameters));
             req.CookieContainer = this.cookies;
             req.ContentType = "application/ld+json";
@@ -109,12 +115,24 @@ namespace xOwl_Excel_Connector
         {
             this.baseArtifactsLB.Enabled = true;
             this.newBATB.Enabled = false;
+            this.supersededLB.Enabled = false;
         }
 
         private void NewBase_Click(object sender, EventArgs e)
         {
             this.baseArtifactsLB.Enabled = false;
             this.newBATB.Enabled = true;
+            this.supersededLB.Enabled = false;
+        }
+
+        private void BaseArtifact_Selected(object sender, EventArgs e)
+        {
+            string selectedBA = this.baseArtifactsLB.Text;
+            List<Artifact> filteredArtifacts = this.artifacts.Where<Artifact>(a => string.Equals(a.Base, selectedBA)).ToList<Artifact>();
+            this.supersededLB.DataSource = filteredArtifacts;
+            this.supersededLB.DisplayMember = "supersededDisplay";
+            this.supersededLB.ValueMember = "identifier";
+            this.supersededLB.Enabled = true;
         }
     }
 }
