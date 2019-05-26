@@ -6,7 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
+using System.Reflection;
 using Microsoft.Office.Interop.Excel;
+using BusinessData;
 
 namespace xOwl_Excel_Connector
 {
@@ -22,6 +24,8 @@ namespace xOwl_Excel_Connector
             this.isConnected = isConnected;
             this.cookies = cookies;
             this.RetrieveArtifacts();
+            this.archetypesLB.DataSource = XowlUtils.GetClassesFromNameSpace("BusinessData");
+            this.archetypesLB.DisplayMember = "Name";
             this.archetypesLB.SelectedIndex = 0;
             this.baseArtifactsLB.DataSource = new List<string>(new HashSet<string>(this.artifacts.ConvertAll(new Converter<Artifact, string>(ArtifactToString))));
         }
@@ -68,7 +72,7 @@ namespace xOwl_Excel_Connector
             System.Diagnostics.Debug.WriteLine("Pushing data to collaboration");
 
             string name = this.artifactNameTB.Text.Trim();
-            string type = this.archetypesLB.Text; //TODO: process type
+            Type type = (Type)this.archetypesLB.SelectedItem;
             string archetype = "org.xowl.platform.kernel.artifacts.ArtifactArchetypeFree";
             string version = this.artifactVersionTB.Text.Trim();
             string baseArtifact, superseded, parameters;
@@ -87,7 +91,7 @@ namespace xOwl_Excel_Connector
             req.CookieContainer = this.cookies;
             req.ContentType = "application/ld+json";
             req.Method = "POST";
-            string body = this.JsonFromSelectecCells();
+            string body = this.JsonFromSelectecCells(type);
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(body);
             req.ContentLength = bytes.Length;
             System.IO.Stream os = req.GetRequestStream();
@@ -136,23 +140,26 @@ namespace xOwl_Excel_Connector
             this.supersededLB.Enabled = true;
         }
 
-        private string JsonFromSelectecCells()
+        private string JsonFromSelectecCells(Type type)
         {
-            //TODO: use delegators to produce quads
             Range selection = Globals.ThisAddIn.Application.ActiveWindow.RangeSelection;
-            List<Requirement> requirements = RequirementsDelegate.GetRequirementsFromRange(selection);
+            Type genericClass = typeof(JsonLdDelegate<>);
+            Type constructedClass = genericClass.MakeGenericType(type);
+            ConstructorInfo constructedClassConstructor = constructedClass.GetConstructor(Type.EmptyTypes);
+            object createdInstance = constructedClassConstructor.Invoke(new Object[] { });
+            MethodInfo getData = constructedClass.GetMethod("GetDataFromRange");
+            object res = getData.Invoke(createdInstance, new Object[] { selection });
+            List<Identifiable> data = ((IEnumerable<Identifiable>)res).Cast<Identifiable>().ToList();
             StringBuilder sb = new StringBuilder();
-            //TODO: use polymorphisme to simplify the process
             sb.Append("{\"@graph\":[");
-            foreach (Requirement req in requirements)
+            foreach (Identifiable identifiable in data)
             {
-                sb.Append(req.ToJsonLD());
+                sb.Append(identifiable.ToJsonLD());
                 sb.Append(",");
             }
             sb.Length--;
             sb.Append("]}");
             return sb.ToString();
-            //return "{ \"@graph\": [{ \"@id\":\"http://xowl.org/requirements#REQ001\", \"http://xowl.org/requirements#description\": \"REQ001 description\"}]}";
         }
     }
 }

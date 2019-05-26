@@ -41,24 +41,11 @@ namespace xOwl_Excel_Connector
 
     }
 
-    public class Requirement
+    public abstract class Identifiable
     {
         public string identifier { get; set; }
-        public string title { get; set; }
-        public string description { get; set; }
 
-        public string ToJsonLD()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("{ \"@id\":\"http://xowl.org/requirement#");
-            sb.Append(this.identifier);
-            sb.Append("\", \"http://xowl.org/requirement#title\":\"");
-            sb.Append(this.title);
-            sb.Append("\", \"http://xowl.org/requirement#description\":\"");
-            sb.Append(this.description);
-            sb.Append("\"}");
-            return sb.ToString();
-        }
+        public abstract string ToJsonLD();
     }
 
 }

@@ -206,10 +206,6 @@
             this.archetypesLB.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.archetypesLB.FormattingEnabled = true;
             this.archetypesLB.ItemHeight = 16;
-            this.archetypesLB.Items.AddRange(new object[] {
-            "Requirements",
-            "Functions",
-            "Components"});
             this.archetypesLB.Location = new System.Drawing.Point(142, 231);
             this.archetypesLB.Margin = new System.Windows.Forms.Padding(4);
             this.archetypesLB.Name = "archetypesLB";

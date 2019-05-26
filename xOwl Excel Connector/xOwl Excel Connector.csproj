@@ -159,6 +159,7 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="BusinessData.cs" />
     <Compile Include="XOwlUtils.cs">
       <SubType>Form</SubType>
     </Compile>
