@@ -160,6 +160,7 @@
   -->
   <ItemGroup>
     <Compile Include="BusinessData.cs" />
+    <Compile Include="XowlAnnotations.cs" />
     <Compile Include="XOwlUtils.cs">
       <SubType>Form</SubType>
     </Compile>

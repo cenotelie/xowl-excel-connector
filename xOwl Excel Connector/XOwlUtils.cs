@@ -8,6 +8,7 @@ using System.Net;
 using System.Reflection;
 using Newtonsoft.Json;
 using Microsoft.Office.Interop.Excel;
+using xOwl_Annotations;
 
 namespace xOwl_Excel_Connector
 {
@@ -43,7 +44,7 @@ namespace xOwl_Excel_Connector
 
     public class JsonLdDelegate<T> where T : Identifiable, new()
     {
-        public List<T> GetDataFromRange(Range range)
+        public List<T> GetDataFromRows(Range range)
         {
             if (range.Count == 0)
             {
@@ -57,14 +58,40 @@ namespace xOwl_Excel_Connector
             {
                 t = new T();
                 int col = 1;
-                for (int j = 0; j < properties.Length; j++)
+                //we start at 1 because we don't process uuid
+                for (int j = 1; j < properties.Length; j++)
                 {
                     //FIXME: take into account the type of the property when reading the value
-                    properties[j].SetValue(t, range.Cells[i, col++].Value.ToString(), null);
+                    PropertyInfo property = properties[j];
+                    var cellConfiguration = property.GetCustomAttribute(typeof(CellConfiguration));
+                    Type propertyType = property.PropertyType;
+                    string typeName = propertyType.Name;
+                    switch(typeName)
+                    {
+                        case "Int32":
+                            property.SetValue(t, range.Cells[i, col++].Value.ToString(), null); //FIXME: retrieve integer value instead
+                            break;
+
+                        default:
+                            property.SetValue(t, range.Cells[i, col++].Value.ToString(), null);
+                            break;
+                    }
+                    
+                    if (cellConfiguration != null)
+                    {
+                        col += ((CellConfiguration)cellConfiguration).cellsAfter;
+                        //TODO: process cellspan
+                    }
                 }
                 res.Add(t);
             }
             return res;
+        }
+
+        public List<T> GetDataFromCols(Range range)
+        {
+            //TODO
+            throw new NotImplementedException();
         }
     }
 

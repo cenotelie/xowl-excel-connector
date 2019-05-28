@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace xOwl_Excel_Connector
 {
     public class Artifact
@@ -43,7 +44,12 @@ namespace xOwl_Excel_Connector
 
     public abstract class Identifiable
     {
-        public string identifier { get; set; }
+        public string uuid { get; }
+
+        public Identifiable()
+        {
+            this.uuid = System.Guid.NewGuid().ToString();
+        }
 
         public abstract string ToJsonLD();
     }

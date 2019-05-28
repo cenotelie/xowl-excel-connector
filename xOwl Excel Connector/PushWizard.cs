@@ -147,7 +147,8 @@ namespace xOwl_Excel_Connector
             Type constructedClass = genericClass.MakeGenericType(type);
             ConstructorInfo constructedClassConstructor = constructedClass.GetConstructor(Type.EmptyTypes);
             object createdInstance = constructedClassConstructor.Invoke(new Object[] { });
-            MethodInfo getData = constructedClass.GetMethod("GetDataFromRange");
+            //TODO: take into account chosen alignment
+            MethodInfo getData = constructedClass.GetMethod("GetDataFromRows");
             object res = getData.Invoke(createdInstance, new Object[] { selection });
             List<Identifiable> data = ((IEnumerable<Identifiable>)res).Cast<Identifiable>().ToList();
             StringBuilder sb = new StringBuilder();
