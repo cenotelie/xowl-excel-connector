@@ -160,6 +160,12 @@
   -->
   <ItemGroup>
     <Compile Include="BusinessData.cs" />
+    <Compile Include="PullWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PullWizard.Designer.cs">
+      <DependentUpon>PullWizard.cs</DependentUpon>
+    </Compile>
     <Compile Include="XowlAnnotations.cs" />
     <Compile Include="XOwlUtils.cs">
       <SubType>Form</SubType>
@@ -180,6 +186,9 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <EmbeddedResource Include="PullWizard.resx">
+      <DependentUpon>PullWizard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PushWizard.resx">
       <DependentUpon>PushWizard.cs</DependentUpon>
     </EmbeddedResource>

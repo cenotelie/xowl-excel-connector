@@ -74,5 +74,10 @@ namespace xOwl_Excel_Connector
             //Worksheet sheet = Globals.ThisAddIn.Application.ActiveSheet;
             new PushWizard(this.isConnected, this.cookies).Show();
         }
+
+        private void PullArtifact_Click(object sender, RibbonControlEventArgs e)
+        {
+            new PullWizard(this.isConnected, this.cookies).Show();
+        }
     }
 }

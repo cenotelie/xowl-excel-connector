@@ -42,6 +42,36 @@ namespace xOwl_Excel_Connector
         }
     }
 
+    public partial class PullWizard : Form
+    {
+        private List<Artifact> artifacts;
+        private void RetrieveArtifacts()
+        {
+            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XOWLRibbon.api + "services/storage/artifacts"));
+            req.CookieContainer = this.cookies;
+            req.ContentType = "application/json";
+            req.Method = "GET";
+            try
+            {
+                HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+                this.cookies.Add(resp.Cookies);
+                System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
+                string json = sr.ReadToEnd().Trim();
+                this.artifacts = JsonConvert.DeserializeObject<List<Artifact>>(json);
+            }
+            catch (WebException ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                this.isConnected = false;
+            }
+        }
+
+        public static string ArtifactToString(Artifact a)
+        {
+            return a.Base;
+        }
+    }
+
     public class JsonLdDelegate<T> where T : Identifiable, new()
     {
         public List<T> GetDataFromRows(Range range)
@@ -66,6 +96,7 @@ namespace xOwl_Excel_Connector
                     var cellConfiguration = property.GetCustomAttribute(typeof(CellConfiguration));
                     Type propertyType = property.PropertyType;
                     string typeName = propertyType.Name;
+                    //TODO: refactor
                     switch(typeName)
                     {
                         case "Int32":

@@ -104,6 +104,7 @@
             this.pullBtn.Name = "pullBtn";
             this.pullBtn.OfficeImageId = "ImportHtmlDocument";
             this.pullBtn.ShowImage = true;
+            this.pullBtn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.PullArtifact_Click);
             // 
             // XOWLRibbon
             // 
