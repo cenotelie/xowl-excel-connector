@@ -24,10 +24,10 @@ namespace xOwl_Excel_Connector
             this.isConnected = isConnected;
             this.cookies = cookies;
             this.RetrieveArtifacts();
+            this.baseArtifactsLB.DataSource = new List<string>(new HashSet<string>(this.artifacts.ConvertAll(new Converter<Artifact, string>(XowlUtils.ArtifactToString))));
             this.archetypesLB.DataSource = XowlUtils.GetClassesFromNameSpace("BusinessData");
             this.archetypesLB.DisplayMember = "Name";
             this.archetypesLB.SelectedIndex = 0;
-            this.baseArtifactsLB.DataSource = new List<string>(new HashSet<string>(this.artifacts.ConvertAll(new Converter<Artifact, string>(ArtifactToString))));
         }
 
         private void ArtifactNameValidating(object sender, CancelEventArgs e)

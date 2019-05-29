@@ -21,6 +21,11 @@ namespace xOwl_Excel_Connector
             InitializeComponent();
             this.isConnected = isConnected;
             this.cookies = cookies;
+            this.RetrieveArtifacts();
+            this.baseArtifactsLB.DataSource = new List<string>(new HashSet<string>(this.artifacts.ConvertAll(new Converter<Artifact, string>(XowlUtils.ArtifactToString))));
+            this.archetypesLB.DataSource = XowlUtils.GetClassesFromNameSpace("BusinessData");
+            this.archetypesLB.DisplayMember = "Name";
+            this.archetypesLB.SelectedIndex = 0;
         }
 
         private void PullArtifact_Click(object sender, EventArgs e)
