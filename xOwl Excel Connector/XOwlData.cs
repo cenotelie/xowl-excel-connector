@@ -56,17 +56,6 @@ namespace xOwl_Excel_Connector
         public string ToJsonLD()
         {
             StringBuilder sb = new StringBuilder();
-            /*
-            sb.Append("{ \"@id\":\"http://xowl.org/requirement#");
-            sb.Append(this.uuid);
-            sb.Append("\", \"http://xowl.org/requirement#id\":\"");
-            sb.Append(this.id);
-            sb.Append("\", \"http://xowl.org/requirement#title\":\"");
-            sb.Append(this.title);
-            sb.Append("\", \"http://xowl.org/requirement#description\":\"");
-            sb.Append(this.description);
-            sb.Append("\"}");
-            */
             string baseUri;
             var businessClass = this.GetType().GetCustomAttribute(typeof(BusinessClass));
             if (businessClass != null)

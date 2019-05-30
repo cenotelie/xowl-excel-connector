@@ -63,27 +63,13 @@ namespace xOwl_Excel_Connector
                 //we start at 1 because we don't process uuid
                 for (int j = 1; j < properties.Length; j++)
                 {
-                    //FIXME: take into account the type of the property when reading the value
                     PropertyInfo property = properties[j];
                     var cellConfiguration = property.GetCustomAttribute(typeof(CellConfiguration));
-                    Type propertyType = property.PropertyType;
-                    string typeName = propertyType.Name;
-                    //TODO: refactor
-                    switch(typeName)
-                    {
-                        case "Int32":
-                            property.SetValue(t, range.Cells[i, col++].Value.ToString(), null); //FIXME: retrieve integer value instead
-                            break;
-
-                        default:
-                            property.SetValue(t, range.Cells[i, col++].Value.ToString(), null);
-                            break;
-                    }
-                    
+                    property.SetValue(t, Convert.ChangeType(range.Cells[i, col++].Value, property.PropertyType));
                     if (cellConfiguration != null)
                     {
                         col += ((CellConfiguration)cellConfiguration).cellsAfter;
-                        //TODO: process cellspan
+                        //TODO: process other cell properties
                     }
                 }
                 res.Add(t);

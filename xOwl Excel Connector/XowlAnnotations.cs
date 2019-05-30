@@ -11,6 +11,7 @@ namespace xOwl_Annotations
         public string baseUri { get; set; }
     }
 
+    //TODO: eventually add other presentation properties: Color, Font, etc.
     public class CellConfiguration : Attribute
     {
         public int cellsAfter { get; set; }

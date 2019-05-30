@@ -9,7 +9,7 @@ using xOwl_Annotations;
 
 namespace BusinessData
 {
-    [BusinessClass(baseUri = "http://xowl.org/requirements#")]
+    [BusinessClass(baseUri = "http://xowl.org/requirement#")]
     public class Requirement : Identifiable
     {
         [CellConfiguration(cellsAfter = 1)]
@@ -18,7 +18,7 @@ namespace BusinessData
         public string description { get; set; }
     }
 
-    [BusinessClass(baseUri = "http://xowl.org/functions#")]
+    [BusinessClass(baseUri = "http://xowl.org/function#")]
     public class Function : Identifiable
     {
         public string name { get; set; }
