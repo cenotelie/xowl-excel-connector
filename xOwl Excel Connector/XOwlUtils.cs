@@ -28,22 +28,6 @@ namespace xOwl_Excel_Connector
         }
     }
 
-    public partial class PullWizard : Form
-    {
-        private List<Artifact> artifacts;
-        private void RetrieveArtifacts()
-        {
-            try
-            {
-                this.artifacts = XowlUtils.RetrieveArtifacts(this.cookies);
-            }
-            catch (WebException e)
-            {
-                this.isConnected = false;
-            }
-        }
-    }
-
     public class JsonLdDelegate<T> where T : Identifiable, new()
     {
         public List<T> GetDataFromRows(Range range)
@@ -86,6 +70,7 @@ namespace xOwl_Excel_Connector
 
     public class XowlUtils
     {
+        //TODO: retrieve namespace using properties file
         public static List<Type> GetClassesFromNameSpace(string name)
         {
             var q = from t in Assembly.GetExecutingAssembly().GetTypes()
@@ -112,9 +97,14 @@ namespace xOwl_Excel_Connector
             return JsonConvert.DeserializeObject<List<Artifact>>(json);
         }
 
-        public static string ArtifactToString(Artifact a)
+        public static string ArtifactToBase(Artifact a)
         {
             return a.Base;
+        }
+
+        public static string ArtifactToName(Artifact a)
+        {
+            return a.name;
         }
     }
 }

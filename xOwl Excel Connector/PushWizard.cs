@@ -24,7 +24,7 @@ namespace xOwl_Excel_Connector
             this.isConnected = isConnected;
             this.cookies = cookies;
             this.RetrieveArtifacts();
-            this.baseArtifactsLB.DataSource = new List<string>(new HashSet<string>(this.artifacts.ConvertAll(new Converter<Artifact, string>(XowlUtils.ArtifactToString))));
+            this.baseArtifactsLB.DataSource = new List<string>(new HashSet<string>(this.artifacts.ConvertAll(new Converter<Artifact, string>(XowlUtils.ArtifactToBase))));
             this.archetypesLB.DataSource = XowlUtils.GetClassesFromNameSpace("BusinessData");
             this.archetypesLB.DisplayMember = "Name";
             this.archetypesLB.SelectedIndex = 0;
@@ -74,6 +74,7 @@ namespace xOwl_Excel_Connector
             string name = this.artifactNameTB.Text.Trim();
             Type type = (Type)this.archetypesLB.SelectedItem;
             string archetype = "org.xowl.platform.kernel.artifacts.ArtifactArchetypeFree";
+            //FIXME: ensure unicity of version for the same name and within the same base
             string version = this.artifactVersionTB.Text.Trim();
             string baseArtifact, superseded, parameters;
             if (this.existingBABtn.Checked)
@@ -90,6 +91,7 @@ namespace xOwl_Excel_Connector
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XOWLRibbon.api + "connectors/generics/sw?" + parameters));
             req.CookieContainer = this.cookies;
             req.ContentType = "application/ld+json";
+            req.Accept = "application/json";
             req.Method = "POST";
             string body = this.JsonFromSelectecCells(type);
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(body);
@@ -102,7 +104,6 @@ namespace xOwl_Excel_Connector
                 HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
                 System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
                 string r = sr.ReadToEnd().Trim();
-                //TODO: use local storage to store artifacts (create corresponding class before)
                 System.Diagnostics.Debug.WriteLine(r);
             }
             catch (WebException ex)
