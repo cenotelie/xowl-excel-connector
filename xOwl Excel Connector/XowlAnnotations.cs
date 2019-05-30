@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace xOwl_Annotations
 {
+    public class BusinessClass : Attribute
+    {
+        public string baseUri { get; set; }
+    }
+
     public class CellConfiguration : Attribute
     {
         public int cellsAfter { get; set; }
