@@ -46,45 +46,35 @@ namespace xOwl_Excel_Connector
 
     public abstract class Identifiable
     {
-        public string uuid { get; }
-
-        public Identifiable()
-        {
-            this.uuid = System.Guid.NewGuid().ToString();
-        }
+        public string uuid { get; set; }
 
         public string ToJsonLD()
         {
             StringBuilder sb = new StringBuilder();
-            string baseUri;
-            var businessClass = this.GetType().GetCustomAttribute(typeof(BusinessClass));
-            if (businessClass != null)
-            {
-                baseUri = ((BusinessClass)businessClass).baseUri;
-            } else
-            {
-                baseUri = "http://xowl.org/freetype#";
-            }
+            Type type = this.GetType();
+            string className = type.Name;
+            string baseUri = XowlUtils.GetBaseUri(type);
             PropertyInfo[] properties = this.GetType().GetProperties().OrderBy(p => p.MetadataToken).ToArray();
-            int count = properties.Length;
             sb.Append("{");
             sb.Append($"\"@id\":\"{baseUri}");
             sb.Append(this.uuid);
+            sb.Append("\", \"@type\":\"");
+            sb.Append(baseUri + className);
             sb.Append("\",");
-            for (int i = 1; i < count; i++)
+            for (int i = 1; i < properties.Length; i++)
             {
                 PropertyInfo property = properties[i];
                 string name = property.Name.ToLower();
                 string value = property.GetValue(this).ToString();
-                string type = property.PropertyType.Name;
-                if (type.Equals("String"))
+                string typeName = property.PropertyType.Name;
+                if (typeName.Equals("String"))
                 {
                     sb.Append($"\"{baseUri}{name}\":\"{value}\"");
                 } else
                 {
                     sb.Append($"\"{baseUri}{name}\":{value}");
                 }
-                if (i == count - 1)
+                if (i == properties.Length - 1)
                 {
                     sb.Append("}");
                 } else

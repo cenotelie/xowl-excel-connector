@@ -44,7 +44,7 @@ namespace xOwl_Excel_Connector
             {
                 t = new T();
                 int col = 1;
-                //we start at 1 because we don't process uuid
+                properties[0].SetValue(t, System.Guid.NewGuid().ToString());
                 for (int j = 1; j < properties.Length; j++)
                 {
                     PropertyInfo property = properties[j];
@@ -65,6 +65,30 @@ namespace xOwl_Excel_Connector
         {
             //TODO
             throw new NotImplementedException();
+        }
+    }
+
+    public class SparqlResultDelegate<T> where T : Identifiable, new()
+    {
+        public List<T> GetDataFromResponse(string response)
+        {
+            List<T> res = new List<T>();
+            PropertyInfo[] properties = typeof(T).GetProperties().OrderBy(p => p.MetadataToken).ToArray();
+            dynamic result = JsonConvert.DeserializeObject(response);
+            PropertyInfo property;
+            foreach (var r in result.results.bindings)
+            {
+                T t = new T();
+                properties[0].SetValue(t, (string) r[typeof(T).Name.ToLower()].value);
+                //we skip the uuid
+                for (int i = 1; i < properties.Length; i++)
+                {
+                    property = properties[i];
+                    property.SetValue(t, Convert.ChangeType(r[property.Name].value, property.PropertyType));
+                }
+                res.Add(t);
+            }
+            return res;
         }
     }
 
@@ -105,6 +129,49 @@ namespace xOwl_Excel_Connector
         public static string ArtifactToName(Artifact a)
         {
             return a.name;
+        }
+
+        public static string ToSparqlQuery(Type type)
+        {
+            StringBuilder sb = new StringBuilder();
+            string className = type.Name;
+            string baseUri = GetBaseUri(type);
+            PropertyInfo[] properties = type.GetProperties().OrderBy(p => p.MetadataToken).ToArray();
+            sb.Append("SELECT DISTINCT * WHERE { GRAPH ?g { ?");
+            sb.Append(className.ToLower());
+            sb.Append(" a <");
+            sb.Append(baseUri + className);
+            sb.Append(">;");
+            for (int i = 1; i < properties.Length; i++)
+            {
+                PropertyInfo property = properties[i];
+                string name = property.Name.ToLower();
+                sb.Append("<" + baseUri + name + "> ?");
+                sb.Append(name);
+                if (i == properties.Length - 1)
+                {
+                    sb.Append(". ");
+                }
+                else
+                {
+                    sb.Append("; ");
+                }
+            }
+            sb.Append("} }");
+            return sb.ToString();
+        }
+
+        public static string GetBaseUri(Type type)
+        {
+            var businessClass = type.GetCustomAttribute(typeof(BusinessClass));
+            if (businessClass != null)
+            {
+                return ((BusinessClass)businessClass).baseUri;
+            }
+            else
+            {
+                return "http://xowl.org/freetype#";
+            }
         }
     }
 }

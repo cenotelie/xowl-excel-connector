@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using Microsoft.Office.Interop.Excel;
 using BusinessData;
+using Newtonsoft.Json;
 
 namespace xOwl_Excel_Connector
 {
@@ -47,7 +48,8 @@ namespace xOwl_Excel_Connector
             //TODO: construct the request based on the selected archetype
             //FIXME: It seems that the selection of the artifact is useless here ! It shall actually be activated for live reasoning at server side using the web interface
             //It will be activate later through dedicated UI
-            string sparqlRequest = "SELECT DISTINCT ?x ?y WHERE { GRAPH ?g { ?x <http://xowl.org/requirements#description> ?y } }";
+            Type type = (Type)this.archetypesLB.SelectedItem;
+            string sparqlRequest = XowlUtils.ToSparqlQuery(type);
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(sparqlRequest);
             req.ContentLength = bytes.Length;
             System.IO.Stream os = req.GetRequestStream();
@@ -58,6 +60,7 @@ namespace xOwl_Excel_Connector
                 HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
                 System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
                 string r = sr.ReadToEnd().Trim();
+                processJsonResponse(r, type);
                 System.Diagnostics.Debug.WriteLine(r);
             }
             catch (WebException ex)
@@ -69,6 +72,22 @@ namespace xOwl_Excel_Connector
         private void Cancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void processJsonResponse(string response, Type type)
+        {
+            Type genericClass = typeof(SparqlResultDelegate<>);
+            Type constructedClass = genericClass.MakeGenericType(type);
+            ConstructorInfo constructedClassConstructor = constructedClass.GetConstructor(Type.EmptyTypes);
+            object createdInstance = constructedClassConstructor.Invoke(new Object[] { });
+            //TODO: take into account chosen alignment
+            MethodInfo getData = constructedClass.GetMethod("GetDataFromResponse");
+            object res = getData.Invoke(createdInstance, new Object[] { response });
+            List<Identifiable> data = ((IEnumerable<Identifiable>)res).Cast<Identifiable>().ToList();
+            foreach (Identifiable identifiable in data)
+            {
+                //TODO
+            }
         }
     }
 }
