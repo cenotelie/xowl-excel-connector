@@ -46,7 +46,7 @@ namespace xOwl_Excel_Connector
 
     public abstract class Identifiable
     {
-        public string uuid { get; set; }
+        public string UUID { get; set; }
 
         public string ToJsonLD()
         {
@@ -57,7 +57,7 @@ namespace xOwl_Excel_Connector
             PropertyInfo[] properties = this.GetType().GetProperties().OrderBy(p => p.MetadataToken).ToArray();
             sb.Append("{");
             sb.Append($"\"@id\":\"{baseUri}");
-            sb.Append(this.uuid);
+            sb.Append(this.UUID);
             sb.Append("\", \"@type\":\"");
             sb.Append(baseUri + className);
             sb.Append("\",");

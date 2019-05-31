@@ -13,25 +13,25 @@ namespace BusinessData
     public class Requirement : Identifiable
     {
         [CellConfiguration(cellsAfter = 1)]
-        public string id { get; set; }
-        public string title { get; set; }
-        public string description { get; set; }
+        public string ID { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
     }
 
     [BusinessClass(baseUri = "http://xowl.org/function#")]
     public class Function : Identifiable
     {
-        public string name { get; set; }
+        public string Name { get; set; }
 
-        public int priority { get; set; }
+        public int Priority { get; set; }
     }
 
     [BusinessClass(baseUri ="http://xowl.org/components#")]
     public class Component : Identifiable
     {
         [CellConfiguration(cellsAfter = 2)]
-        public string name { get; set; }
+        public string Name { get; set; }
 
-        public int complexity { get; set; }
+        public int Complexity { get; set; }
     }
 }

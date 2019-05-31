@@ -84,7 +84,7 @@ namespace xOwl_Excel_Connector
                 for (int i = 1; i < properties.Length; i++)
                 {
                     property = properties[i];
-                    property.SetValue(t, Convert.ChangeType(r[property.Name].value, property.PropertyType));
+                    property.SetValue(t, Convert.ChangeType(r[property.Name.ToLower()].value, property.PropertyType));
                 }
                 res.Add(t);
             }
