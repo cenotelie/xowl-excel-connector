@@ -25,4 +25,13 @@ namespace BusinessData
 
         public int priority { get; set; }
     }
+
+    [BusinessClass(baseUri ="http://xowl.org/components#")]
+    public class Component : Identifiable
+    {
+        [CellConfiguration(cellsAfter = 2)]
+        public string name { get; set; }
+
+        public int complexity { get; set; }
+    }
 }
