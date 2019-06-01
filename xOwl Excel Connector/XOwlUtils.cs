@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using System.Reflection;
+using System.Drawing;
 using Newtonsoft.Json;
 using Microsoft.Office.Interop.Excel;
 using xOwl_Annotations;
@@ -89,6 +90,52 @@ namespace xOwl_Excel_Connector
                 res.Add(t);
             }
             return res;
+        }
+
+        public void SetRowsFromData(Range range, List<T> data)
+        {
+            //TODO: set cells read only
+            PropertyInfo[] properties = typeof(T).GetProperties().OrderBy(p => p.MetadataToken).ToArray();
+            Range cell;
+            //we skip the uuid
+            int col = 0;
+            for (int i = 1; i < properties.Length; i++)
+            {
+                cell = range.Cells[1, col + i];
+                cell.Value = properties[i].Name.ToUpper();
+                //TODO: use annotation instead to set cell style
+                cell.Font.Bold = true;
+                cell.Font.Color = ColorTranslator.ToOle(Color.White);
+                cell.Interior.Color = ColorTranslator.ToOle(Color.Gray);
+                var cellConfiguration = properties[i].GetCustomAttribute(typeof(CellConfiguration));
+                if (cellConfiguration != null)
+                {
+                    col += ((CellConfiguration)cellConfiguration).cellsAfter;
+                    //TODO: process other cell properties
+                }
+            }
+            col = 0;
+            int row = 2;
+            PropertyInfo property;
+            object value;
+            foreach (T t in data)
+            {
+                //we skip the uuid
+                for (int i = 1; i < properties.Length; i++)
+                {
+                    property = properties[i];
+                    value = property.GetValue(t);
+                    range.Cells[row, col + i].Value = value;
+                    var cellConfiguration = property.GetCustomAttribute(typeof(CellConfiguration));
+                    if (cellConfiguration != null)
+                    {
+                        col += ((CellConfiguration)cellConfiguration).cellsAfter;
+                        //TODO: process other cell properties
+                    }
+                }
+                col = 0;
+                row++;
+            }
         }
     }
 

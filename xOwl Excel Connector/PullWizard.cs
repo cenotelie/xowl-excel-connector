@@ -83,11 +83,9 @@ namespace xOwl_Excel_Connector
             //TODO: take into account chosen alignment
             MethodInfo getData = constructedClass.GetMethod("GetDataFromResponse");
             object res = getData.Invoke(createdInstance, new Object[] { response });
-            List<Identifiable> data = ((IEnumerable<Identifiable>)res).Cast<Identifiable>().ToList();
-            foreach (Identifiable identifiable in data)
-            {
-                //TODO
-            }
+            Range selection = Globals.ThisAddIn.Application.ActiveWindow.RangeSelection;
+            MethodInfo setRows = constructedClass.GetMethod("SetRowsFromData");
+            setRows.Invoke(createdInstance, new Object[] { selection, res });
         }
     }
 }
