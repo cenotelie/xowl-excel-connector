@@ -13,22 +13,6 @@ using xOwl_Annotations;
 
 namespace xOwl_Excel_Connector
 {
-    public partial class PushWizard : Form
-    {
-        private List<Artifact> artifacts;
-        private void RetrieveArtifacts()
-        {
-            try
-            {
-                this.artifacts = XowlUtils.RetrieveArtifacts(this.cookies);
-            }
-            catch(WebException e)
-            {
-                this.isConnected = false;
-            }
-        }
-    }
-
     public class JsonLdDelegate<T> where T : Identifiable, new()
     {
         public List<T> GetDataFromRows(Range range)
@@ -141,6 +125,41 @@ namespace xOwl_Excel_Connector
 
     public class XowlUtils
     {
+        public static CookieContainer cookies = null;
+        public static string api = null;
+        /// <summary>
+        /// <exception cref="WebException">Connection Failed</exception>
+        /// </summary>
+        /// <returns>Cookies for secured transactions</returns>
+        public static CookieContainer Connect()
+        {
+            string xowlAddress = (string)Properties.Settings.Default["xowlAddress"];
+            string xowlLogin = (string)Properties.Settings.Default["xowlLogin"];
+            string xowlPassword = (string)Properties.Settings.Default["xowlPassword"];
+            cookies = new CookieContainer();
+            api = xowlAddress + "/api/";
+            if (string.IsNullOrEmpty(xowlAddress) || string.IsNullOrEmpty(xowlAddress) || string.IsNullOrEmpty(xowlAddress))
+            {
+                new PrefForm().Show();
+                return Connect();
+            }
+            // System.Diagnostics.Debug.WriteLine("Connecting to collaboration");
+            string parameters = "login=" + xowlLogin;
+            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XowlUtils.api + "kernel/security/login?" + parameters));
+            req.CookieContainer = cookies;
+            req.ContentType = "application/json";
+            req.Method = "POST";
+            string body = xowlPassword;
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(body);
+            req.ContentLength = bytes.Length;
+            System.IO.Stream os = req.GetRequestStream();
+            os.Write(bytes, 0, bytes.Length);
+            os.Close();
+            HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+            cookies.Add(resp.Cookies);
+            return cookies;
+        }
+
         //TODO: retrieve namespace using properties file
         public static List<Type> GetClassesFromNameSpace(string name)
         {
@@ -150,22 +169,31 @@ namespace xOwl_Excel_Connector
             return q.ToList();
         }
 
-        /// <summary>
-        /// <exception cref="WebException">Connection Failed</exception>
-        /// </summary>
-        /// <param name="cookies"></param>
-        /// <returns>List of stored artifacts</returns>
-        public static List<Artifact> RetrieveArtifacts(CookieContainer cookies)
+        public static List<Artifact> RetrieveArtifacts(bool live)
         {
-            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XOWLRibbon.api + "services/storage/artifacts"));
+            string addr = api + "services/storage/artifacts";
+            if (live)
+            {
+                addr += "/live";
+            }
+            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(addr));
             req.CookieContainer = cookies;
             req.ContentType = "application/json";
             req.Method = "GET";
-            HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
-            cookies.Add(resp.Cookies);
-            System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
-            string json = sr.ReadToEnd().Trim();
-            return JsonConvert.DeserializeObject<List<Artifact>>(json);
+            try
+            {
+                HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+                cookies.Add(resp.Cookies);
+                System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
+                string json = sr.ReadToEnd().Trim();
+                return JsonConvert.DeserializeObject<List<Artifact>>(json);
+            } catch (WebException ex)
+            {
+                //TODO: take into account the error code to execute appropriate actions
+                Connect();
+                return RetrieveArtifacts(live);
+            }
+            
         }
 
         public static string ArtifactToBase(Artifact a)

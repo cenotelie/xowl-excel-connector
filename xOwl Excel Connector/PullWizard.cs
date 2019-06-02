@@ -15,14 +15,10 @@ namespace xOwl_Excel_Connector
 {
     public partial class PullWizard : Form
     {
-        private bool isConnected = false;
-        private CookieContainer cookies;
 
-        public PullWizard(bool isConnected, CookieContainer cookies)
+        public PullWizard()
         {
             InitializeComponent();
-            this.isConnected = isConnected;
-            this.cookies = cookies;
             this.archetypesLB.DataSource = XowlUtils.GetClassesFromNameSpace("BusinessData");
             this.archetypesLB.DisplayMember = "Name";
             this.archetypesLB.SelectedIndex = 0;
@@ -30,7 +26,7 @@ namespace xOwl_Excel_Connector
 
         private void PullArtifact_Click(object sender, EventArgs e)
         {
-            if (this.isConnected && this.ValidateChildren())
+            if (this.ValidateChildren())
             {
                 this.DoPullArtifact();
                 this.Close();
@@ -40,8 +36,9 @@ namespace xOwl_Excel_Connector
         private void DoPullArtifact()
         {
             string parameters = "store=longTerm";
-            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XOWLRibbon.api + "services/storage/sparql?" + parameters));
-            req.CookieContainer = this.cookies;
+            //FIXME: request only the live artifacts
+            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XowlUtils.api + "services/storage/sparql?" + parameters));
+            req.CookieContainer = XowlUtils.cookies;
             req.ContentType = "application/sparql-query";
             req.Accept = "application/json";
             req.Method = "POST";
@@ -50,7 +47,7 @@ namespace xOwl_Excel_Connector
             //It will be activate later through dedicated UI
             Type type = (Type)this.archetypesLB.SelectedItem;
             string sparqlRequest = XowlUtils.ToSparqlQuery(type);
-            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(sparqlRequest);
+            byte[] bytes = Encoding.UTF8.GetBytes(sparqlRequest);
             req.ContentLength = bytes.Length;
             System.IO.Stream os = req.GetRequestStream();
             os.Write(bytes, 0, bytes.Length);
@@ -65,7 +62,9 @@ namespace xOwl_Excel_Connector
             }
             catch (WebException ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
+                //TODO: take into account the code of the exception to execute appropriate actions
+                XowlUtils.Connect();
+                DoPullArtifact();
             }
         }
 

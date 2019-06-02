@@ -37,7 +37,6 @@
             this.xowl = this.Factory.CreateRibbonTab();
             this.connexionGroup = this.Factory.CreateRibbonGroup();
             this.prefBtn = this.Factory.CreateRibbonButton();
-            this.connectBtn = this.Factory.CreateRibbonButton();
             this.collaborationGroup = this.Factory.CreateRibbonGroup();
             this.pushBtn = this.Factory.CreateRibbonButton();
             this.pullBtn = this.Factory.CreateRibbonButton();
@@ -57,7 +56,6 @@
             // connexionGroup
             // 
             this.connexionGroup.Items.Add(this.prefBtn);
-            this.connexionGroup.Items.Add(this.connectBtn);
             this.connexionGroup.Label = "Connexion";
             this.connexionGroup.Name = "connexionGroup";
             // 
@@ -70,15 +68,6 @@
             this.prefBtn.ShowImage = true;
             this.prefBtn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.PrefBtn_Click);
             // 
-            // connectBtn
-            // 
-            this.connectBtn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.connectBtn.Label = "Connect";
-            this.connectBtn.Name = "connectBtn";
-            this.connectBtn.OfficeImageId = "ViewOnlineConnection";
-            this.connectBtn.ShowImage = true;
-            this.connectBtn.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.ConnectBtn_Click);
-            // 
             // collaborationGroup
             // 
             this.collaborationGroup.Items.Add(this.pushBtn);
@@ -89,7 +78,6 @@
             // pushBtn
             // 
             this.pushBtn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.pushBtn.Enabled = false;
             this.pushBtn.Label = "Push";
             this.pushBtn.Name = "pushBtn";
             this.pushBtn.OfficeImageId = "ExportHtmlDocument";
@@ -99,7 +87,6 @@
             // pullBtn
             // 
             this.pullBtn.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.pullBtn.Enabled = false;
             this.pullBtn.Label = "Pull";
             this.pullBtn.Name = "pullBtn";
             this.pullBtn.OfficeImageId = "ImportHtmlDocument";
@@ -128,7 +115,6 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup connexionGroup;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup collaborationGroup;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton prefBtn;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton connectBtn;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton pushBtn;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton pullBtn;
     }
