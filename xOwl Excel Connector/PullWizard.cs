@@ -29,8 +29,7 @@ namespace xOwl_Excel_Connector
 
         private void DoPullArtifact()
         {
-            string parameters = "store=longTerm";
-            //FIXME: request only the live artifacts
+            string parameters = "store=liveTerm"; //FIXME: or long term if needed
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XowlUtils.api + "services/storage/sparql?" + parameters));
             req.CookieContainer = XowlUtils.cookies;
             req.ContentType = "application/sparql-query";
