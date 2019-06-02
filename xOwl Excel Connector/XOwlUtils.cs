@@ -1,14 +1,12 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Net;
 using System.Reflection;
-using System.Drawing;
-using Newtonsoft.Json;
-using Microsoft.Office.Interop.Excel;
+using System.Text;
 using xOwl_Annotations;
 
 namespace xOwl_Excel_Connector
@@ -64,7 +62,7 @@ namespace xOwl_Excel_Connector
             foreach (var r in result.results.bindings)
             {
                 T t = new T();
-                properties[0].SetValue(t, (string) r[typeof(T).Name.ToLower()].value);
+                properties[0].SetValue(t, (string)r[typeof(T).Name.ToLower()].value);
                 //we skip the uuid
                 for (int i = 1; i < properties.Length; i++)
                 {
@@ -187,13 +185,14 @@ namespace xOwl_Excel_Connector
                 System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
                 string json = sr.ReadToEnd().Trim();
                 return JsonConvert.DeserializeObject<List<Artifact>>(json);
-            } catch (WebException ex)
+            }
+            catch (WebException ex)
             {
                 //TODO: take into account the error code to execute appropriate actions
                 Connect();
                 return RetrieveArtifacts(live);
             }
-            
+
         }
 
         public static string ArtifactToBase(Artifact a)

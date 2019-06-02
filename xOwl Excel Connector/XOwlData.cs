@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Reflection;
-using System.Threading.Tasks;
-using xOwl_Annotations;
+using System.Text;
 
 
 namespace xOwl_Excel_Connector
@@ -70,14 +67,16 @@ namespace xOwl_Excel_Connector
                 if (typeName.Equals("String"))
                 {
                     sb.Append($"\"{baseUri}{name}\":\"{value}\"");
-                } else
+                }
+                else
                 {
                     sb.Append($"\"{baseUri}{name}\":{value}");
                 }
                 if (i == properties.Length - 1)
                 {
                     sb.Append("}");
-                } else
+                }
+                else
                 {
                     sb.Append(",");
                 }

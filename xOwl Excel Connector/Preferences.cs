@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace xOwl_Excel_Connector
@@ -19,7 +13,7 @@ namespace xOwl_Excel_Connector
 
         private void Save_Click(object sender, EventArgs e)
         {
-           if (this.ValidateChildren())
+            if (this.ValidateChildren())
             {
                 string collabAddr = this.collabAddrRtb.Text.Trim();
                 string login = this.loginRtb.Text.Trim();

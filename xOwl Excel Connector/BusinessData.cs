@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
+﻿using xOwl_Annotations;
 using xOwl_Excel_Connector;
-using xOwl_Annotations;
 
 namespace BusinessData
 {
@@ -26,7 +20,7 @@ namespace BusinessData
         public int Priority { get; set; }
     }
 
-    [BusinessClass(baseUri ="http://xowl.org/components#")]
+    [BusinessClass(baseUri = "http://xowl.org/components#")]
     public class Component : Identifiable
     {
         [CellConfiguration(cellsAfter = 2)]
