@@ -8,6 +8,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using xOwl_Annotations;
 
 namespace xOwl_Excel_Connector
 {
@@ -88,7 +89,7 @@ namespace xOwl_Excel_Connector
             req.ContentType = "application/ld+json";
             req.Accept = "application/json";
             req.Method = "POST";
-            string body = this.JsonFromSelectecCells(type);
+            string body = this.ToJsonLD(type);
             byte[] bytes = Encoding.UTF8.GetBytes(body);
             req.ContentLength = bytes.Length;
             System.IO.Stream os = req.GetRequestStream();
@@ -138,26 +139,36 @@ namespace xOwl_Excel_Connector
             this.supersededLB.Enabled = true;
         }
 
-        private string JsonFromSelectecCells(Type type)
+        private string ToJsonLD(Type type)
         {
-            Range selection = Globals.ThisAddIn.Application.ActiveWindow.RangeSelection;
             Type genericClass = typeof(JsonLdDelegate<>);
             Type constructedClass = genericClass.MakeGenericType(type);
             ConstructorInfo constructedClassConstructor = constructedClass.GetConstructor(Type.EmptyTypes);
             object createdInstance = constructedClassConstructor.Invoke(new Object[] { });
-            //TODO: take into account chosen alignment
-            MethodInfo getData = constructedClass.GetMethod("GetDataFromRows");
-            object res = getData.Invoke(createdInstance, new Object[] { selection });
-            List<Identifiable> data = ((IEnumerable<Identifiable>)res).Cast<Identifiable>().ToList();
+            //TODO: take into account chosen alignment in case of simple mapping
             StringBuilder sb = new StringBuilder();
-            sb.Append("{\"@graph\":[");
-            foreach (Identifiable identifiable in data)
+            BusinessClass businessClass = type.GetCustomAttribute<BusinessClass>();
+            if (businessClass.IsComplex)
             {
-                sb.Append(identifiable.ToJsonLD());
-                sb.Append(",");
+                Worksheet worksheet = Globals.ThisAddIn.Application.Worksheets[businessClass.Position];
+                MethodInfo getData = constructedClass.GetMethod("GetDataFromWorksheet");
+                object res = getData.Invoke(createdInstance, new Object[] { worksheet });
+                return ((Identifiable)res).ToJsonLD();
+            } else
+            {
+                Range selection = Globals.ThisAddIn.Application.ActiveWindow.RangeSelection;
+                MethodInfo getData = constructedClass.GetMethod("GetDataFromRows");
+                object res = getData.Invoke(createdInstance, new Object[] { selection });
+                List<Identifiable> data = ((IEnumerable<Identifiable>)res).Cast<Identifiable>().ToList();
+                sb.Append("{\"@graph\":[");
+                foreach (Identifiable identifiable in data)
+                {
+                    sb.Append(identifiable.ToJsonLD());
+                    sb.Append(",");
+                }
+                sb.Length--;
+                sb.Append("]}");
             }
-            sb.Length--;
-            sb.Append("]}");
             return sb.ToString();
         }
     }

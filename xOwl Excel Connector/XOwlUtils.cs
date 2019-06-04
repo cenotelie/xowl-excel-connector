@@ -13,6 +13,25 @@ namespace xOwl_Excel_Connector
 {
     public class JsonLdDelegate<T> where T : Identifiable, new()
     {
+        public T GetDataFromWorksheet(Worksheet worksheet)
+        {
+            if (worksheet == null)
+            {
+                return null;
+            }
+            T res = new T();
+            PropertyInfo[] properties = typeof(T).GetProperties().OrderBy(p => p.MetadataToken).ToArray();
+            //FIXME: exclude UUID !!!
+            foreach(PropertyInfo property in properties)
+            {
+                CellConfiguration cellConfiguration = property.GetCustomAttribute<CellConfiguration>();
+                int[] position = cellConfiguration.Position;
+                Range range = worksheet.Cells[position[0], position[1]];
+                property.SetValue(res, Convert.ChangeType(range.Value, property.PropertyType));
+            }
+            return res;
+        }
+
         public List<T> GetDataFromRows(Range range)
         {
             if (range.Count == 0)
@@ -31,11 +50,11 @@ namespace xOwl_Excel_Connector
                 for (int j = 1; j < properties.Length; j++)
                 {
                     PropertyInfo property = properties[j];
-                    var cellConfiguration = property.GetCustomAttribute(typeof(CellConfiguration));
+                    CellConfiguration cellConfiguration = properties[i].GetCustomAttribute<CellConfiguration>();
                     property.SetValue(t, Convert.ChangeType(range.Cells[i, col++].Value, property.PropertyType));
                     if (cellConfiguration != null)
                     {
-                        col += ((CellConfiguration)cellConfiguration).cellsAfter;
+                        col += ((CellConfiguration)cellConfiguration).CellsAfter;
                         //TODO: process other cell properties
                     }
                 }
@@ -89,10 +108,10 @@ namespace xOwl_Excel_Connector
                 cell.Font.Bold = true;
                 cell.Font.Color = ColorTranslator.ToOle(Color.White);
                 cell.Interior.Color = ColorTranslator.ToOle(Color.Gray);
-                var cellConfiguration = properties[i].GetCustomAttribute(typeof(CellConfiguration));
+                CellConfiguration cellConfiguration = properties[i].GetCustomAttribute<CellConfiguration>();
                 if (cellConfiguration != null)
                 {
-                    col += ((CellConfiguration)cellConfiguration).cellsAfter;
+                    col += cellConfiguration.CellsAfter;
                     //TODO: process other cell properties
                 }
             }
@@ -108,10 +127,10 @@ namespace xOwl_Excel_Connector
                     property = properties[i];
                     value = property.GetValue(t);
                     range.Cells[row, col + i].Value = value;
-                    var cellConfiguration = property.GetCustomAttribute(typeof(CellConfiguration));
+                    CellConfiguration cellConfiguration = properties[i].GetCustomAttribute<CellConfiguration>();
                     if (cellConfiguration != null)
                     {
-                        col += ((CellConfiguration)cellConfiguration).cellsAfter;
+                        col += cellConfiguration.CellsAfter;
                         //TODO: process other cell properties
                     }
                 }
@@ -125,6 +144,7 @@ namespace xOwl_Excel_Connector
     {
         public static CookieContainer cookies = null;
         public static string api = null;
+
         /// <summary>
         /// <exception cref="WebException">Connection Failed</exception>
         /// </summary>
@@ -240,7 +260,7 @@ namespace xOwl_Excel_Connector
             var businessClass = type.GetCustomAttribute(typeof(BusinessClass));
             if (businessClass != null)
             {
-                return ((BusinessClass)businessClass).baseUri;
+                return ((BusinessClass)businessClass).BaseUri;
             }
             else
             {
