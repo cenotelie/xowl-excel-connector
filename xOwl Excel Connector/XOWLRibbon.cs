@@ -13,7 +13,6 @@ namespace xOwl_Excel_Connector
                | SecurityProtocolType.Tls11
                | SecurityProtocolType.Tls12
                | SecurityProtocolType.Ssl3;
-            XowlUtils.Connect();
         }
 
         private void PrefBtn_Click(object sender, RibbonControlEventArgs e) => new PrefForm().Show();

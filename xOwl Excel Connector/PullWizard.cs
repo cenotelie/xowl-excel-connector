@@ -13,6 +13,10 @@ namespace xOwl_Excel_Connector
         public PullWizard()
         {
             InitializeComponent();
+            if (XowlUtils.cookies == null)
+            {
+                XowlUtils.Connect();
+            }
             this.archetypesLB.DataSource = XowlUtils.GetClassesFromNameSpace("BusinessData");
             this.archetypesLB.DisplayMember = "Name";
             this.archetypesLB.SelectedIndex = 0;

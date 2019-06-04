@@ -159,7 +159,7 @@ namespace xOwl_Excel_Connector
             if (string.IsNullOrEmpty(xowlAddress) || string.IsNullOrEmpty(xowlAddress) || string.IsNullOrEmpty(xowlAddress))
             {
                 new PrefForm().Show();
-                return Connect();
+                return null;
             }
             // System.Diagnostics.Debug.WriteLine("Connecting to collaboration");
             string parameters = "login=" + xowlLogin;

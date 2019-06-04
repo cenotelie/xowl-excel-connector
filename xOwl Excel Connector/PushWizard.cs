@@ -19,6 +19,10 @@ namespace xOwl_Excel_Connector
         public PushWizard()
         {
             InitializeComponent();
+            if (XowlUtils.cookies == null)
+            {
+                XowlUtils.Connect();
+            }
             this.artifacts = XowlUtils.RetrieveArtifacts(false);
             this.baseArtifactsLB.DataSource = new List<string>(new HashSet<string>(this.artifacts.ConvertAll(new Converter<Artifact, string>(XowlUtils.ArtifactToBase))));
             this.archetypesLB.DataSource = XowlUtils.GetClassesFromNameSpace("BusinessData");
