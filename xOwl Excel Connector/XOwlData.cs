@@ -58,12 +58,19 @@ namespace xOwl_Excel_Connector
             sb.Append("\", \"@type\":\"");
             sb.Append(baseUri + className);
             sb.Append("\",");
+            PropertyInfo property;
+            Type propertyType;
             for (int i = 1; i < properties.Length; i++)
             {
-                PropertyInfo property = properties[i];
+                property = properties[i];
+                propertyType = property.PropertyType;
                 string name = property.Name.ToLower();
                 string value = property.GetValue(this).ToString();
                 string typeName = property.PropertyType.Name;
+                if (typeName.Equals("Double"))
+                {
+                    value = value.Replace(',', '.');
+                }
                 if (typeName.Equals("String"))
                 {
                     sb.Append($"\"{baseUri}{name}\":\"{value}\"");

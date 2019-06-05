@@ -152,27 +152,28 @@ namespace xOwl_Excel_Connector
             //TODO: take into account chosen alignment in case of simple mapping
             StringBuilder sb = new StringBuilder();
             BusinessClass businessClass = type.GetCustomAttribute<BusinessClass>();
+            sb.Append("{\"@graph\":[");
             if (businessClass.IsComplex)
             {
                 Worksheet worksheet = Globals.ThisAddIn.Application.Worksheets[businessClass.Position];
                 MethodInfo getData = constructedClass.GetMethod("GetDataFromWorksheet");
                 object res = getData.Invoke(createdInstance, new Object[] { worksheet });
-                return ((Identifiable)res).ToJsonLD();
+                sb.Append(((Identifiable)res).ToJsonLD());
             } else
             {
                 Range selection = Globals.ThisAddIn.Application.ActiveWindow.RangeSelection;
                 MethodInfo getData = constructedClass.GetMethod("GetDataFromRows");
                 object res = getData.Invoke(createdInstance, new Object[] { selection });
                 List<Identifiable> data = ((IEnumerable<Identifiable>)res).Cast<Identifiable>().ToList();
-                sb.Append("{\"@graph\":[");
+                
                 foreach (Identifiable identifiable in data)
                 {
                     sb.Append(identifiable.ToJsonLD());
                     sb.Append(",");
                 }
                 sb.Length--;
-                sb.Append("]}");
             }
+            sb.Append("]}");
             return sb.ToString();
         }
     }

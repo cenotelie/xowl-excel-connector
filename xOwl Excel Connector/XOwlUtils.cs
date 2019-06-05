@@ -21,13 +21,21 @@ namespace xOwl_Excel_Connector
             }
             T res = new T();
             PropertyInfo[] properties = typeof(T).GetProperties().OrderBy(p => p.MetadataToken).ToArray();
-            //FIXME: exclude UUID !!!
-            foreach(PropertyInfo property in properties)
+            properties[0].SetValue(res, System.Guid.NewGuid().ToString());
+            PropertyInfo property;
+            for (int i = 1; i < properties.Length; i++) 
             {
+                property = properties[i];
                 CellConfiguration cellConfiguration = property.GetCustomAttribute<CellConfiguration>();
                 int[] position = cellConfiguration.Position;
                 Range range = worksheet.Cells[position[0], position[1]];
-                property.SetValue(res, Convert.ChangeType(range.Value, property.PropertyType));
+                string value = range.Value.ToString();
+                Type propertyType = property.PropertyType;
+                if (propertyType == typeof(System.Double))
+                {
+                    value = value.Replace('.', ',');
+                }
+                property.SetValue(res, Convert.ChangeType(value, propertyType));
             }
             return res;
         }
@@ -47,11 +55,19 @@ namespace xOwl_Excel_Connector
                 t = new T();
                 int col = 1;
                 properties[0].SetValue(t, System.Guid.NewGuid().ToString());
+                PropertyInfo property;
+                Type propertyType;
                 for (int j = 1; j < properties.Length; j++)
                 {
-                    PropertyInfo property = properties[j];
-                    CellConfiguration cellConfiguration = properties[i].GetCustomAttribute<CellConfiguration>();
-                    property.SetValue(t, Convert.ChangeType(range.Cells[i, col++].Value, property.PropertyType));
+                    property = properties[j];
+                    propertyType = property.PropertyType;
+                    CellConfiguration cellConfiguration = properties[j].GetCustomAttribute<CellConfiguration>();
+                    string value = range.Cells[i, col++].Value.ToString();
+                    if (propertyType.Name.Equals("Double"))
+                    {
+                        value = value.Replace('.', ',');
+                    }
+                    property.SetValue(t, Convert.ChangeType(value, property.PropertyType));
                     if (cellConfiguration != null)
                     {
                         col += ((CellConfiguration)cellConfiguration).CellsAfter;

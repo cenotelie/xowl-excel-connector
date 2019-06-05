@@ -16,8 +16,7 @@ namespace BusinessData
     public class Function : Identifiable
     {
         public string Name { get; set; }
-
-        public int Priority { get; set; }
+        public double Priority { get; set; }
     }
 
     [BusinessClass(BaseUri = "http://xowl.org/components#")]
@@ -32,15 +31,15 @@ namespace BusinessData
     [BusinessClass(BaseUri = "http://xowl.org/specparam#", IsComplex = true, Position = "Paramètre spec")]
     public class SpecParameter : Identifiable
     {
-        [CellConfiguration(Position = new int[] { 5, 10 })]
+        [CellConfiguration(Position = new int[] { 10, 5 })]
         public double ChargeArret { get; set; }
-        [CellConfiguration(Position = new int[] { 5, 11 })]
+        [CellConfiguration(Position = new int[] { 11, 5 })]
         public double ChargeNominaleExtenstion { get; set; }
-        [CellConfiguration(Position = new int[] { 5, 12 })]
+        [CellConfiguration(Position = new int[] { 12, 5 })]
         public double ChargeNominaleRetraction { get; set; }
-        [CellConfiguration(Position = new int[] { 5, 13 })]
+        [CellConfiguration(Position = new int[] { 13, 5 })]
         public double CourseButeeExtension { get; set; }
-        [CellConfiguration(Position = new int[] { 5, 14 })]
+        [CellConfiguration(Position = new int[] { 14, 5 })]
         public double CourseButeeRetraction { get; set; }
     }
 }
