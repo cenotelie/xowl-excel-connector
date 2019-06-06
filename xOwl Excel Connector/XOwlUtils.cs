@@ -109,6 +109,32 @@ namespace xOwl_Excel_Connector
             return res;
         }
 
+        public void SetCellsFromData(List<T> data, Worksheet worksheet)
+        {
+            Type type = typeof(T);
+            //FIXME: we consider for the moment that type has a complex mapping
+            PropertyInfo[] properties = typeof(T).GetProperties().OrderBy(p => p.MetadataToken).ToArray();
+            PropertyInfo property;
+            object value;
+            int[] position;
+            foreach (T t in data)
+            {
+                //we skip the uuid
+                for (int i = 1; i < properties.Length; i++)
+                {
+                    property = properties[i];
+                    value = property.GetValue(t);
+                    CellConfiguration cellConfiguration = properties[i].GetCustomAttribute<CellConfiguration>();
+                    if (cellConfiguration != null)
+                    {
+                        position = cellConfiguration.Position;
+                        worksheet.Cells[position[0], position[1]].Value = value;
+                        //TODO: process other cell properties
+                    }
+                }
+            }
+        }
+
         public void SetRowsFromData(Range range, List<T> data)
         {
             //TODO: set cells read only

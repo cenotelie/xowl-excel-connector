@@ -4,6 +4,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using xOwl_Annotations;
 
 namespace xOwl_Excel_Connector
 {
@@ -77,11 +78,21 @@ namespace xOwl_Excel_Connector
             ConstructorInfo constructedClassConstructor = constructedClass.GetConstructor(Type.EmptyTypes);
             object createdInstance = constructedClassConstructor.Invoke(new Object[] { });
             //TODO: take into account chosen alignment
+            BusinessClass businessClass = type.GetCustomAttribute<BusinessClass>();
             MethodInfo getData = constructedClass.GetMethod("GetDataFromResponse");
             object res = getData.Invoke(createdInstance, new Object[] { response });
-            Range selection = Globals.ThisAddIn.Application.ActiveWindow.RangeSelection;
-            MethodInfo setRows = constructedClass.GetMethod("SetRowsFromData");
-            setRows.Invoke(createdInstance, new Object[] { selection, res });
+            if (businessClass.IsComplex)
+            {
+                //FIXME: we consider that the worksheet exists => create it otherwise
+                Worksheet worksheet = Globals.ThisAddIn.Application.Worksheets[businessClass.Position];
+                MethodInfo setCellsFromData = constructedClass.GetMethod("SetCellsFromData");
+                setCellsFromData.Invoke(createdInstance, new Object[] { res, worksheet });
+            } else
+            {
+                Range selection = Globals.ThisAddIn.Application.ActiveWindow.RangeSelection;
+                MethodInfo setRows = constructedClass.GetMethod("SetRowsFromData");
+                setRows.Invoke(createdInstance, new Object[] { selection, res });
+            }
         }
     }
 }
