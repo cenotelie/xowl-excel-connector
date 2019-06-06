@@ -20,8 +20,10 @@ namespace xOwl_Excel_Connector
                 return null;
             }
             T res = new T();
+            //FIXME: we need to keep track of data evolution => generating new uuid each times fails the comparison at server side
             PropertyInfo[] properties = typeof(T).GetProperties().OrderBy(p => p.MetadataToken).ToArray();
-            properties[0].SetValue(res, System.Guid.NewGuid().ToString());
+            //properties[0].SetValue(res, System.Guid.NewGuid().ToString());
+            properties[0].SetValue(res, typeof(T).Name.ToLower()); //temporary
             PropertyInfo property;
             for (int i = 1; i < properties.Length; i++) 
             {
@@ -54,7 +56,9 @@ namespace xOwl_Excel_Connector
             {
                 t = new T();
                 int col = 1;
-                properties[0].SetValue(t, System.Guid.NewGuid().ToString());
+                //FIXME: we need to keep track of data evolution => generating new uuid each times fails the comparison at server side
+                //properties[0].SetValue(t, System.Guid.NewGuid().ToString());
+                properties[0].SetValue(t, typeof(T).Name.ToLower() + i); //temporary
                 PropertyInfo property;
                 Type propertyType;
                 for (int j = 1; j < properties.Length; j++)
