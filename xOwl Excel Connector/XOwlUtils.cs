@@ -36,8 +36,7 @@ namespace xOwl_Excel_Connector
                 Type propertyType = property.PropertyType;
                 if (propertyType.Name.Equals("Double"))
                 {
-                    var culture = new CultureInfo("en");
-                    var dvalue = Double.Parse(value, culture);
+                    var dvalue = Double.Parse(value, CultureInfo.CurrentCulture);
                     property.SetValue(res, dvalue);
                 }
                 else
@@ -75,8 +74,7 @@ namespace xOwl_Excel_Connector
                     string value = range.Cells[i, col++].Value.ToString();
                     if (propertyType.Name.Equals("Double"))
                     {
-                        var culture = new CultureInfo("en");
-                        var dvalue = Double.Parse(value, culture);
+                        var dvalue = Double.Parse(value, CultureInfo.CurrentCulture);
                         property.SetValue(t, dvalue);
                     }
                     else
