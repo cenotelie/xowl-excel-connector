@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -33,11 +34,16 @@ namespace xOwl_Excel_Connector
                 Range range = worksheet.Cells[position[0], position[1]];
                 string value = range.Value.ToString();
                 Type propertyType = property.PropertyType;
-                if (propertyType == typeof(System.Double))
+                if (propertyType.Name.Equals("Double"))
                 {
-                    value = value.Replace('.', ',');
+                    var culture = new CultureInfo("en");
+                    var dvalue = Double.Parse(value, culture);
+                    property.SetValue(res, dvalue);
                 }
-                property.SetValue(res, Convert.ChangeType(value, propertyType));
+                else
+                {
+                    property.SetValue(res, Convert.ChangeType(value, property.PropertyType));
+                }
             }
             return res;
         }
@@ -69,9 +75,14 @@ namespace xOwl_Excel_Connector
                     string value = range.Cells[i, col++].Value.ToString();
                     if (propertyType.Name.Equals("Double"))
                     {
-                        value = value.Replace('.', ',');
+                        var culture = new CultureInfo("en");
+                        var dvalue = Double.Parse(value, culture);
+                        property.SetValue(t, dvalue);
                     }
-                    property.SetValue(t, Convert.ChangeType(value, property.PropertyType));
+                    else
+                    {
+                        property.SetValue(t, Convert.ChangeType(value, property.PropertyType));
+                    }
                     if (cellConfiguration != null)
                     {
                         col += ((CellConfiguration)cellConfiguration).CellsAfter;
