@@ -161,10 +161,20 @@ namespace BusinessData
     [BusinessClass(BaseUri = "http://xowl.org/sectionverin#", IsComplex = true, Position = "section vérin")]
     public class SectionVerin : Identifiable
     {
-		/*
+        /*
+        Cartouche Paramètres de la spécification utiles pour le calcul 
+        */
+        [CellConfiguration(Position = new int[] { 10, 5 })]
+        public double ChargeArretSouhaitee { get; set; }
+        [CellConfiguration(Position = new int[] { 11, 5 })]
+        public double PressionAlimentationNominale { get; set; }
+        [CellConfiguration(Position = new int[] { 12, 5 })]
+        public double PressionRetourNominale { get; set; }
+
+        /*
 		Cartouche Paramètres internes (Unités SI)
 		*/
-    	[CellConfiguration(Position = new int[] { 18, 5 })]
+        [CellConfiguration(Position = new int[] { 18, 5 })]
         public double FrottementsJointsEstimes { get; set; }
         [CellConfiguration(Position = new int[] { 19, 5 })]
         public double DpOuvertureClapetIsolementRetour { get; set; }
