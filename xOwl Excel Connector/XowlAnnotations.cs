@@ -5,10 +5,11 @@ namespace xOwl_Annotations
     public class BusinessClass : Attribute
     {
         public string BaseUri { get; set; }
-
         public bool IsComplex { get; set; }
         //TODO: Position is mandatory in case of complex mapping
         public string Position { get; set; }
+        public string ProcessId { get; set; }
+        public string TaskId { get; set; }
         public BusinessClass()
         {
             this.IsComplex = false;

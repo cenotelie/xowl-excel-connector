@@ -6,6 +6,7 @@ using xOwl_Excel_Connector;
 /// </summary>
 namespace BusinessData
 {
+    /*
     [BusinessClass(BaseUri = "http://xowl.org/requirement#")]
     public class Requirement : Identifiable
     {
@@ -29,14 +30,14 @@ namespace BusinessData
         public string Name { get; set; }
 
         public int Complexity { get; set; }
-    }
+    }*/
 	
 	
 	/// <summary>
 	/// Aileron_static_perfo_TBS.xls
 	/// Feuille Paramètre spec
 	/// </summary>
-    [BusinessClass(BaseUri = "http://xowl.org/specparam#", IsComplex = true, Position = "Paramètre spec")]
+    [BusinessClass(BaseUri = "http://xowl.org/specparam#", IsComplex = true, Position = "Paramètre spec", ProcessId = "collins", TaskId = "spec_params")]
     public class SpecParameter : Identifiable
     {
 		/*
@@ -158,7 +159,7 @@ namespace BusinessData
 	/// Feuille section vérin
 	/// Calcul de la section nécessaire pour obtenir la charge d'arrêt
 	/// </summary>
-    [BusinessClass(BaseUri = "http://xowl.org/sectionverin#", IsComplex = true, Position = "section vérin")]
+    [BusinessClass(BaseUri = "http://xowl.org/sectionverin#", IsComplex = true, Position = "section vérin", ProcessId = "collins", TaskId = "section_verin")]
     public class SectionVerin : Identifiable
     {
         /*

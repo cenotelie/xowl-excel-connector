@@ -58,5 +58,17 @@ namespace xOwl_Excel_Connector.Properties {
                 this["xowlPassword"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string activitiApi {
+            get {
+                return ((string)(this["activitiApi"]));
+            }
+            set {
+                this["activitiApi"] = value;
+            }
+        }
     }
 }

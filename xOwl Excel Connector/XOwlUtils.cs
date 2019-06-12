@@ -36,7 +36,7 @@ namespace xOwl_Excel_Connector
                 Type propertyType = property.PropertyType;
                 if (propertyType.Name.Equals("Double"))
                 {
-                    var dvalue = Double.Parse(value, CultureInfo.CurrentCulture);
+                    var dvalue = Double.Parse(value, new CultureInfo("en-US"));
                     property.SetValue(res, dvalue);
                 }
                 else
@@ -74,7 +74,7 @@ namespace xOwl_Excel_Connector
                     string value = range.Cells[i, col++].Value.ToString();
                     if (propertyType.Name.Equals("Double"))
                     {
-                        var dvalue = Double.Parse(value, CultureInfo.CurrentCulture);
+                        var dvalue = Double.Parse(value, new CultureInfo("en-US"));
                         property.SetValue(t, dvalue);
                     }
                     else
@@ -198,7 +198,7 @@ namespace xOwl_Excel_Connector
     public class XowlUtils
     {
         public static CookieContainer cookies = null;
-        public static string api = null;
+        public static string xowlApi = null;
 
         /// <summary>
         /// <exception cref="WebException">Connection Failed</exception>
@@ -210,7 +210,7 @@ namespace xOwl_Excel_Connector
             string xowlLogin = (string)Properties.Settings.Default["xowlLogin"];
             string xowlPassword = (string)Properties.Settings.Default["xowlPassword"];
             cookies = new CookieContainer();
-            api = xowlAddress + "/api/";
+            xowlApi = xowlAddress + "/api/";
             if (string.IsNullOrEmpty(xowlAddress) || string.IsNullOrEmpty(xowlAddress) || string.IsNullOrEmpty(xowlAddress))
             {
                 new PrefForm().Show();
@@ -218,7 +218,7 @@ namespace xOwl_Excel_Connector
             }
             // System.Diagnostics.Debug.WriteLine("Connecting to collaboration");
             string parameters = "login=" + xowlLogin;
-            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XowlUtils.api + "kernel/security/login?" + parameters));
+            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XowlUtils.xowlApi + "kernel/security/login?" + parameters));
             req.CookieContainer = cookies;
             req.ContentType = "application/json";
             req.Method = "POST";
@@ -244,7 +244,7 @@ namespace xOwl_Excel_Connector
 
         public static List<Artifact> RetrieveArtifacts(bool live)
         {
-            string addr = api + "services/storage/artifacts";
+            string addr = xowlApi + "services/storage/artifacts";
             if (live)
             {
                 addr += "/live";

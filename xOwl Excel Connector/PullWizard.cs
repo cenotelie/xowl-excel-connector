@@ -35,7 +35,7 @@ namespace xOwl_Excel_Connector
         private void DoPullArtifact()
         {
             string parameters = "store=liveTerm"; //TODO: or long term if needed (does not work)
-            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XowlUtils.api + "services/storage/sparql?" + parameters));
+            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XowlUtils.xowlApi + "services/storage/sparql?" + parameters));
             req.CookieContainer = XowlUtils.cookies;
             req.ContentType = "application/sparql-query";
             req.Accept = "application/json";
@@ -62,7 +62,7 @@ namespace xOwl_Excel_Connector
             {
                 //TODO: take into account the code of the exception to execute appropriate actions
                 XowlUtils.Connect();
-                DoPullArtifact();
+                //DoPullArtifact();//FIXME: improve management of cookies
             }
         }
 

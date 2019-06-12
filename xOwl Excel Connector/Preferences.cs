@@ -16,9 +16,11 @@ namespace xOwl_Excel_Connector
             if (this.ValidateChildren())
             {
                 string collabAddr = this.collabAddrRtb.Text.Trim();
+                string activitiApi = this.activitiApiRtb.Text.Trim();//REST API
                 string login = this.loginRtb.Text.Trim();
                 string password = this.passwordRtb.Text.Trim();
                 Properties.Settings.Default["xowlAddress"] = collabAddr;
+                Properties.Settings.Default["activitiApi"] = activitiApi;
                 Properties.Settings.Default["xowlLogin"] = login;
                 Properties.Settings.Default["xowlPassword"] = password;
                 Properties.Settings.Default.Save();
@@ -29,6 +31,7 @@ namespace xOwl_Excel_Connector
         private void PrefForm_Load(object sender, EventArgs e)
         {
             this.collabAddrRtb.Text = (string)Properties.Settings.Default["xowlAddress"];
+            this.activitiApiRtb.Text = (string)Properties.Settings.Default["activitiApi"];
             this.loginRtb.Text = (string)Properties.Settings.Default["xowlLogin"];
             this.passwordRtb.Text = (string)Properties.Settings.Default["xowlPassword"];
         }
