@@ -700,44 +700,58 @@ namespace BusinessData
 
 
 	/// <summary>
-	/// Spec EHSA.xslx
-	/// Feuille Feuil1
+	/// Spec EHSA_v1.xslx
+	/// Feuille Spec
 	/// </summary>
-    [BusinessClass(BaseUri = "http://xowl.org/specehsa#", IsComplex = true, Position = "Feuil1")]
+    [BusinessClass(BaseUri = "http://xowl.org/specehsa#", IsComplex = true, Position = "Spec")]
     public class SpecEHSA : Identifiable
     {
 		/*
-		Section 1 ACTUATOR APPLICATION
+		Section 1 DONNEES GENERALES
 		*/
     	[CellConfiguration(Position = new int[] { 4, 4 })]
         public string AircraftType { get; set; }
         [CellConfiguration(Position = new int[] { 5, 4 })]
         public string System { get; set; }
+		[CellConfiguration(Position = new int[] { 6, 4 })]
+        public string TypeDeServocommande { get; set; }
+		[CellConfiguration(Position = new int[] { 7, 4 })]
+        public string NombreActionneurParSurface { get; set; }
 		
 		/*
 		Section 2 SPACE ENVELOP and WEIGHT
 		*/
-    	[CellConfiguration(Position = new int[] { 7, 4 })] //Format "(Length, Width, Height)" en (mm mm mm)
+    	[CellConfiguration(Position = new int[] { 10, 4 })] //Format "(Length, Width, Height)" en (mm mm mm)
         public string SpaceEnvelop { get; set; }
-        [CellConfiguration(Position = new int[] { 8, 4 })]
+        [CellConfiguration(Position = new int[] { 11, 4 })]
         public double DistanceBetweenAttachments { get; set; }
-		[CellConfiguration(Position = new int[] { 9, 4 })]
+		[CellConfiguration(Position = new int[] { 12, 4 })]
         public double MaximumWeight { get; set; }
+		[CellConfiguration(Position = new int[] { 13, 4 })]
+        public double AngleBraquageGouverneExtension { get; set; }
+		[CellConfiguration(Position = new int[] { 14, 4 })]
+        public double AngleBraquageGouverneRetractionNegatif { get; set; }
+		[CellConfiguration(Position = new int[] { 15, 4 })]
+        public double ExtensionStroke { get; set; }
+		[CellConfiguration(Position = new int[] { 16, 4 })]
+        public double RetractionStroke { get; set; }
  
 		/*
 		Section 3 FUNCTIONAL REQUIREMENTS
 		*/
-    	[CellConfiguration(Position = new int[] { 11, 4 })] 
+    	[CellConfiguration(Position = new int[] { 19, 4 })] 
         public string ActuatorModes { get; set; }
-        [CellConfiguration(Position = new int[] { 12, 4 })]
+        [CellConfiguration(Position = new int[] { 20, 4 })]
         public string ControlInterface { get; set; }
-		[CellConfiguration(Position = new int[] { 13, 4 })]
+		[CellConfiguration(Position = new int[] { 21, 4 })]
         public string ControlSignalMagnitude { get; set; } //Format " +/- 8" en (mA) ?
 		
 		/*
 		Section 4 PERFORMANCE
 		*/
-    	[CellConfiguration(Position = new int[] { 15, 4 })] 
+    	/*
+		Ancienne feuille
+		[CellConfiguration(Position = new int[] { 15, 4 })] 
         public double StallLoad { get; set; } //int suffisant?
         [CellConfiguration(Position = new int[] { 16, 4 })]
         public double LimitLoadNoDeformation { get; set; } //int suffisant?
@@ -767,21 +781,1007 @@ namespace BusinessData
 		[CellConfiguration(Position = new int[] { 29, 4 })]
         public double FrequencyResponse { get; set; } //int suffisant?
 		[CellConfiguration(Position = new int[] { 30, 4 })]
-        public double MaximumRunUpTime { get; set; } //int suffisant?
+        public double MaximumRunUpTime { get; set; } //int suffisant?*/
+		
+		[CellConfiguration(Position = new int[] { 23, 4 })] 
+        public double SupplyPressure { get; set; }
+		[CellConfiguration(Position = new int[] { 24, 4 })] 
+        public double ReturnPressure { get; set; }
+		[CellConfiguration(Position = new int[] { 25, 4 })] 
+        public double SupplyProofPressure { get; set; }
+		[CellConfiguration(Position = new int[] { 26, 4 })] 
+        public double ReturnProofPressure { get; set; }
+		[CellConfiguration(Position = new int[] { 27, 4 })] 
+        public double LimitLoad { get; set; }
+		[CellConfiguration(Position = new int[] { 28, 4 })] 
+        public double StallLoadExtension { get; set; }
+		[CellConfiguration(Position = new int[] { 29, 4 })] 
+        public double StallLoadRetraction { get; set; }
+		[CellConfiguration(Position = new int[] { 30, 4 })] 
+        public double DampingCoefficient { get; set; }
+		[CellConfiguration(Position = new int[] { 31, 4 })] 
+        public double MaxPowerPointLoad { get; set; }
+		[CellConfiguration(Position = new int[] { 32, 4 })] 
+        public double MaxPowerPointSpeed { get; set; }
+		[CellConfiguration(Position = new int[] { 33, 4 })] 
+        public double MinFluidTemperature { get; set; }
+		[CellConfiguration(Position = new int[] { 34, 4 })] 
+        public double MaxFluidTemperature { get; set; }
 		
 		/*
 		Section 5 DUTY CYCLE
 		*/
-    	[CellConfiguration(Position = new int[] { 32, 4 })] 
+    	[CellConfiguration(Position = new int[] { 38, 4 })] 
         public double UsefulLife { get; set; } //int suffisant?
-        [CellConfiguration(Position = new int[] { 33, 4 })]
+        [CellConfiguration(Position = new int[] { 39, 4 })]
         public string EquivalentPermanentCycle { get; set; } //Format sine 1Hz +/- 2mm
-		[CellConfiguration(Position = new int[] { 34, 4 })]
+		[CellConfiguration(Position = new int[] { 40, 4 })]
         public double PermanentLoad { get; set; } //int suffisant?
 
 	}
+		
+	/// <summary>
+	/// Spec EHSA_v1.xslx
+	/// Feuille Actuator Key characteristics
+	/// </summary>
+    [BusinessClass(BaseUri = "http://xowl.org/specehsa/actuatorkeycharacteristics#", IsComplex = true, Position = "Actuator Key characteristics")]
+    public class ActuatorKeyCharacteristics : Identifiable
+    {
+		/*
+		Cartouche Identification
+		*/
+		[CellConfiguration(Position = new int[] { 7, 2 })] //Expected column B
+        public string Programme { get; set; }
+		[CellConfiguration(Position = new int[] { 8, 2 })] 
+        public string Author { get; set; }
+		[CellConfiguration(Position = new int[] { 9, 2 })] 
+        public string Date { get; set; }
+		[CellConfiguration(Position = new int[] { 10, 2 })] 
+        public string Version { get; set; }
+		/*
+		Cartouche Actuator Key characteristics Aileron
+		*/
+		//Power lane
+		[CellConfiguration(Position = new int[] { 17, 2 })] 
+        public string ActuatorType { get; set; } //(balanced/unbalanced sections)
+		[CellConfiguration(Position = new int[] { 18, 2 })] 
+        public double RodDiameter { get; set; }
+		[CellConfiguration(Position = new int[] { 19, 2 })] 
+        public double PistonDiameter { get; set; }
+ 
+		//Attachments
+		[CellConfiguration(Position = new int[] { 22, 2 })] 
+        public string TypeRodEnd { get; set; } //(male/femelle)
+		/*[CellConfiguration(Position = new int[] { 22, 2 })] 
+        public string StructureBearingType { get; set; } //(auto lub, roller)
+		[CellConfiguration(Position = new int[] { 23, 2 })] 
+        public string SurfaceBearingType { get; set; } //(auto lub, roller)*/
+		[CellConfiguration(Position = new int[] { 23, 2 })] 
+        public double PinToPinDistance { get; set; }
+ 
+		//Hydraulic block
+		[CellConfiguration(Position = new int[] { 26, 2 })] 
+        public double SelectedTubeDiameter { get; set; }
+ 
+		//Servovalve
+		[CellConfiguration(Position = new int[] { 29, 2 })] 
+        public double EHSVMinFlow { get; set; }
+
+		//Acumulator
+		[CellConfiguration(Position = new int[] { 32, 2 })] 
+        public double MinimumAcumulatorPressure { get; set; }
+		[CellConfiguration(Position = new int[] { 33, 2 })] 
+        public double MinimumAccumulatorVolume { get; set; }
+
+		/*
+		Cartouche Actuator Key characteristics Tool1 output
+		*/
+		//Power lane
+		[CellConfiguration(Position = new int[] { 17, 3 })] 
+        public string ActuatorTypeTool1 { get; set; } //(balanced/unbalanced sections)
+		[CellConfiguration(Position = new int[] { 18, 3 })] 
+        public double RodDiameterTool1 { get; set; }
+		[CellConfiguration(Position = new int[] { 19, 3 })] 
+        public double PistonDiameterTool1 { get; set; }
+ 
+		//Attachments
+		[CellConfiguration(Position = new int[] { 22, 3 })] 
+        public string TypeRodEndTool1 { get; set; } //(male/femelle)
+		/*[CellConfiguration(Position = new int[] { 22, 3 })] 
+        public string StructureBearingTypeTool1 { get; set; } //(auto lub, roller)
+		[CellConfiguration(Position = new int[] { 23, 3 })] 
+        public string SurfaceBearingTypeTool1 { get; set; } //(auto lub, roller)*/
+		[CellConfiguration(Position = new int[] { 23, 3 })] 
+        public double PinToPinDistanceTool1 { get; set; }
+ 
+		//Hydraulic block
+		[CellConfiguration(Position = new int[] { 26, 3 })] 
+        public double SelectedTubeDiameterTool1 { get; set; }
+ 
+		//Servovalve
+		[CellConfiguration(Position = new int[] { 29, 3 })] 
+        public double EHSVMinFlowTool1 { get; set; }
+
+		//Acumulator
+		[CellConfiguration(Position = new int[] { 32, 3 })] 
+        public double MinimumAcumulatorPressureTool1 { get; set; }
+		[CellConfiguration(Position = new int[] { 33, 3 })] 
+        public double MinimumAccumulatorVolumeTool1 { get; set; }
+		
+		/*
+		Cartouche Actuator Key characteristics Tool2 output
+		*/
+		//Power lane
+		[CellConfiguration(Position = new int[] { 17, 4 })] 
+        public string ActuatorTypeTool2 { get; set; } //(balanced/unbalanced sections)
+		[CellConfiguration(Position = new int[] { 18, 4 })] 
+        public double RodDiameterTool2 { get; set; }
+		[CellConfiguration(Position = new int[] { 19, 4 })] 
+        public double PistonDiameterTool2 { get; set; }
+ 
+		//Attachments
+		[CellConfiguration(Position = new int[] { 22, 4 })] 
+        public string TypeRodEndTool2 { get; set; } //(male/femelle)
+		/*[CellConfiguration(Position = new int[] { 22, 4 })] 
+        public string StructureBearingTypeTool2 { get; set; } //(auto lub, roller)
+		[CellConfiguration(Position = new int[] { 23, 4 })] 
+        public string SurfaceBearingTypeTool2 { get; set; } //(auto lub, roller)*/
+		[CellConfiguration(Position = new int[] { 23, 4 })] 
+        public double PinToPinDistanceTool2 { get; set; }
+ 
+		//Hydraulic block
+		[CellConfiguration(Position = new int[] { 26, 4 })] 
+        public double SelectedTubeDiameterTool2 { get; set; }
+ 
+		//Servovalve
+		[CellConfiguration(Position = new int[] { 29, 4 })] 
+        public double EHSVMinFlowTool2 { get; set; }
+
+		//Acumulator
+		[CellConfiguration(Position = new int[] { 32, 4 })] 
+        public double MinimumAcumulatorPressureTool2 { get; set; }
+		[CellConfiguration(Position = new int[] { 33, 4 })] 
+        public double MinimumAccumulatorVolumeTool2 { get; set; }
+	}
 	
+	/// <summary>
+	/// Spec EHSA_v1.xslx
+	/// Feuille PFCA Spec
+	/// </summary>
+	/// FIXME check types
+    [BusinessClass(BaseUri = "http://xowl.org/specehsa/pfcaspec#", IsComplex = true, Position = "PFCA Spec")]
+    public class PFCASpec : Identifiable
+    {
+		/*
+		Section 1 Functions
+		*/
+		
+		//Values Aileron IB
+		[CellConfiguration(Position = new int[] { 6, 4 })] 
+        public double FunctionActiveModeValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 7, 4 })] 
+        public double FunctionDampedModeValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 8, 4 })] 
+        public double FunctionBlockedModeValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 9, 4 })] 
+        public double FunctionMaintenanceModeValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 10, 4 })] 
+        public double FunctionAntiExtensionSpoilerValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 11, 4 })] 
+        public double FunctionSurfaceEndStopValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 12, 4 })] 
+        public double FunctionLoadOrPressureSensingValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 13, 4 })] 
+        public double FunctionDroopFunctionValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 14, 4 })] 
+        public double FunctionREUModesAndFunctionsValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 15, 4 })] 
+        public double FunctionMotorDriveElectronicModesAndFunctionsValueAileronIB { get; set; }
+		
+		//Values Aileron OB
+		[CellConfiguration(Position = new int[] { 6, 5 })] 
+        public double FunctionActiveModeValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 7, 5 })] 
+        public double FunctionDampedModeValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 8, 5 })] 
+        public double FunctionBlockedModeValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 9, 5 })] 
+        public double FunctionMaintenanceModeValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 10, 5 })] 
+        public double FunctionAntiExtensionSpoilerValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 11, 5 })] 
+        public double FunctionSurfaceEndStopValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 12, 5 })] 
+        public double FunctionLoadOrPressureSensingValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 13, 5 })] 
+        public double FunctionDroopFunctionValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 14, 5 })] 
+        public double FunctionREUModesAndFunctionsValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 15, 5 })] 
+        public double FunctionMotorDriveElectronicModesAndFunctionsValueAileronOB { get; set; }
+		
+		//Values Elevator
+		[CellConfiguration(Position = new int[] { 6, 6 })] 
+        public double FunctionActiveModeValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 7, 6 })] 
+        public double FunctionDampedModeValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 8, 6 })] 
+        public double FunctionBlockedModeValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 9, 6 })] 
+        public double FunctionMaintenanceModeValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 10, 6 })] 
+        public double FunctionAntiExtensionSpoilerValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 11, 6 })] 
+        public double FunctionSurfaceEndStopValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 12, 6 })] 
+        public double FunctionLoadOrPressureSensingValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 13, 6 })] 
+        public double FunctionDroopFunctionValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 14, 6 })] 
+        public double FunctionREUModesAndFunctionsValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 15, 6 })] 
+        public double FunctionMotorDriveElectronicModesAndFunctionsValueElevator { get; set; }
+		
+		//Values Rudder
+		[CellConfiguration(Position = new int[] { 6, 7 })] 
+        public double FunctionActiveModeValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 7, 7 })] 
+        public double FunctionDampedModeValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 8, 7 })] 
+        public double FunctionBlockedModeValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 9, 7 })] 
+        public double FunctionMaintenanceModeValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 10, 7 })] 
+        public double FunctionAntiExtensionSpoilerValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 11, 7 })] 
+        public double FunctionSurfaceEndStopValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 12, 7 })] 
+        public double FunctionLoadOrPressureSensingValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 13, 7 })] 
+        public double FunctionDroopFunctionValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 14, 7 })] 
+        public double FunctionREUModesAndFunctionsValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 15, 7 })] 
+        public double FunctionMotorDriveElectronicModesAndFunctionsValueRudder { get; set; }
+		
+		//Values Spoiler
+		[CellConfiguration(Position = new int[] { 6, 8 })] 
+        public double FunctionActiveModeValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 7, 8 })] 
+        public double FunctionDampedModeValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 8, 8 })] 
+        public double FunctionBlockedModeValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 9, 8 })] 
+        public double FunctionMaintenanceModeValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 10, 8 })] 
+        public double FunctionAntiExtensionSpoilerValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 11, 8 })] 
+        public double FunctionSurfaceEndStopValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 12, 8 })] 
+        public double FunctionLoadOrPressureSensingValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 13, 8 })] 
+        public double FunctionDroopFunctionValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 14, 8 })] 
+        public double FunctionREUModesAndFunctionsValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 15, 8 })] 
+        public double FunctionMotorDriveElectronicModesAndFunctionsValueSpoiler { get; set; }
+		
+		//Units
+		[CellConfiguration(Position = new int[] { 6, 9 })] 
+        public string FunctionActiveModeUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 7, 9 })] 
+        public string FunctionDampedModeUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 8, 9 })] 
+        public string FunctionBlockedModeUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 9, 9 })] 
+        public string FunctionMaintenanceModeUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 10, 9 })] 
+        public string FunctionAntiExtensionSpoilerUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 11, 9 })] 
+        public string FunctionSurfaceEndStopUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 12, 9 })] 
+        public string FunctionLoadOrPressureSensingUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 13, 9 })] 
+        public string FunctionDroopFunctionUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 14, 9 })] 
+        public string FunctionREUModesAndFunctionsUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 15, 9 })] 
+        public string FunctionMotorDriveElectronicModesAndFunctionsUnit { get; set; }
+		
+		//Comments
+		[CellConfiguration(Position = new int[] { 6, 10 })] 
+        public string FunctionActiveModeComments { get; set; }
+		[CellConfiguration(Position = new int[] { 7, 10 })] 
+        public string FunctionDampedModeComments { get; set; }
+		[CellConfiguration(Position = new int[] { 8, 10 })] 
+        public string FunctionBlockedModeComments { get; set; }
+		[CellConfiguration(Position = new int[] { 9, 10 })] 
+        public string FunctionMaintenanceModeComments { get; set; }
+		[CellConfiguration(Position = new int[] { 10, 10 })] 
+        public string FunctionAntiExtensionSpoilerComments { get; set; }
+		[CellConfiguration(Position = new int[] { 11, 10 })] 
+        public string FunctionSurfaceEndStopComments { get; set; }
+		[CellConfiguration(Position = new int[] { 12, 10 })] 
+        public string FunctionLoadOrPressureSensingComments { get; set; }
+		[CellConfiguration(Position = new int[] { 13, 10 })] 
+        public string FunctionDroopFunctionComments { get; set; }
+		[CellConfiguration(Position = new int[] { 14, 10 })] 
+        public string FunctionREUModesAndFunctionsComments { get; set; }
+		[CellConfiguration(Position = new int[] { 15, 10 })] 
+        public string FunctionMotorDriveElectronicModesAndFunctionsComments { get; set; }
+		
+		//Status
+		[CellConfiguration(Position = new int[] { 6, 11 })] 
+        public string FunctionActiveModeStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 7, 11 })] 
+        public string FunctionDampedModeStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 8, 11 })] 
+        public string FunctionBlockedModeStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 9, 11 })] 
+        public string FunctionMaintenanceModeStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 10, 11 })] 
+        public string FunctionAntiExtensionSpoilerStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 11, 11 })] 
+        public string FunctionSurfaceEndStopStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 12, 11 })] 
+        public string FunctionLoadOrPressureSensingStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 13, 11 })] 
+        public string FunctionDroopFunctionStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 14, 11 })] 
+        public string FunctionREUModesAndFunctionsStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 15, 11 })] 
+        public string FunctionMotorDriveElectronicModesAndFunctionsStatus { get; set; }
+		
+		/*
+		Section 2 Installation
+		*/
+		
+		//Values Aileron IB
+		[CellConfiguration(Position = new int[] { 16, 4 })] 
+        public string InstallationConfigurationValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 17, 4 })] 
+        public double InstallationEnvelopeValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 18, 4 })] 
+        public double InstallationStrokeValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 19, 4 })] 
+        public double InstallationAttachmentPointsCoordinatesValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 20, 4 })] 
+        public string InstallationTypeAttachmentsValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 21, 4 })] 
+        public string InstallationElectricalConnectionDefinitionValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 22, 4 })] 
+        public string InstallationHydraulicInterfaceDefinitionValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 23, 4 })] 
+        public double InstallationSurfaceInertiaValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 24, 4 })] 
+        public double InstallationAttachmentStiffnessValueAileronIB { get; set; }
+		
+		//Values Aileron OB
+		[CellConfiguration(Position = new int[] { 16, 5 })] 
+        public string InstallationConfigurationValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 17, 5 })] 
+        public double InstallationEnvelopeValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 18, 5 })] 
+        public double InstallationStrokeValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 19, 5 })] 
+        public double InstallationAttachmentPointsCoordinatesValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 20, 5 })] 
+        public string InstallationTypeAttachmentsValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 21, 5 })] 
+        public string InstallationElectricalConnectionDefinitionValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 22, 5 })] 
+        public string InstallationHydraulicInterfaceDefinitionValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 23, 5 })] 
+        public double InstallationSurfaceInertiaValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 24, 5 })] 
+        public double InstallationAttachmentStiffnessValueAileronOB { get; set; }
+		
+		//Values Elevator
+		[CellConfiguration(Position = new int[] { 16, 6 })] 
+        public string InstallationConfigurationValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 17, 6 })] 
+        public double InstallationEnvelopeValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 18, 6 })] 
+        public double InstallationStrokeValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 19, 6 })] 
+        public double InstallationAttachmentPointsCoordinatesValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 20, 6 })] 
+        public string InstallationTypeAttachmentsValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 21, 6 })] 
+        public string InstallationElectricalConnectionDefinitionValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 22, 6 })] 
+        public string InstallationHydraulicInterfaceDefinitionValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 23, 6 })] 
+        public double InstallationSurfaceInertiaValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 24, 6 })] 
+        public double InstallationAttachmentStiffnessValueElevator { get; set; }
+		
+		//Values Rudder
+		[CellConfiguration(Position = new int[] { 16, 7 })] 
+        public string InstallationConfigurationValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 17, 7 })] 
+        public double InstallationEnvelopeValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 18, 7 })] 
+        public double InstallationStrokeValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 19, 7 })] 
+        public double InstallationAttachmentPointsCoordinatesValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 20, 7 })] 
+        public string InstallationTypeAttachmentsValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 21, 7 })] 
+        public string InstallationElectricalConnectionDefinitionValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 22, 7 })] 
+        public string InstallationHydraulicInterfaceDefinitionValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 23, 7 })] 
+        public double InstallationSurfaceInertiaValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 24, 7 })] 
+        public double InstallationAttachmentStiffnessValueRudder { get; set; }
+		
+		//Values Spoiler
+		[CellConfiguration(Position = new int[] { 16, 8 })] 
+        public string InstallationConfigurationValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 17, 8 })] 
+        public double InstallationEnvelopeValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 18, 8 })] 
+        public double InstallationStrokeValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 19, 8 })] 
+        public double InstallationAttachmentPointsCoordinatesValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 20, 8 })] 
+        public string InstallationTypeAttachmentsValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 21, 8 })] 
+        public string InstallationElectricalConnectionDefinitionValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 22, 8 })] 
+        public string InstallationHydraulicInterfaceDefinitionValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 23, 8 })] 
+        public double InstallationSurfaceInertiaValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 24, 8 })] 
+        public double InstallationAttachmentStiffnessValueSpoiler { get; set; }
+		
+		//Units
+		[CellConfiguration(Position = new int[] { 16, 9 })] 
+        public string InstallationConfigurationUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 17, 9 })] 
+        public string InstallationEnvelopeUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 18, 9 })] 
+        public string InstallationStrokeUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 19, 9 })] 
+        public string InstallationAttachmentPointsCoordinatesUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 20, 9 })] 
+        public string InstallationTypeAttachmentsUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 21, 9 })] 
+        public string InstallationElectricalConnectionDefinitionUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 22, 9 })] 
+        public string InstallationHydraulicInterfaceDefinitionUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 23, 9 })] 
+        public string InstallationSurfaceInertiaUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 24, 9 })] 
+        public string InstallationAttachmentStiffnessUnit { get; set; }
+		
+		//Comments
+		[CellConfiguration(Position = new int[] { 16, 10 })] 
+        public string InstallationConfigurationComments { get; set; }
+		[CellConfiguration(Position = new int[] { 17, 10 })] 
+        public string InstallationEnvelopeComments { get; set; }
+		[CellConfiguration(Position = new int[] { 18, 10 })] 
+        public string InstallationStrokeComments { get; set; }
+		[CellConfiguration(Position = new int[] { 19, 10 })] 
+        public string InstallationAttachmentPointsCoordinatesComments { get; set; }
+		[CellConfiguration(Position = new int[] { 20, 10 })] 
+        public string InstallationTypeAttachmentsComments { get; set; }
+		[CellConfiguration(Position = new int[] { 21, 10 })] 
+        public string InstallationElectricalConnectionDefinitionComments { get; set; }
+		[CellConfiguration(Position = new int[] { 22, 10 })] 
+        public string InstallationHydraulicInterfaceDefinitionComments { get; set; }
+		[CellConfiguration(Position = new int[] { 23, 10 })] 
+        public string InstallationSurfaceInertiaComments { get; set; }
+		[CellConfiguration(Position = new int[] { 24, 10 })] 
+        public string InstallationAttachmentStiffnessComments { get; set; }
+		
+		//Status
+		[CellConfiguration(Position = new int[] { 16, 11 })] 
+        public string InstallationConfigurationStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 17, 11 })] 
+        public string InstallationEnvelopeStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 18, 11 })] 
+        public string InstallationStrokeStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 19, 11 })] 
+        public string InstallationAttachmentPointsCoordinatesStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 20, 11 })] 
+        public string InstallationTypeAttachmentsStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 21, 11 })] 
+        public string InstallationElectricalConnectionDefinitionStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 22, 11 })] 
+        public string InstallationHydraulicInterfaceDefinitionStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 23, 11 })] 
+        public string InstallationSurfaceInertiaStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 24, 11 })] 
+        public string InstallationAttachmentStiffnessStatus { get; set; }
+		
+		/*
+		Section 3 Performances
+		*/
+		
+		//Values Aileron IB
+		[CellConfiguration(Position = new int[] { 25, 4 })] 
+        public double PerformancesLimitLoadValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 26, 4 })] 
+        public double PerformancesMaximumOperatingLoad100ValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 27, 4 })] 
+        public double PerformancesMaximumOperatingLoad70ValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 28, 4 })] 
+        public double PerformancesLoadVsRateValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 29, 4 })] 
+        public double PerformancesDampingCoefficientValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 30, 4 })] 
+        public double PerformancesLoadMaintainedContinuouslyValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 31, 4 })] 
+        public double PerformancesLoadMaintainedMomentarilyValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 32, 4 })] 
+        public double PerformancesBacklashValueAileronIB { get; set; }
+		
+		//Values Aileron OB
+		[CellConfiguration(Position = new int[] { 25, 5 })] 
+        public double PerformancesLimitLoadValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 26, 5 })] 
+        public double PerformancesMaximumOperatingLoad100ValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 27, 5 })] 
+        public double PerformancesMaximumOperatingLoad70ValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 28, 5 })] 
+        public double PerformancesLoadVsRateValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 29, 5 })] 
+        public double PerformancesDampingCoefficientValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 30, 5 })] 
+        public double PerformancesLoadMaintainedContinuouslyValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 31, 5 })] 
+        public double PerformancesLoadMaintainedMomentarilyValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 32, 5 })] 
+        public double PerformancesBacklashValueAileronOB { get; set; }
+		
+		//Values Elevator
+		[CellConfiguration(Position = new int[] { 25, 6 })] 
+        public double PerformancesLimitLoadValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 26, 6 })] 
+        public double PerformancesMaximumOperatingLoad100ValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 27, 6 })] 
+        public double PerformancesMaximumOperatingLoad70ValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 28, 6 })] 
+        public double PerformancesLoadVsRateValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 29, 6 })] 
+        public double PerformancesDampingCoefficientValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 30, 6 })] 
+        public double PerformancesLoadMaintainedContinuouslyValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 31, 6 })] 
+        public double PerformancesLoadMaintainedMomentarilyValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 32, 6 })] 
+        public double PerformancesBacklashValueElevator { get; set; }
 	
+		//Values Rudder
+		[CellConfiguration(Position = new int[] { 25, 7 })] 
+        public double PerformancesLimitLoadValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 26, 7 })] 
+        public double PerformancesMaximumOperatingLoad100ValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 27, 7 })] 
+        public double PerformancesMaximumOperatingLoad70ValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 28, 7 })] 
+        public double PerformancesLoadVsRateValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 29, 7 })] 
+        public double PerformancesDampingCoefficientValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 30, 7 })] 
+        public double PerformancesLoadMaintainedContinuouslyValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 31, 7 })] 
+        public double PerformancesLoadMaintainedMomentarilyValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 32, 7 })] 
+        public double PerformancesBacklashValueRudder { get; set; }
+		
+		//Values Spoiler
+		[CellConfiguration(Position = new int[] { 25, 8 })] 
+        public double PerformancesLimitLoadValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 26, 8 })] 
+        public double PerformancesMaximumOperatingLoad100ValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 27, 8 })] 
+        public double PerformancesMaximumOperatingLoad70ValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 28, 8 })] 
+        public double PerformancesLoadVsRateValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 29, 8 })] 
+        public double PerformancesDampingCoefficientValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 30, 8 })] 
+        public double PerformancesLoadMaintainedContinuouslyValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 31, 8 })] 
+        public double PerformancesLoadMaintainedMomentarilyValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 32, 8 })] 
+        public double PerformancesBacklashValueSpoiler { get; set; }
+		
+		//Units
+		[CellConfiguration(Position = new int[] { 25, 9 })] 
+        public string PerformancesLimitLoadUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 26, 9 })] 
+        public string PerformancesMaximumOperatingLoad100Unit { get; set; }
+		[CellConfiguration(Position = new int[] { 27, 9 })] 
+        public string PerformancesMaximumOperatingLoad70Unit { get; set; }
+		[CellConfiguration(Position = new int[] { 28, 9 })] 
+        public string PerformancesLoadVsRateUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 29, 9 })] 
+        public string PerformancesDampingCoefficientUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 30, 9 })] 
+        public string PerformancesLoadMaintainedContinuouslyUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 31, 9 })] 
+        public string PerformancesLoadMaintainedMomentarilyUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 32, 9 })] 
+        public string PerformancesBacklashUnit { get; set; }
+		
+		//Comments
+		[CellConfiguration(Position = new int[] { 25, 10 })] 
+        public string PerformancesLimitLoadComments { get; set; }
+		[CellConfiguration(Position = new int[] { 26, 10 })] 
+        public string PerformancesMaximumOperatingLoad100Comments { get; set; }
+		[CellConfiguration(Position = new int[] { 27, 10 })] 
+        public string PerformancesMaximumOperatingLoad70Comments { get; set; }
+		[CellConfiguration(Position = new int[] { 28, 10 })] 
+        public string PerformancesLoadVsRateComments { get; set; }
+		[CellConfiguration(Position = new int[] { 29, 10 })] 
+        public string PerformancesDampingCoefficientComments { get; set; }
+		[CellConfiguration(Position = new int[] { 30, 10 })] 
+        public string PerformancesLoadMaintainedContinuouslyComments { get; set; }
+		[CellConfiguration(Position = new int[] { 31, 10 })] 
+        public string PerformancesLoadMaintainedMomentarilyComments { get; set; }
+		[CellConfiguration(Position = new int[] { 32, 10 })] 
+        public string PerformancesBacklashComments { get; set; }
+		
+		//Status
+		[CellConfiguration(Position = new int[] { 25, 11 })] 
+        public string PerformancesLimitLoadStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 26, 11 })] 
+        public string PerformancesMaximumOperatingLoad100Status { get; set; }
+		[CellConfiguration(Position = new int[] { 27, 11 })] 
+        public string PerformancesMaximumOperatingLoad70Status { get; set; }
+		[CellConfiguration(Position = new int[] { 28, 11 })] 
+        public string PerformancesLoadVsRateStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 29, 11 })] 
+        public string PerformancesDampingCoefficientStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 30, 11 })] 
+        public string PerformancesLoadMaintainedContinuouslyStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 31, 11 })] 
+        public string PerformancesLoadMaintainedMomentarilyStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 32, 11 })] 
+        public string PerformancesBacklashStatus { get; set; }
+		
+		/*
+		Section 4 Stressing and life
+		*/
+		
+		//Values Aileron IB
+		[CellConfiguration(Position = new int[] { 33, 4 })] 
+        public string StressingAndLifeFlightDefinitionValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 34, 4 })] 
+        public string StressingAndLifeNumberFlightAndFlightHoursValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 35, 4 })] 
+        public string StressingAndLifeNumberAircraftPressurizationValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 36, 4 })] 
+        public string StressingAndLifeNumberAircraftElectricalPowerOnOffValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 37, 4 })] 
+        public string StressingAndLifeGroundWindGustDefinitionValueAileronIB { get; set; }
+		
+		//Values Aileron OB
+		[CellConfiguration(Position = new int[] { 33, 5 })] 
+        public string StressingAndLifeFlightDefinitionValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 34, 5 })] 
+        public string StressingAndLifeNumberFlightAndFlightHoursValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 35, 5 })] 
+        public string StressingAndLifeNumberAircraftPressurizationValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 36, 5 })] 
+        public string StressingAndLifeNumberAircraftElectricalPowerOnOffValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 37, 5 })] 
+        public string StressingAndLifeGroundWindGustDefinitionValueAileronOB { get; set; }
+		
+		//Values Elevator
+		[CellConfiguration(Position = new int[] { 33, 6 })] 
+        public string StressingAndLifeFlightDefinitionValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 34, 6 })] 
+        public string StressingAndLifeNumberFlightAndFlightHoursValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 35, 6 })] 
+        public string StressingAndLifeNumberAircraftPressurizationValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 36, 6 })] 
+        public string StressingAndLifeNumberAircraftElectricalPowerOnOffValueElevator{ get; set; }
+		[CellConfiguration(Position = new int[] { 37, 6 })] 
+        public string StressingAndLifeGroundWindGustDefinitionValueElevator { get; set; }
+		
+		//Values Rudder
+		[CellConfiguration(Position = new int[] { 33, 7 })] 
+        public string StressingAndLifeFlightDefinitionValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 34, 7 })] 
+        public string StressingAndLifeNumberFlightAndFlightHoursValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 35, 7 })] 
+        public string StressingAndLifeNumberAircraftPressurizationValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 36, 7 })] 
+        public string StressingAndLifeNumberAircraftElectricalPowerOnOffValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 37, 7 })] 
+        public string StressingAndLifeGroundWindGustDefinitionValueRudder { get; set; }
+		
+		//Values Spoiler
+		[CellConfiguration(Position = new int[] { 33, 8 })] 
+        public string StressingAndLifeFlightDefinitionValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 34, 8 })] 
+        public string StressingAndLifeNumberFlightAndFlightHoursValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 35, 8 })] 
+        public string StressingAndLifeNumberAircraftPressurizationValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 36, 8 })] 
+        public string StressingAndLifeNumberAircraftElectricalPowerOnOffValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 37, 8 })] 
+        public string StressingAndLifeGroundWindGustDefinitionValueSpoiler { get; set; }
+		
+		//Units
+		[CellConfiguration(Position = new int[] { 33, 9 })] 
+        public string StressingAndLifeFlightDefinitionUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 34, 9 })] 
+        public string StressingAndLifeNumberFlightAndFlightHoursUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 35, 9 })] 
+        public string StressingAndLifeNumberAircraftPressurizationUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 36, 9 })] 
+        public string StressingAndLifeNumberAircraftElectricalPowerOnOffUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 37, 9 })] 
+        public string StressingAndLifeGroundWindGustDefinitionUnit { get; set; }
+		
+		//Comments
+		[CellConfiguration(Position = new int[] { 33, 10 })] 
+        public string StressingAndLifeFlightDefinitionComments { get; set; }
+		[CellConfiguration(Position = new int[] { 34, 10 })] 
+        public string StressingAndLifeNumberFlightAndFlightHoursComments { get; set; }
+		[CellConfiguration(Position = new int[] { 35, 10 })] 
+        public string StressingAndLifeNumberAircraftPressurizationComments { get; set; }
+		[CellConfiguration(Position = new int[] { 36, 10 })] 
+        public string StressingAndLifeNumberAircraftElectricalPowerOnOffVComments { get; set; }
+		[CellConfiguration(Position = new int[] { 37, 10 })] 
+        public string StressingAndLifeGroundWindGustDefinitionComments { get; set; }
+		
+		//Status
+		[CellConfiguration(Position = new int[] { 33, 11 })] 
+        public string StressingAndLifeFlightDefinitionStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 34, 11 })] 
+        public string StressingAndLifeNumberFlightAndFlightHoursStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 35, 11 })] 
+        public string StressingAndLifeNumberAircraftPressurizationStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 36, 11 })] 
+        public string StressingAndLifeNumberAircraftElectricalPowerOnOffStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 37, 11 })] 
+        public string StressingAndLifeGroundWindGustDefinitionStatus { get; set; }
+		
+		
+		/*
+		Section 5 Safety - Reliability
+		*/
+		
+		//Values Aileron IB
+		[CellConfiguration(Position = new int[] { 38, 4 })] 
+        public string SafetyReliabilityMTBFValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 39, 4 })] 
+        public string SafetyReliabilityFailuresRatesActuatorDisconnectValueAileronIB { get; set; }	
+		[CellConfiguration(Position = new int[] { 40, 4 })] 
+        public string SafetyReliabilityFailureRatesLossActiveModeValueAileronIB { get; set; }	
+		[CellConfiguration(Position = new int[] { 41, 4 })] 
+        public string SafetyReliabilityFailureRatesLossDampingModeValueAileronIB { get; set; }	
+		[CellConfiguration(Position = new int[] { 42, 4 })] 
+        public string SafetyReliabilityFailureRatesRunawayValueAileronIB { get; set; }	
+		[CellConfiguration(Position = new int[] { 43, 4 })] 
+        public string SafetyReliabilityFailureRatesOscillationsValueAileronIB { get; set; }			
+
+		//Values Aileron OB
+		[CellConfiguration(Position = new int[] { 38, 5 })] 
+        public string SafetyReliabilityMTBFValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 39, 5 })] 
+        public string SafetyReliabilityFailuresRatesActuatorDisconnectValueAileronOB { get; set; }	
+		[CellConfiguration(Position = new int[] { 40, 5 })] 
+        public string SafetyReliabilityFailureRatesLossActiveModeValueAileronOB { get; set; }	
+		[CellConfiguration(Position = new int[] { 41, 5 })] 
+        public string SafetyReliabilityFailureRatesLossDampingModeValueAileronOB { get; set; }	
+		[CellConfiguration(Position = new int[] { 42, 5 })] 
+        public string SafetyReliabilityFailureRatesRunawayValueAileronOB { get; set; }	
+		[CellConfiguration(Position = new int[] { 43, 5 })] 
+        public string SafetyReliabilityFailureRatesOscillationsValueAileronOB { get; set; }
+		
+		//Values Elevator
+		[CellConfiguration(Position = new int[] { 38, 6 })] 
+        public string SafetyReliabilityMTBFValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 39, 6 })] 
+        public string SafetyReliabilityFailuresRatesActuatorDisconnectValueElevator { get; set; }	
+		[CellConfiguration(Position = new int[] { 40, 6 })] 
+        public string SafetyReliabilityFailureRatesLossActiveModeValueElevator { get; set; }	
+		[CellConfiguration(Position = new int[] { 41, 6 })] 
+        public string SafetyReliabilityFailureRatesLossDampingModeValueElevator { get; set; }	
+		[CellConfiguration(Position = new int[] { 42, 6 })] 
+        public string SafetyReliabilityFailureRatesRunawayValueElevator { get; set; }	
+		[CellConfiguration(Position = new int[] { 43, 6 })] 
+        public string SafetyReliabilityFailureRatesOscillationsValueElevator { get; set; }
+		
+		//Values Rudder
+		[CellConfiguration(Position = new int[] { 38, 7 })] 
+        public string SafetyReliabilityMTBFValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 39, 7 })] 
+        public string SafetyReliabilityFailuresRatesActuatorDisconnectValueRudder { get; set; }	
+		[CellConfiguration(Position = new int[] { 40, 7 })] 
+        public string SafetyReliabilityFailureRatesLossActiveModeValueRudder { get; set; }	
+		[CellConfiguration(Position = new int[] { 41, 7 })] 
+        public string SafetyReliabilityFailureRatesLossDampingModeValueRudder { get; set; }	
+		[CellConfiguration(Position = new int[] { 42, 7 })] 
+        public string SafetyReliabilityFailureRatesRunawayValueRudder { get; set; }	
+		[CellConfiguration(Position = new int[] { 43, 7 })] 
+        public string SafetyReliabilityFailureRatesOscillationsValueRudder { get; set; }
+		
+		//Values Spoiler
+		[CellConfiguration(Position = new int[] { 38, 8 })] 
+        public string SafetyReliabilityMTBFValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 39, 8 })] 
+        public string SafetyReliabilityFailuresRatesActuatorDisconnectValueSpoiler { get; set; }	
+		[CellConfiguration(Position = new int[] { 40, 8 })] 
+        public string SafetyReliabilityFailureRatesLossActiveModeValueSpoiler { get; set; }	
+		[CellConfiguration(Position = new int[] { 41, 8 })] 
+        public string SafetyReliabilityFailureRatesLossDampingModeValueSpoiler { get; set; }	
+		[CellConfiguration(Position = new int[] { 42, 8 })] 
+        public string SafetyReliabilityFailureRatesRunawayValueSpoiler { get; set; }	
+		[CellConfiguration(Position = new int[] { 43, 8 })] 
+        public string SafetyReliabilityFailureRatesOscillationsValueSpoiler { get; set; }
+		
+		//Units
+		[CellConfiguration(Position = new int[] { 38, 9 })] 
+        public string SafetyReliabilityMTBFUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 39, 9 })] 
+        public string SafetyReliabilityFailuresRatesActuatorDisconnectUnit { get; set; }	
+		[CellConfiguration(Position = new int[] { 40, 9 })] 
+        public string SafetyReliabilityFailureRatesLossActiveModeUnit { get; set; }	
+		[CellConfiguration(Position = new int[] { 41, 9 })] 
+        public string SafetyReliabilityFailureRatesLossDampingModeUnit { get; set; }	
+		[CellConfiguration(Position = new int[] { 42, 9 })] 
+        public string SafetyReliabilityFailureRatesRunawayUnit{ get; set; }	
+		[CellConfiguration(Position = new int[] { 43, 9 })] 
+        public string SafetyReliabilityFailureRatesOscillationsUnit { get; set; }
+		
+		//Comments
+		[CellConfiguration(Position = new int[] { 38, 10 })] 
+        public string SafetyReliabilityMTBFComments { get; set; }
+		[CellConfiguration(Position = new int[] { 39, 10 })] 
+        public string SafetyReliabilityFailuresRatesActuatorDisconnectComments { get; set; }	
+		[CellConfiguration(Position = new int[] { 40, 10 })] 
+        public string SafetyReliabilityFailureRatesLossActiveModeComments { get; set; }	
+		[CellConfiguration(Position = new int[] { 41, 10 })] 
+        public string SafetyReliabilityFailureRatesLossDampingModeComments { get; set; }	
+		[CellConfiguration(Position = new int[] { 42, 10 })] 
+        public string SafetyReliabilityFailureRatesRunawayComments{ get; set; }	
+		[CellConfiguration(Position = new int[] { 43, 10 })] 
+        public string SafetyReliabilityFailureRatesOscillationsComments { get; set; }
+		
+		//Status
+		[CellConfiguration(Position = new int[] { 38, 11 })] 
+        public string SafetyReliabilityMTBFStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 39, 11 })] 
+        public string SafetyReliabilityFailuresRatesActuatorDisconnectStatus { get; set; }	
+		[CellConfiguration(Position = new int[] { 40, 11 })] 
+        public string SafetyReliabilityFailureRatesLossActiveModeStatus { get; set; }	
+		[CellConfiguration(Position = new int[] { 41, 11 })] 
+        public string SafetyReliabilityFailureRatesLossDampingModeStatus { get; set; }	
+		[CellConfiguration(Position = new int[] { 42, 11 })] 
+        public string SafetyReliabilityFailureRatesRunawayStatus { get; set; }	
+		[CellConfiguration(Position = new int[] { 43, 11 })] 
+        public string SafetyReliabilityFailureRatesOscillationsStatus { get; set; }
+
+		/*
+		Section 6 Power supply
+		*/
+		
+		//Values Aileron IB
+		[CellConfiguration(Position = new int[] { 44, 4 })] 
+        public string PowerSupplyHydraulicPowerCharacteristicsValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 45, 4 })] 
+        public string PowerSupplyFluidTemperatureValueAileronIB { get; set; }
+		[CellConfiguration(Position = new int[] { 46, 4 })] 
+        public string PowerSupplyElectricalPowerCharacteristicsValueAileronIB { get; set; }
+		
+		//Values Aileron OB
+		[CellConfiguration(Position = new int[] { 44, 5 })] 
+        public string PowerSupplyHydraulicPowerCharacteristicsValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 45, 5 })] 
+        public string PowerSupplyFluidTemperatureValueAileronOB { get; set; }
+		[CellConfiguration(Position = new int[] { 46, 5 })] 
+        public string PowerSupplyElectricalPowerCharacteristicsValueAileronOB { get; set; }
+		
+		//Values Elevator
+		[CellConfiguration(Position = new int[] { 44, 6 })] 
+        public string PowerSupplyHydraulicPowerCharacteristicsValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 45, 6 })] 
+        public string PowerSupplyFluidTemperatureValueElevator { get; set; }
+		[CellConfiguration(Position = new int[] { 46, 6 })] 
+        public string PowerSupplyElectricalPowerCharacteristicsValueElevator { get; set; }
+		
+		//Values Rudder
+		[CellConfiguration(Position = new int[] { 44, 7 })] 
+        public string PowerSupplyHydraulicPowerCharacteristicsValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 45, 7 })] 
+        public string PowerSupplyFluidTemperatureValueRudder { get; set; }
+		[CellConfiguration(Position = new int[] { 46, 7 })] 
+        public string PowerSupplyElectricalPowerCharacteristicsValueRudder { get; set; }
+		
+		//Values Spoiler
+		[CellConfiguration(Position = new int[] { 44, 8 })] 
+        public string PowerSupplyHydraulicPowerCharacteristicsValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 45, 8 })] 
+        public string PowerSupplyFluidTemperatureValueSpoiler { get; set; }
+		[CellConfiguration(Position = new int[] { 46, 8 })] 
+        public string PowerSupplyElectricalPowerCharacteristicsValueSpoiler { get; set; }
+		
+		//Units
+		[CellConfiguration(Position = new int[] { 44, 9 })] 
+        public string PowerSupplyHydraulicPowerCharacteristicsUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 45, 9 })] 
+        public string PowerSupplyFluidTemperatureUnit { get; set; }
+		[CellConfiguration(Position = new int[] { 46, 9 })] 
+        public string PowerSupplyElectricalPowerCharacteristicsUnit { get; set; }
+		
+		//Comments
+		[CellConfiguration(Position = new int[] { 44, 10 })] 
+        public string PowerSupplyHydraulicPowerCharacteristicsComments { get; set; }
+		[CellConfiguration(Position = new int[] { 45, 10 })] 
+        public string PowerSupplyFluidTemperatureComments { get; set; }
+		[CellConfiguration(Position = new int[] { 46, 10 })] 
+        public string PowerSupplyElectricalPowerCharacteristicsComments { get; set; }
+		
+		//Status
+		[CellConfiguration(Position = new int[] { 44, 11 })] 
+        public string PowerSupplyHydraulicPowerCharacteristicsStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 45, 11 })] 
+        public string PowerSupplyFluidTemperatureStatus { get; set; }
+		[CellConfiguration(Position = new int[] { 46, 11 })] 
+        public string PowerSupplyElectricalPowerCharacteristicsStatus { get; set; }
+		
+		/*
+		Section 7 Environment
+		*/
+		
+		//Values Aileron IB
+		[CellConfiguration(Position = new int[] { 47, 4 })] 
+        public string EnvironmentDOorMILCategoriesValueAileronIB { get; set; }
+		 
+		//Values Aileron OB
+		[CellConfiguration(Position = new int[] { 47, 5 })] 
+        public string EnvironmentDOorMILCategoriesValueAileronOB { get; set; }
+		
+		//Values Elevator
+		[CellConfiguration(Position = new int[] { 47, 6 })] 
+        public string EnvironmentDOorMILCategoriesValueElevator { get; set; }
+		
+		//Values Rudder
+		[CellConfiguration(Position = new int[] { 47, 7 })] 
+        public string EnvironmentDOorMILCategoriesValueRudder { get; set; }
+		
+		//Values Spoiler
+		[CellConfiguration(Position = new int[] { 47, 8 })] 
+        public string EnvironmentDOorMILCategoriesValueSpoiler { get; set; }
+		
+		//Unit
+		[CellConfiguration(Position = new int[] { 47, 9 })] 
+        public string EnvironmentDOorMILCategoriesUnit { get; set; }
+		
+		//Comments
+		[CellConfiguration(Position = new int[] { 47, 10 })] 
+        public string EnvironmentDOorMILCategoriesComments { get; set; }
+		
+		//Status
+		[CellConfiguration(Position = new int[] { 47, 11 })] 
+        public string EnvironmentDOorMILCategoriesStatus { get; set; }
+		 
+	}
+	
+	/// <summary>
+	/// Spec EHSA_v1.xslx
+	/// Feuille Compliance Analysis
+	/// </summary>
+	[BusinessClass(BaseUri = "http://xowl.org/specehsa/complianceanalysis#",Position = "Compliance Analysis")]
+    public class ComplianceAnalysis : Identifiable
+    {
+        [CellConfiguration(CellsAfter = 8)]
+		public string empty { get; set; }
+        public string SpecificationParagraph { get; set; }
+        public string RequirementReferenceTheme { get; set; }
+        public string RequirementTitle { get; set; }
+		public string ComplianceStatement { get; set; } 
+		public string UTASComments { get; set; } 
+    }
 	
 	/// <summary>
 	/// Power_ram_sizing.xlsx
@@ -800,11 +1800,11 @@ namespace BusinessData
         [CellConfiguration(Position = new int[] { 6, 3 })]
         public string ChoixDeLEmbout { get; set; } 
 		[CellConfiguration(Position = new int[] { 7, 3 })]
-        public int NombreDActionneurParSurface { get; set; } 
+        public int NombreActionneurParSurface { get; set; } 
 		[CellConfiguration(Position = new int[] { 8, 3 })]
         public int DimensionnementEnFatigue { get; set; } 
 		
-		/*
+		
 		//Validation des données
 		[CellConfiguration(Position = new int[] { 4, 7 })] 
         public string TypeDeServocommandeValidation { get; set; } //Format BOOLEAN  (Y/N)
@@ -859,7 +1859,7 @@ namespace BusinessData
 		[CellConfiguration(Position = new int[] { 17, 3 })] 
         public double AngleBraquageGouverneRetractionNegatif { get; set; }
 		
-		/*
+		
 		//Validation des données
 		[CellConfiguration(Position = new int[] { 11, 7 })] 
         public string SurcourseValidation { get; set; } //Format BOOLEAN  (Y/N)
@@ -904,7 +1904,7 @@ namespace BusinessData
         public string AngleBraquageGouverneExtensionCommentaire { get; set; }
 		[CellConfiguration(Position = new int[] { 17, 9 })] 
         public string AngleBraquageGouverneRetractionNegatifCommentaire { get; set; }
-		*/
+		
 		
 		/*
 		Cartouche Données dimensionnement en statique
@@ -934,7 +1934,7 @@ namespace BusinessData
 		[CellConfiguration(Position = new int[] { 32, 3 })] 
         public double CoefficientAmortissement { get; set; }
 		
-		/*
+		
 		//Validation des données
 		[CellConfiguration(Position = new int[] { 21, 7 })] 
         public string PressionEntreeStatiqueValidation { get; set; } //Format BOOLEAN  (Y/N)
@@ -1012,7 +2012,6 @@ namespace BusinessData
         public string CoupleRafaleVentSolCommentaire { get; set; }
 		[CellConfiguration(Position = new int[] { 32, 9 })] 
         public string CoefficientAmortissementCommentaire { get; set; }
-		*/
 		
 	}
 	
@@ -1020,12 +2019,12 @@ namespace BusinessData
 	/// Power_ram_sizing.xlsx
 	/// Feuille Donnees Partie Validation 
 	/// </summary>
-    [BusinessClass(BaseUri = "http://xowl.org/powerramsizing/validationdonnees#", IsComplex = true, Position = "Donnees")]
+    /*[BusinessClass(BaseUri = "http://xowl.org/powerramsizing/validationdonnees#", IsComplex = true, Position = "Donnees")]
     public class PowerRamSizingValidationDonnees : Identifiable
     {
-		/*
-		Cartouche Données générales
-		*/
+		
+		//Cartouche Données générales
+		
 		[CellConfiguration(Position = new int[] { 4, 7 })] 
         public string TypeDeServocommande { get; set; } //Format BOOLEAN  (Y/N)
 		[CellConfiguration(Position = new int[] { 5, 7 })] 
@@ -1037,9 +2036,9 @@ namespace BusinessData
 		[CellConfiguration(Position = new int[] { 8, 7 })]
         public string DimensionnementEnFatigue { get; set; } //Format BOOLEAN  (Y/N)
 		
-		/*
-		Cartouche Données plan d'encombrement
-		*/
+		
+		//Cartouche Données plan d'encombrement
+		
 		[CellConfiguration(Position = new int[] { 11, 7 })] 
         public string Surcourse { get; set; } //Format BOOLEAN  (Y/N)
 		
@@ -1053,9 +2052,9 @@ namespace BusinessData
         public string AngleBraquageGouverneExtension { get; set; } //Format BOOLEAN  (Y/N)
 		[CellConfiguration(Position = new int[] { 17, 7 })] 
         public string AngleBraquageGouverneRetractionNegatif { get; set; } //Format BOOLEAN  (Y/N)
-		/*
-		Cartouche Données dimensionnement en statique
-		*/
+		
+		//Cartouche Données dimensionnement en statique
+		
 		[CellConfiguration(Position = new int[] { 21, 7 })] 
         public string PressionEntreeStatique { get; set; }
 		[CellConfiguration(Position = new int[] { 22, 7 })] 
@@ -1081,18 +2080,18 @@ namespace BusinessData
 		[CellConfiguration(Position = new int[] { 32, 7 })] 
         public string CoefficientAmortissement { get; set; }
 		
-	}
+	}*/
 	
 	/// <summary>
 	/// Power_ram_sizing.xlsx
 	/// Feuille Donnees Partie Source 
 	/// </summary>
-    [BusinessClass(BaseUri = "http://xowl.org/powerramsizing/sourcesdonnees#", IsComplex = true, Position = "Donnees")]
+    /*[BusinessClass(BaseUri = "http://xowl.org/powerramsizing/sourcesdonnees#", IsComplex = true, Position = "Donnees")]
     public class PowerRamSizingSourceDonnees : Identifiable
     {
-		/*
-		Cartouche Données générales
-		*/
+		
+		//Cartouche Données générales
+		
 		[CellConfiguration(Position = new int[] { 4, 8 })] 
         public string TypeDeServocommande { get; set; } // Enum {"Exigence client","Hypothèse interne","Autre","TBC"," "}
 		[CellConfiguration(Position = new int[] { 5, 8 })] 
@@ -1104,9 +2103,9 @@ namespace BusinessData
 		[CellConfiguration(Position = new int[] { 8, 8 })]
         public string DimensionnementEnFatigue { get; set; } 
 		
-		/*
-		Cartouche Données plan d'encombrement
-		*/
+		
+		//Cartouche Données plan d'encombrement
+		
 		[CellConfiguration(Position = new int[] { 11, 8 })] 
         public string Surcourse { get; set; } // Enum {"Exigence client","Hypothèse interne","Autre","TBC"," "}
 		
@@ -1121,9 +2120,9 @@ namespace BusinessData
 		[CellConfiguration(Position = new int[] { 17, 8 })] 
         public string AngleBraquageGouverneRetractionNegatif { get; set; }
 		
-		/*
-		Cartouche Données dimensionnement en statique
-		*/
+		
+		//Cartouche Données dimensionnement en statique
+		
 		[CellConfiguration(Position = new int[] { 21, 8 })] 
         public string PressionEntreeStatique { get; set; }  // Enum {"Exigence client","Hypothèse interne","Autre","TBC"," "}
 		[CellConfiguration(Position = new int[] { 22, 8 })] 
@@ -1149,18 +2148,18 @@ namespace BusinessData
 		[CellConfiguration(Position = new int[] { 32, 8 })] 
         public string CoefficientAmortissement { get; set; }
 		
-	}
+	}*/
 
 	/// <summary>
 	/// Power_ram_sizing.xlsx
 	/// Feuille Donnees Partie Commentaires 
 	/// </summary>
-    [BusinessClass(BaseUri = "http://xowl.org/powerramsizing/commentairesdonnees#", IsComplex = true, Position = "Donnees")]
+    /*[BusinessClass(BaseUri = "http://xowl.org/powerramsizing/commentairesdonnees#", IsComplex = true, Position = "Donnees")]
     public class PowerRamSizingCommentairesDonnees : Identifiable
     {
-		/*
-		Cartouche Données générales
-		*/
+		
+		//Cartouche Données générales
+		
 		[CellConfiguration(Position = new int[] { 4, 9 })] 
         public string TypeDeServocommande { get; set; } 
 		[CellConfiguration(Position = new int[] { 5, 9 })] 
@@ -1172,9 +2171,9 @@ namespace BusinessData
 		[CellConfiguration(Position = new int[] { 8, 9 })]
         public string DimensionnementEnFatigue { get; set; } 
 		
-		/*
-		Cartouche Données plan d'encombrement
-		*/
+		
+		//Cartouche Données plan d'encombrement
+		
 		[CellConfiguration(Position = new int[] { 11, 9 })] 
         public string Surcourse { get; set; }
 		
@@ -1188,9 +2187,9 @@ namespace BusinessData
         public string AngleBraquageGouverneExtension { get; set; }
 		[CellConfiguration(Position = new int[] { 17, 9 })] 
         public string AngleBraquageGouverneRetractionNegatif { get; set; }
-		/*
-		Cartouche Données dimensionnement en statique
-		*/
+		
+		//Cartouche Données dimensionnement en statique
+		
 		[CellConfiguration(Position = new int[] { 21, 9 })] 
         public string PressionEntreeStatique { get; set; } 
 		[CellConfiguration(Position = new int[] { 22, 9 })] 
@@ -1216,7 +2215,7 @@ namespace BusinessData
 		[CellConfiguration(Position = new int[] { 32, 9 })] 
         public string CoefficientAmortissement { get; set; }
 		
-	}
+	}*/
 	
 	/// <summary>
 	/// Power_ram_sizing.xlsx
@@ -1272,12 +2271,12 @@ namespace BusinessData
 	/// KDD.xlsm
 	/// Feuille KDD
 	/// </summary>
-    [BusinessClass(BaseUri = "http://xowl.org/kdd/kdd#", IsComplex = true, Position = "KDD")]
+    /*[BusinessClass(BaseUri = "http://xowl.org/kdd/kdd#", IsComplex = true, Position = "KDD")]
     public class KDD : Identifiable
     {
-		/*
-		Cartouche Identification
-		*/
+		
+		//Cartouche Identification
+		
 		[CellConfiguration(Position = new int[] { 7, 2 })] //Expected column B
         public string Programme { get; set; }
 		[CellConfiguration(Position = new int[] { 8, 2 })] 
@@ -1286,9 +2285,9 @@ namespace BusinessData
         public string Date { get; set; }
 		[CellConfiguration(Position = new int[] { 10, 2 })] 
         public string Version { get; set; }
-		/*
-		Cartouche KDD Aileron
-		*/
+		
+		//Cartouche KDD Aileron
+		
 		[CellConfiguration(Position = new int[] { 15, 2 })]
         public double SuppyPressure { get; set; }
 		[CellConfiguration(Position = new int[] { 16, 2 })]
@@ -1324,9 +2323,9 @@ namespace BusinessData
 		[CellConfiguration(Position = new int[] { 33, 2 })]
         public double MaxFluidTemperature { get; set; }
 		
-		/*
-		Cartouche Reference  documents
-		*/
+		
+		//Cartouche Reference  documents
+		
 		[CellConfiguration(Position = new int[] { 15, 3 })]
         public string SuppyPressureRefDocuments { get; set; }
 		[CellConfiguration(Position = new int[] { 16, 3 })]
@@ -1361,18 +2360,17 @@ namespace BusinessData
         public string MinFluidTemperatureRefDocuments { get; set; }
 		[CellConfiguration(Position = new int[] { 33, 3 })]
         public string MaxFluidTemperatureRefDocuments { get; set; }
-	}
+	}*/
 	
 	/// <summary>
 	/// KDD.xlsm
 	/// Feuille Actuator Key characteristics
 	/// </summary>
-    [BusinessClass(BaseUri = "http://xowl.org/kdd/actuatorkeycharacteristics#", IsComplex = true, Position = "Actuator Key characteristics")]
+    /*[BusinessClass(BaseUri = "http://xowl.org/kdd/actuatorkeycharacteristics#", IsComplex = true, Position = "Actuator Key characteristics")]
     public class ActuatorKeyCharacteristics : Identifiable
     {
-		/*
-		Cartouche Identification
-		*/
+		//Cartouche Identification
+		
 		[CellConfiguration(Position = new int[] { 7, 2 })] //Expected column B
         public string Programme { get; set; }
 		[CellConfiguration(Position = new int[] { 8, 2 })] 
@@ -1381,9 +2379,9 @@ namespace BusinessData
         public string Date { get; set; }
 		[CellConfiguration(Position = new int[] { 10, 2 })] 
         public string Version { get; set; }
-		/*
-		Cartouche Actuator Key characteristics Aileron
-		*/
+		
+		//Cartouche Actuator Key characteristics Aileron
+		
 		//Power lane
 		[CellConfiguration(Position = new int[] { 16, 2 })] 
         public string ActuatorType { get; set; } //(balanced/unbalanced sections)
@@ -1413,9 +2411,9 @@ namespace BusinessData
 		[CellConfiguration(Position = new int[] { 32, 2 })] 
         public double MinimumAccumulatorVolume { get; set; }
 
-		/*
-		Cartouche Actuator Key characteristics Tool1 output
-		*/
+		
+		//Cartouche Actuator Key characteristics Tool1 output
+		
 		//Power lane
 		[CellConfiguration(Position = new int[] { 16, 3 })] 
         public string ActuatorTypeTool1 { get; set; } //(balanced/unbalanced sections)
@@ -1445,9 +2443,9 @@ namespace BusinessData
 		[CellConfiguration(Position = new int[] { 32, 3 })] 
         public double MinimumAccumulatorVolumeTool1 { get; set; }
 		
-		/*
-		Cartouche Actuator Key characteristics Tool2 output
-		*/
+		
+		//Cartouche Actuator Key characteristics Tool2 output
+		
 		//Power lane
 		[CellConfiguration(Position = new int[] { 16, 4 })] 
         public string ActuatorTypeTool2 { get; set; } //(balanced/unbalanced sections)
@@ -1476,7 +2474,7 @@ namespace BusinessData
         public double MinimumAcumulatorPressureTool2 { get; set; }
 		[CellConfiguration(Position = new int[] { 32, 4 })] 
         public double MinimumAccumulatorVolumeTool2 { get; set; }
-	}
+	}*/
 	
 	/// <summary>
 	/// Activities_planning.xlsx
