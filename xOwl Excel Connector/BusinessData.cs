@@ -1,5 +1,4 @@
-﻿using System;
-using xOwl_Annotations;
+﻿using xOwl_Annotations;
 using xOwl_Excel_Connector;
 
 /// <summary>
