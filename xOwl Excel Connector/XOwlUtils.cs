@@ -29,15 +29,21 @@ namespace xOwl_Excel_Connector
             for (int i = 1; i < properties.Length; i++) 
             {
                 property = properties[i];
-                CellConfiguration cellConfiguration = property.GetCustomAttribute<CellConfiguration>();
+                PushConfiguration cellConfiguration = property.GetCustomAttribute<PushConfiguration>();
                 int[] position = cellConfiguration.Position;
                 Range range = worksheet.Cells[position[0], position[1]];
                 string value = range.Value.ToString();
                 Type propertyType = property.PropertyType;
                 if (propertyType.Name.Equals("Double"))
                 {
-                    var dvalue = Double.Parse(value, new CultureInfo("en-US"));
+                    //var dvalue = Double.Parse(value, new CultureInfo("en-US"));
+                    var dvalue = Double.Parse(value, CultureInfo.CurrentUICulture);
                     property.SetValue(res, dvalue);
+                }
+                else if (propertyType.Name.Equals("Boolean"))
+                {
+                    var bvalue = Boolean.Parse(value);
+                    property.SetValue(res, bvalue);
                 }
                 else
                 {
@@ -45,57 +51,6 @@ namespace xOwl_Excel_Connector
                 }
             }
             return res;
-        }
-
-        public List<T> GetDataFromRows(Range range)
-        {
-            if (range.Count == 0)
-            {
-                return new List<T>();
-            }
-            List<T> res = new List<T>();
-            //Need to reorder properties properly
-            PropertyInfo[] properties = typeof(T).GetProperties().OrderBy(p => p.MetadataToken).ToArray();
-            T t;
-            for (int i = 1; i <= range.Rows.Count; i++)
-            {
-                t = new T();
-                int col = 1;
-                //FIXME: we need to keep track of data evolution => generating new uuid each times fails the comparison at server side
-                //properties[0].SetValue(t, System.Guid.NewGuid().ToString());
-                properties[0].SetValue(t, typeof(T).Name.ToLower() + i); //temporary
-                PropertyInfo property;
-                Type propertyType;
-                for (int j = 1; j < properties.Length; j++)
-                {
-                    property = properties[j];
-                    propertyType = property.PropertyType;
-                    CellConfiguration cellConfiguration = properties[j].GetCustomAttribute<CellConfiguration>();
-                    string value = range.Cells[i, col++].Value.ToString();
-                    if (propertyType.Name.Equals("Double"))
-                    {
-                        var dvalue = Double.Parse(value, new CultureInfo("en-US"));
-                        property.SetValue(t, dvalue);
-                    }
-                    else
-                    {
-                        property.SetValue(t, Convert.ChangeType(value, property.PropertyType));
-                    }
-                    if (cellConfiguration != null)
-                    {
-                        col += ((CellConfiguration)cellConfiguration).CellsAfter;
-                        //TODO: process other cell properties
-                    }
-                }
-                res.Add(t);
-            }
-            return res;
-        }
-
-        public List<T> GetDataFromCols(Range range)
-        {
-            //TODO
-            throw new NotImplementedException();
         }
     }
 
@@ -125,11 +80,24 @@ namespace xOwl_Excel_Connector
         public void SetCellsFromData(List<T> data, Worksheet worksheet)
         {
             Type type = typeof(T);
-            //FIXME: we consider for the moment that type has a complex mapping
+
+            BusinessClass businessClass = type.GetCustomAttribute<BusinessClass>();
+            if (businessClass.Position.Equals(worksheet.Name))
+            {
+                this.SetCellsFromPushConfiguration(data, worksheet);
+            } else
+            {
+                this.SetCellsFromPullConfiguration(data, worksheet);
+            }
+        }
+
+        private void SetCellsFromPushConfiguration(List<T> data, Worksheet worksheet)
+        {
             PropertyInfo[] properties = typeof(T).GetProperties().OrderBy(p => p.MetadataToken).ToArray();
             PropertyInfo property;
             object value;
             int[] position;
+            PushConfiguration cellConfiguration;
             foreach (T t in data)
             {
                 //we skip the uuid
@@ -137,7 +105,7 @@ namespace xOwl_Excel_Connector
                 {
                     property = properties[i];
                     value = property.GetValue(t);
-                    CellConfiguration cellConfiguration = properties[i].GetCustomAttribute<CellConfiguration>();
+                    cellConfiguration = property.GetCustomAttribute<PushConfiguration>();
                     if (cellConfiguration != null)
                     {
                         position = cellConfiguration.Position;
@@ -148,32 +116,13 @@ namespace xOwl_Excel_Connector
             }
         }
 
-        public void SetRowsFromData(Range range, List<T> data)
+        private void SetCellsFromPullConfiguration(List<T> data, Worksheet worksheet)
         {
-            //TODO: set cells read only
             PropertyInfo[] properties = typeof(T).GetProperties().OrderBy(p => p.MetadataToken).ToArray();
-            Range cell;
-            //we skip the uuid
-            int col = 0;
-            for (int i = 1; i < properties.Length; i++)
-            {
-                cell = range.Cells[1, col + i];
-                cell.Value = properties[i].Name.ToUpper();
-                //TODO: use annotation instead to set cell style
-                cell.Font.Bold = true;
-                cell.Font.Color = ColorTranslator.ToOle(Color.White);
-                cell.Interior.Color = ColorTranslator.ToOle(Color.Gray);
-                CellConfiguration cellConfiguration = properties[i].GetCustomAttribute<CellConfiguration>();
-                if (cellConfiguration != null)
-                {
-                    col += cellConfiguration.CellsAfter;
-                    //TODO: process other cell properties
-                }
-            }
-            col = 0;
-            int row = 2;
             PropertyInfo property;
             object value;
+            int[] position;
+            CellConfiguration cellConfiguration = null;
             foreach (T t in data)
             {
                 //we skip the uuid
@@ -181,16 +130,21 @@ namespace xOwl_Excel_Connector
                 {
                     property = properties[i];
                     value = property.GetValue(t);
-                    range.Cells[row, col + i].Value = value;
-                    CellConfiguration cellConfiguration = properties[i].GetCustomAttribute<CellConfiguration>();
+                    //FIXME: avoid hard coding this
+                    if (worksheet.Name.Equals("Donnees"))
+                    {
+                        cellConfiguration = property.GetCustomAttribute<PowerRamDataConfiguration>();
+                    } else if (worksheet.Name.Equals("Actuator Key characteristics"))
+                    {
+                        cellConfiguration = property.GetCustomAttribute<ActuatorConfiguration>();
+                    }
                     if (cellConfiguration != null)
                     {
-                        col += cellConfiguration.CellsAfter;
+                        position = cellConfiguration.Position;
+                        worksheet.Cells[position[0], position[1]].Value = value;
                         //TODO: process other cell properties
                     }
                 }
-                col = 0;
-                row++;
             }
         }
     }
@@ -273,11 +227,6 @@ namespace xOwl_Excel_Connector
         public static string ArtifactToBase(Artifact a)
         {
             return a.Base;
-        }
-
-        public static string ArtifactToName(Artifact a)
-        {
-            return a.name;
         }
 
         public static string ToSparqlQuery(Type type)

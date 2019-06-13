@@ -71,6 +71,17 @@ namespace xOwl_Excel_Connector
                 {
                     value = value.Replace(',', '.');
                 }
+                if (typeName.Equals("Boolean"))
+                {
+                    if (value.Equals("True"))
+                    {
+                        value = "true";
+                    }
+                    else
+                    {
+                        value = "false";
+                    }
+                }
                 if (typeName.Equals("String"))
                 {
                     sb.Append($"\"{baseUri}{name}\":\"{value}\"");

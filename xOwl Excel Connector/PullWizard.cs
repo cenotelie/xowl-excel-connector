@@ -81,18 +81,10 @@ namespace xOwl_Excel_Connector
             BusinessClass businessClass = type.GetCustomAttribute<BusinessClass>();
             MethodInfo getData = constructedClass.GetMethod("GetDataFromResponse");
             object res = getData.Invoke(createdInstance, new Object[] { response });
-            if (businessClass.IsComplex)
-            {
-                //FIXME: we consider that the worksheet exists => create it otherwise
-                Worksheet worksheet = Globals.ThisAddIn.Application.Worksheets[businessClass.Position];
-                MethodInfo setCellsFromData = constructedClass.GetMethod("SetCellsFromData");
-                setCellsFromData.Invoke(createdInstance, new Object[] { res, worksheet });
-            } else
-            {
-                Range selection = Globals.ThisAddIn.Application.ActiveWindow.RangeSelection;
-                MethodInfo setRows = constructedClass.GetMethod("SetRowsFromData");
-                setRows.Invoke(createdInstance, new Object[] { selection, res });
-            }
+            //FIXME: we consider that the worksheet exists => create it otherwise
+            Worksheet worksheet = Globals.ThisAddIn.Application.ActiveSheet;
+            MethodInfo setCellsFromData = constructedClass.GetMethod("SetCellsFromData");
+            setCellsFromData.Invoke(createdInstance, new Object[] { res, worksheet });
         }
     }
 }

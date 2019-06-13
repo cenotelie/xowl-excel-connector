@@ -41,26 +41,21 @@
             this.newBATB = new System.Windows.Forms.TextBox();
             this.archetypeLabel = new System.Windows.Forms.Label();
             this.archetypesLB = new System.Windows.Forms.ListBox();
-            this.nameLabel = new System.Windows.Forms.Label();
-            this.artifactNameTB = new System.Windows.Forms.TextBox();
-            this.versionLabel = new System.Windows.Forms.Label();
-            this.artifactVersionTB = new System.Windows.Forms.TextBox();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.cancelBtn = new System.Windows.Forms.Button();
             this.pushBtn = new System.Windows.Forms.Button();
+            this.versionLabel = new System.Windows.Forms.Label();
+            this.artifactVersionTB = new System.Windows.Forms.TextBox();
+            this.nameLabel = new System.Windows.Forms.Label();
+            this.artifactNameTB = new System.Windows.Forms.TextBox();
             this.nameError = new System.Windows.Forms.ErrorProvider(this.components);
             this.versionError = new System.Windows.Forms.ErrorProvider(this.components);
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.dispositionLabel = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.rowDispostionBtn = new System.Windows.Forms.RadioButton();
-            this.colDispositionBtn = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nameError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.versionError)).BeginInit();
-            this.tableLayoutPanel3.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -75,24 +70,21 @@
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.archetypeLabel, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.archetypesLB, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 1, 6);
-            this.tableLayoutPanel1.Controls.Add(this.versionLabel, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.artifactVersionTB, 1, 5);
-            this.tableLayoutPanel1.Controls.Add(this.nameLabel, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.artifactNameTB, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.dispositionLabel, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.panel2, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.versionLabel, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.artifactVersionTB, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.nameLabel, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.artifactNameTB, 1, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 7;
+            this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(691, 436);
             this.tableLayoutPanel1.TabIndex = 0;
@@ -220,51 +212,20 @@
             this.archetypesLB.Size = new System.Drawing.Size(500, 36);
             this.archetypesLB.TabIndex = 5;
             // 
-            // nameLabel
+            // tableLayoutPanel3
             // 
-            this.nameLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.nameLabel.AutoSize = true;
-            this.nameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nameLabel.Location = new System.Drawing.Point(4, 316);
-            this.nameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(45, 16);
-            this.nameLabel.TabIndex = 0;
-            this.nameLabel.Text = "Name";
-            // 
-            // artifactNameTB
-            // 
-            this.artifactNameTB.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.artifactNameTB.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.artifactNameTB.Location = new System.Drawing.Point(142, 313);
-            this.artifactNameTB.Margin = new System.Windows.Forms.Padding(4);
-            this.artifactNameTB.Name = "artifactNameTB";
-            this.artifactNameTB.Size = new System.Drawing.Size(500, 22);
-            this.artifactNameTB.TabIndex = 6;
-            this.artifactNameTB.Validating += new System.ComponentModel.CancelEventHandler(this.ArtifactNameValidating);
-            // 
-            // versionLabel
-            // 
-            this.versionLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.versionLabel.AutoSize = true;
-            this.versionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.versionLabel.Location = new System.Drawing.Point(4, 359);
-            this.versionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.versionLabel.Name = "versionLabel";
-            this.versionLabel.Size = new System.Drawing.Size(54, 16);
-            this.versionLabel.TabIndex = 2;
-            this.versionLabel.Text = "Version";
-            // 
-            // artifactVersionTB
-            // 
-            this.artifactVersionTB.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.artifactVersionTB.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.artifactVersionTB.Location = new System.Drawing.Point(142, 356);
-            this.artifactVersionTB.Margin = new System.Windows.Forms.Padding(4);
-            this.artifactVersionTB.Name = "artifactVersionTB";
-            this.artifactVersionTB.Size = new System.Drawing.Size(500, 22);
-            this.artifactVersionTB.TabIndex = 7;
-            this.artifactVersionTB.Validating += new System.ComponentModel.CancelEventHandler(this.ArtifactVersionValidating);
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Controls.Add(this.cancelBtn, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.pushBtn, 0, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(141, 393);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(505, 40);
+            this.tableLayoutPanel3.TabIndex = 15;
             // 
             // cancelBtn
             // 
@@ -290,6 +251,52 @@
             this.pushBtn.UseVisualStyleBackColor = true;
             this.pushBtn.Click += new System.EventHandler(this.PushArtifact_Click);
             // 
+            // versionLabel
+            // 
+            this.versionLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.versionLabel.AutoSize = true;
+            this.versionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.versionLabel.Location = new System.Drawing.Point(4, 349);
+            this.versionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.versionLabel.Name = "versionLabel";
+            this.versionLabel.Size = new System.Drawing.Size(54, 16);
+            this.versionLabel.TabIndex = 2;
+            this.versionLabel.Text = "Version";
+            // 
+            // artifactVersionTB
+            // 
+            this.artifactVersionTB.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.artifactVersionTB.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.artifactVersionTB.Location = new System.Drawing.Point(142, 346);
+            this.artifactVersionTB.Margin = new System.Windows.Forms.Padding(4);
+            this.artifactVersionTB.Name = "artifactVersionTB";
+            this.artifactVersionTB.Size = new System.Drawing.Size(500, 22);
+            this.artifactVersionTB.TabIndex = 7;
+            this.artifactVersionTB.Validating += new System.ComponentModel.CancelEventHandler(this.ArtifactVersionValidating);
+            // 
+            // nameLabel
+            // 
+            this.nameLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.nameLabel.AutoSize = true;
+            this.nameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameLabel.Location = new System.Drawing.Point(4, 284);
+            this.nameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.nameLabel.Name = "nameLabel";
+            this.nameLabel.Size = new System.Drawing.Size(45, 16);
+            this.nameLabel.TabIndex = 0;
+            this.nameLabel.Text = "Name";
+            // 
+            // artifactNameTB
+            // 
+            this.artifactNameTB.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.artifactNameTB.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.artifactNameTB.Location = new System.Drawing.Point(142, 281);
+            this.artifactNameTB.Margin = new System.Windows.Forms.Padding(4);
+            this.artifactNameTB.Name = "artifactNameTB";
+            this.artifactNameTB.Size = new System.Drawing.Size(500, 22);
+            this.artifactNameTB.TabIndex = 6;
+            this.artifactNameTB.Validating += new System.ComponentModel.CancelEventHandler(this.ArtifactNameValidating);
+            // 
             // nameError
             // 
             this.nameError.ContainerControl = this;
@@ -297,63 +304,6 @@
             // versionError
             // 
             this.versionError.ContainerControl = this;
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.cancelBtn, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.pushBtn, 0, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(141, 392);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 1;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(505, 41);
-            this.tableLayoutPanel3.TabIndex = 15;
-            // 
-            // dispositionLabel
-            // 
-            this.dispositionLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.dispositionLabel.AutoSize = true;
-            this.dispositionLabel.Location = new System.Drawing.Point(3, 273);
-            this.dispositionLabel.Name = "dispositionLabel";
-            this.dispositionLabel.Size = new System.Drawing.Size(75, 16);
-            this.dispositionLabel.TabIndex = 16;
-            this.dispositionLabel.Text = "Disposition";
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.colDispositionBtn);
-            this.panel2.Controls.Add(this.rowDispostionBtn);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(141, 263);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(505, 37);
-            this.panel2.TabIndex = 17;
-            // 
-            // rowDispostionBtn
-            // 
-            this.rowDispostionBtn.AutoSize = true;
-            this.rowDispostionBtn.Checked = true;
-            this.rowDispostionBtn.Location = new System.Drawing.Point(6, 8);
-            this.rowDispostionBtn.Name = "rowDispostionBtn";
-            this.rowDispostionBtn.Size = new System.Drawing.Size(60, 20);
-            this.rowDispostionBtn.TabIndex = 0;
-            this.rowDispostionBtn.TabStop = true;
-            this.rowDispostionBtn.Text = "Rows";
-            this.rowDispostionBtn.UseVisualStyleBackColor = true;
-            // 
-            // colDispositionBtn
-            // 
-            this.colDispositionBtn.AutoSize = true;
-            this.colDispositionBtn.Location = new System.Drawing.Point(109, 8);
-            this.colDispositionBtn.Name = "colDispositionBtn";
-            this.colDispositionBtn.Size = new System.Drawing.Size(53, 20);
-            this.colDispositionBtn.TabIndex = 1;
-            this.colDispositionBtn.Text = "Cols";
-            this.colDispositionBtn.UseVisualStyleBackColor = true;
             // 
             // PushWizard
             // 
@@ -375,11 +325,9 @@
             this.flowLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.tableLayoutPanel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nameError)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.versionError)).EndInit();
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -407,9 +355,5 @@
         private System.Windows.Forms.ErrorProvider nameError;
         private System.Windows.Forms.ErrorProvider versionError;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.Label dispositionLabel;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.RadioButton colDispositionBtn;
-        private System.Windows.Forms.RadioButton rowDispostionBtn;
     }
 }
