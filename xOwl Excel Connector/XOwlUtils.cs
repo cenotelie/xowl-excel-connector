@@ -138,6 +138,14 @@ namespace xOwl_Excel_Connector
                     {
                         cellConfiguration = property.GetCustomAttribute<ActuatorConfiguration>();
                     }
+                    else if (worksheet.Name.Equals("Paramètre spec"))
+                    {
+                        cellConfiguration = property.GetCustomAttribute<StaticPerformanceConfiguration>();//TODO
+                    }
+                    else if (worksheet.Name.Equals("section bloc hyd"))
+                    {
+                        cellConfiguration = property.GetCustomAttribute<HydraulicBlockConfiguration>();
+                    }
                     if (cellConfiguration != null)
                     {
                         position = cellConfiguration.Position;

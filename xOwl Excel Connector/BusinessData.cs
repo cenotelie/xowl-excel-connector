@@ -38,13 +38,17 @@ namespace BusinessData
         public int MaximumWeight { get; set; }
         [PushConfiguration(Position = new int[] { 13, 4 })]
         [PowerRamDataConfiguration(Position = new int[] { 16, 3 })]
+        [StaticPerformanceConfiguration(Position = new int[] { 15, 5 })]
         public double AngleBraquageGouverneExtension { get; set; }
         [PushConfiguration(Position = new int[] { 14, 4 })]
         [PowerRamDataConfiguration(Position = new int[] { 17, 3 })]
+        [StaticPerformanceConfiguration(Position = new int[] { 16, 5 })]
         public double AngleBraquageGouverneRetractionNegatif { get; set; }
         [PushConfiguration(Position = new int[] { 15, 4 })]
+        [StaticPerformanceConfiguration(Position = new int[] { 11, 5 })]
         public double ExtensionStroke { get; set; }
         [PushConfiguration(Position = new int[] { 16, 4 })]
+        [StaticPerformanceConfiguration(Position = new int[] { 12, 5 })]
         public double RetractionStroke { get; set; }
 
         /*
@@ -63,13 +67,17 @@ namespace BusinessData
 
         [PushConfiguration(Position = new int[] { 23, 4 })]
         [PowerRamDataConfiguration(Position = new int[] { 21, 3 })]
+        [StaticPerformanceConfiguration(Position = new int[] { 34, 5 })]
         public double SupplyPressure { get; set; }
         [PushConfiguration(Position = new int[] { 24, 4 })]
         [PowerRamDataConfiguration(Position = new int[] { 22, 3 })]
+        [StaticPerformanceConfiguration(Position = new int[] { 35, 5 })]
         public double ReturnPressure { get; set; }
         [PushConfiguration(Position = new int[] { 25, 4 })]
+        [PowerRamDataConfiguration(Position = new int[] { 23, 3 })]
         public double SupplyProofPressure { get; set; }
         [PushConfiguration(Position = new int[] { 26, 4 })]
+        [PowerRamDataConfiguration(Position = new int[] { 24, 3 })]
         public double ReturnProofPressure { get; set; }
         [PushConfiguration(Position = new int[] { 27, 4 })]
         [PowerRamDataConfiguration(Position = new int[] { 25, 3 })]
@@ -82,12 +90,16 @@ namespace BusinessData
         public double StallLoadRetraction { get; set; }
         [PushConfiguration(Position = new int[] { 30, 4 })]
         [PowerRamDataConfiguration(Position = new int[] { 32, 3 })]
+        [StaticPerformanceConfiguration(Position = new int[] { 20, 5 })]
         public double DampingCoefficient { get; set; }
         [PushConfiguration(Position = new int[] { 31, 4 })]
+        [StaticPerformanceConfiguration(Position = new int[] { 30, 5 })]
         public double MaxPowerPointLoad { get; set; }
         [PushConfiguration(Position = new int[] { 32, 4 })]
+        [StaticPerformanceConfiguration(Position = new int[] { 30, 1 })]
         public double MaxPowerPointSpeed { get; set; }
         [PushConfiguration(Position = new int[] { 33, 4 })]
+        [StaticPerformanceConfiguration(Position = new int[] { 30, 7 })]
         public double MinFluidTemperature { get; set; }
         [PushConfiguration(Position = new int[] { 34, 4 })]
         public double MaxFluidTemperature { get; set; }
@@ -172,7 +184,6 @@ namespace BusinessData
         [PushConfiguration(Position = new int[] { 5, 3 })]
         public string TypeAccrocheCoteBati { get; set; }
         [PushConfiguration(Position = new int[] { 6, 3 })]
-        [ActuatorConfiguration(Position = new int[] { 22, 2 })]
         public string ChoixDeLEmbout { get; set; }
         [PushConfiguration(Position = new int[] { 7, 3 })]
         public int NombreActionneurParSurface { get; set; }
@@ -216,10 +227,13 @@ namespace BusinessData
         [PushConfiguration(Position = new int[] { 27, 3 })]
         public double ChargeArretRetraction { get; set; }
         [PushConfiguration(Position = new int[] { 28, 3 })]
+        [StaticPerformanceConfiguration(Position = new int[] { 5, 22 })]
         public double InertieGouverne { get; set; }
         [PushConfiguration(Position = new int[] { 29, 3 })]
+        [StaticPerformanceConfiguration(Position = new int[] { 5, 25 })]
         public double RaideurCoteGouverne { get; set; }
         [PushConfiguration(Position = new int[] { 30, 3 })]
+        [StaticPerformanceConfiguration(Position = new int[] { 5, 24 })]
         public double RaideurCoteBati { get; set; }
         [PushConfiguration(Position = new int[] { 31, 3 })]
         public double CoupleRafaleVentSol { get; set; }
@@ -238,12 +252,15 @@ namespace BusinessData
 		Cartouche Dimensions caractéristiques
 		*/
         [PushConfiguration(Position = new int[] { 34, 10 })]
+        [HydraulicBlockConfiguration(Position = new int[] { 15, 3 })]
         public double SectionUtile { get; set; }
         [PushConfiguration(Position = new int[] { 35, 10 })]
         public double ToileTige { get; set; }
         [PushConfiguration(Position = new int[] { 36, 10 })]
+        [ActuatorConfiguration(Position = new int[] { 18, 2 })]
         public double DiametresTige { get; set; }
         [PushConfiguration(Position = new int[] { 38, 10 })]
+        [ActuatorConfiguration(Position = new int[] { 19, 2 })]
         public double DiametresPiston { get; set; }
 
         /*
@@ -256,6 +273,7 @@ namespace BusinessData
         [PushConfiguration(Position = new int[] { 34, 25 })]
         public double R3 { get; set; }
         [PushConfiguration(Position = new int[] { 10, 46 })]
+        [ActuatorConfiguration(Position = new int[] { 23, 10 })]
         public double R4 { get; set; }
         [PushConfiguration(Position = new int[] { 31, 46 })]
         public double R5 { get; set; }
@@ -275,5 +293,40 @@ namespace BusinessData
         public double R12 { get; set; }
         [PushConfiguration(Position = new int[] { 31, 91 })]
         public double R13 { get; set; }
+    }
+
+    [BusinessClass(BaseUri = "http://xowl.org/aileron/param_spec#", Position = "Paramètre spec", ProcessId = "collins_process", TaskId = "static_perf")]
+    public class ParametreSpec : Identifiable
+    {
+        [PushConfiguration(Position = new int[] { 10, 5 })]
+        public double ChargeArret { get; set; }
+        [PushConfiguration(Position = new int[] { 11, 5 })]
+        public double CourseNominalExtension { get; set; }
+        [PushConfiguration(Position = new int[] { 12, 5 })]
+        public double CourseNominalRetraction { get; set; }
+        [PushConfiguration(Position = new int[] { 15, 5 })]
+        public double DeflectionGouverneExtension { get; set; }
+        [PushConfiguration(Position = new int[] { 16, 5 })]
+        public double DeflectionGouverneRetraction { get; set; }
+        [PushConfiguration(Position = new int[] { 20, 5 })]
+        public double CoefficientAmortissement { get; set; }
+        [PushConfiguration(Position = new int[] { 22, 5 })]
+        public double InertieGouverne { get; set; }
+        [PushConfiguration(Position = new int[] { 24, 5 })]
+        public double RaideurAttacheCoteFixe { get; set; }
+        [PushConfiguration(Position = new int[] { 25, 5 })]
+        public double RaideurAttacheCoteMobile { get; set; }
+        [PushConfiguration(Position = new int[] { 30, 1 })]
+        public double Vitesse { get; set; }
+        [PushConfiguration(Position = new int[] { 30, 3 })]
+        public double Position { get; set; }
+        [PushConfiguration(Position = new int[] { 30, 5 })]
+        public double Effort { get; set; }
+        [PushConfiguration(Position = new int[] { 30, 7 })]
+        public double Temperature { get; set; }
+        [PushConfiguration(Position = new int[] { 34, 5 })]
+        public double PressionAlimentationNominale { get; set; }
+        [PushConfiguration(Position = new int[] { 35, 5 })]
+        public double PressionRetourNominale { get; set; }
     }
 }

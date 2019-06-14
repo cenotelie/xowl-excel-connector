@@ -34,4 +34,8 @@ namespace xOwl_Annotations
     public class ActuatorConfiguration: CellConfiguration
     {
     }
+
+    public class HydraulicBlockConfiguration : CellConfiguration
+    {
+    }
 }
