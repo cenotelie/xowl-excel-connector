@@ -8,9 +8,9 @@ namespace xOwl_Excel_Connector
 {
     public class Artifact
     {
-        public string type { get; set; }
-        public string identifier { get; set; }
-        public string name { get; set; }
+        public string Type { get; set; }
+        public string Identifier { get; set; }
+        public string Name { get; set; }
         private string _base;
 
         public string Base
@@ -25,17 +25,17 @@ namespace xOwl_Excel_Connector
             }
         }
 
-        public string version { get; set; }
-        public string from { get; set; }
-        public string creation { get; set; }
-        public string archetype { get; set; }
-        public string superseded { get; set; }
+        public string Version { get; set; }
+        public string From { get; set; }
+        public string Creation { get; set; }
+        public string Archetype { get; set; }
+        public string Superseded { get; set; }
 
-        public string supersededDisplay
+        public string ArtifactQualifiedName
         {
             get
             {
-                return this.name + " [" + this.version + "]";
+                return this.Base + "/" + this.Name + " [" + this.Version + "]";
             }
         }
 

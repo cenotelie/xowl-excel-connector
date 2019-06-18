@@ -4,12 +4,15 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Web;
 using xOwl_Annotations;
 
 namespace xOwl_Excel_Connector
 {
     public partial class PullWizard : Form
     {
+        private List<Artifact> artifacts;
 
         public PullWizard()
         {
@@ -18,6 +21,10 @@ namespace xOwl_Excel_Connector
             {
                 XowlUtils.Connect();
             }
+            this.artifacts = XowlUtils.RetrieveArtifacts(false);
+            //this.baseArtifactsLB.DataSource = new List<string>(new HashSet<string>(this.artifacts.ConvertAll(new Converter<Artifact, string>(XowlUtils.ArtifactToBase))));
+            this.baseArtifactsLB.DataSource = this.artifacts;
+            this.baseArtifactsLB.DisplayMember = "ArtifactQualifiedName";
             this.archetypesLB.DataSource = XowlUtils.GetClassesFromNameSpace("BusinessData");
             this.archetypesLB.DisplayMember = "Name";
             this.archetypesLB.SelectedIndex = 0;
@@ -34,25 +41,17 @@ namespace xOwl_Excel_Connector
 
         private void DoPullArtifact()
         {
-            string parameters = "store=liveTerm"; //TODO: or long term if needed (does not work)
-            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XowlUtils.xowlApi + "services/storage/sparql?" + parameters));
+            Artifact selectedArtifact = (Artifact) this.baseArtifactsLB.SelectedItem;
+            string address = XowlUtils.xowlApi + "services/storage/artifacts/" + HttpUtility.UrlEncode(selectedArtifact.Identifier) + "/content";
+            
+            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(address));
             req.CookieContainer = XowlUtils.cookies;
-            req.ContentType = "application/sparql-query";
-            req.Accept = "application/json";
-            req.Method = "POST";
-            //TODO: construct the request based on the selected archetype
-            //FIXME: It seems that the selection of the artifact is useless here ! It shall actually be activated for live reasoning at server side using the web interface
-            //It will be activate later through dedicated UI
+            req.Accept = "application/n-quads";
+            req.Method = "GET";
             Type type = (Type)this.archetypesLB.SelectedItem;
-            string sparqlRequest = XowlUtils.ToSparqlQuery(type);
-            byte[] bytes = Encoding.UTF8.GetBytes(sparqlRequest);
-            req.ContentLength = bytes.Length;
-            System.IO.Stream os = req.GetRequestStream();
-            os.Write(bytes, 0, bytes.Length);
-            os.Close();
             try
             {
-                HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+                HttpWebResponse resp = (HttpWebResponse)req.GetResponse(); //FIXME: does not work, even if it works with postman !!!
                 System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
                 string r = sr.ReadToEnd().Trim();
                 processJsonResponse(r, type);
