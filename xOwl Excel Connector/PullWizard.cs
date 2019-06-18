@@ -42,13 +42,20 @@ namespace xOwl_Excel_Connector
         private void DoPullArtifact()
         {
             Artifact selectedArtifact = (Artifact) this.baseArtifactsLB.SelectedItem;
-            string address = XowlUtils.xowlApi + "services/storage/artifacts/" + HttpUtility.UrlEncode(selectedArtifact.Identifier) + "/content";
-            
-            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(address));
-            req.CookieContainer = XowlUtils.cookies;
-            req.Accept = "application/n-quads";
-            req.Method = "GET";
             Type type = (Type)this.archetypesLB.SelectedItem;
+            //string address = XowlUtils.xowlApi + "services/storage/artifacts/" + HttpUtility.UrlEncode(selectedArtifact.Identifier) + "/content";
+            //HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(address));
+            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XowlUtils.xowlApi + "services/storage/sparql?store=longTerm"));
+            req.CookieContainer = XowlUtils.cookies;
+            req.ContentType = "application/sparql-query";
+            req.Accept = "application/json";
+            req.Method = "POST";
+            string sparqlRequest = XowlUtils.ToSparqlQuery(type, selectedArtifact);
+            byte[] bytes = Encoding.UTF8.GetBytes(sparqlRequest);
+            req.ContentLength = bytes.Length;
+            System.IO.Stream os = req.GetRequestStream();
+            os.Write(bytes, 0, bytes.Length);
+            os.Close();
             try
             {
                 HttpWebResponse resp = (HttpWebResponse)req.GetResponse(); //FIXME: does not work, even if it works with postman !!!

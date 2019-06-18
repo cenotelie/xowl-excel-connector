@@ -237,13 +237,15 @@ namespace xOwl_Excel_Connector
             return a.Base;
         }
 
-        public static string ToSparqlQuery(Type type)
+        public static string ToSparqlQuery(Type type, Artifact artifact)
         {
             StringBuilder sb = new StringBuilder();
             string className = type.Name;
             string baseUri = GetBaseUri(type);
             PropertyInfo[] properties = type.GetProperties().OrderBy(p => p.MetadataToken).ToArray();
-            sb.Append("SELECT DISTINCT * WHERE { GRAPH ?g { ?");
+            sb.Append("SELECT DISTINCT * WHERE { GRAPH <");
+            sb.Append(artifact.Identifier);
+            sb.Append("> { ?");
             sb.Append(className.ToLower());
             sb.Append(" a <");
             sb.Append(baseUri + className);
