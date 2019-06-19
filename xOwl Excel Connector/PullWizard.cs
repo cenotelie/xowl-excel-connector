@@ -2,6 +2,7 @@
 using System;
 using System.Net;
 using System.Reflection;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections.Generic;
@@ -21,8 +22,6 @@ namespace xOwl_Excel_Connector
                 XowlUtils.Connect();
             }
             this.artifacts = XowlUtils.RetrieveArtifacts(false);
-            this.baseArtifactsLB.DataSource = this.artifacts;
-            this.baseArtifactsLB.DisplayMember = "ArtifactQualifiedName";
             this.archetypesLB.DataSource = XowlUtils.GetClassesFromNameSpace("BusinessData");
             this.archetypesLB.DisplayMember = "Name";
             this.archetypesLB.SelectedIndex = 0;
@@ -39,10 +38,8 @@ namespace xOwl_Excel_Connector
 
         private void DoPullArtifact()
         {
-            Artifact selectedArtifact = (Artifact) this.baseArtifactsLB.SelectedItem;
+            Artifact selectedArtifact = (Artifact) this.versionsLB.SelectedItem;
             Type type = (Type)this.archetypesLB.SelectedItem;
-            //string address = XowlUtils.xowlApi + "services/storage/artifacts/" + HttpUtility.UrlEncode(selectedArtifact.Identifier) + "/content";
-            //HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(address));
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(new Uri(XowlUtils.xowlApi + "services/storage/sparql?store=longTerm"));
             req.CookieContainer = XowlUtils.cookies;
             req.ContentType = "application/sparql-query";
@@ -89,6 +86,16 @@ namespace xOwl_Excel_Connector
             Worksheet worksheet = Globals.ThisAddIn.Application.ActiveSheet;
             MethodInfo setCellsFromData = constructedClass.GetMethod("SetCellsFromData");
             setCellsFromData.Invoke(createdInstance, new Object[] { res, worksheet });
+        }
+
+        private void ArchetypeSelected(object sender, EventArgs e)
+        {
+            Type type = (Type)this.archetypesLB.SelectedItem;
+            string baseArtifact = (string)Properties.Settings.Default["baseUri"] + type.Name.ToLower();
+            var filteredArtifacts = from a in artifacts where a.Base.Equals(baseArtifact) select a;
+            this.versionsLB.DataSource = filteredArtifacts.ToList<Artifact>();
+            this.versionsLB.DisplayMember = "Version";
+            this.versionsLB.Enabled = true;
         }
     }
 }
