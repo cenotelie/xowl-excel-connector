@@ -44,18 +44,21 @@ namespace xOwl_Excel_Connector
                 System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
                 string response = sr.ReadToEnd().Trim();
                 dynamic result = JsonConvert.DeserializeObject(response);
-                string url = result.data[0].url;
-                activitiReq = (HttpWebRequest)HttpWebRequest.Create(url);
-                activitiReq.Credentials = credentialCache;
-                activitiReq.ContentType = "application/json";
-                activitiReq.Method = "POST";
-                string body = "{ \"action\":\"complete\" }";
-                byte[] bytes = Encoding.UTF8.GetBytes(body);
-                activitiReq.ContentLength = bytes.Length;
-                System.IO.Stream os = activitiReq.GetRequestStream();
-                os.Write(bytes, 0, bytes.Length);
-                os.Close();
-                resp = (HttpWebResponse)activitiReq.GetResponse();
+                if (result.data.Count > 0)
+                {
+                    string url = result.data[0].url;
+                    activitiReq = (HttpWebRequest)HttpWebRequest.Create(url);
+                    activitiReq.Credentials = credentialCache;
+                    activitiReq.ContentType = "application/json";
+                    activitiReq.Method = "POST";
+                    string body = "{ \"action\":\"complete\" }";
+                    byte[] bytes = Encoding.UTF8.GetBytes(body);
+                    activitiReq.ContentLength = bytes.Length;
+                    System.IO.Stream os = activitiReq.GetRequestStream();
+                    os.Write(bytes, 0, bytes.Length);
+                    os.Close();
+                    resp = (HttpWebResponse)activitiReq.GetResponse();
+                }
             } catch (WebException ex)
             {
                 System.Diagnostics.Debug.WriteLine("Process Notification Failed");

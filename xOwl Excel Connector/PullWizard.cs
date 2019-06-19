@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using System.Web;
 using xOwl_Annotations;
 
 namespace xOwl_Excel_Connector
@@ -22,7 +21,6 @@ namespace xOwl_Excel_Connector
                 XowlUtils.Connect();
             }
             this.artifacts = XowlUtils.RetrieveArtifacts(false);
-            //this.baseArtifactsLB.DataSource = new List<string>(new HashSet<string>(this.artifacts.ConvertAll(new Converter<Artifact, string>(XowlUtils.ArtifactToBase))));
             this.baseArtifactsLB.DataSource = this.artifacts;
             this.baseArtifactsLB.DisplayMember = "ArtifactQualifiedName";
             this.archetypesLB.DataSource = XowlUtils.GetClassesFromNameSpace("BusinessData");
@@ -58,7 +56,7 @@ namespace xOwl_Excel_Connector
             os.Close();
             try
             {
-                HttpWebResponse resp = (HttpWebResponse)req.GetResponse(); //FIXME: does not work, even if it works with postman !!!
+                HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
                 System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
                 string r = sr.ReadToEnd().Trim();
                 processJsonResponse(r, type);

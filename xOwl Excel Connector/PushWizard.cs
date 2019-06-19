@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -24,24 +23,9 @@ namespace xOwl_Excel_Connector
                 XowlUtils.Connect();
             }
             this.artifacts = XowlUtils.RetrieveArtifacts(false);
-            this.baseArtifactsLB.DataSource = new List<string>(new HashSet<string>(this.artifacts.ConvertAll(new Converter<Artifact, string>(XowlUtils.ArtifactToBase))));
             this.archetypesLB.DataSource = XowlUtils.GetClassesFromNameSpace("BusinessData");
             this.archetypesLB.DisplayMember = "Name";
             this.archetypesLB.SelectedIndex = 0;
-        }
-
-        private void ArtifactNameValidating(object sender, CancelEventArgs e)
-        {
-            if (string.IsNullOrEmpty(this.artifactNameTB.Text.Trim()))
-            {
-                e.Cancel = true;
-                this.nameError.SetError(this.artifactNameTB, "Bad Name");
-            }
-            else
-            {
-                e.Cancel = false;
-                this.nameError.SetError(this.artifactNameTB, null);
-            }
         }
 
         private void ArtifactVersionValidating(object sender, CancelEventArgs e)
@@ -49,12 +33,12 @@ namespace xOwl_Excel_Connector
             if (string.IsNullOrEmpty(this.artifactVersionTB.Text.Trim()))
             {
                 e.Cancel = true;
-                this.nameError.SetError(this.artifactVersionTB, "Bad Version");
+                this.versionError.SetError(this.artifactVersionTB, "Bad Version");
             }
             else
             {
                 e.Cancel = false;
-                this.nameError.SetError(this.artifactVersionTB, null);
+                this.versionError.SetError(this.artifactVersionTB, null);
             }
         }
 
@@ -70,23 +54,22 @@ namespace xOwl_Excel_Connector
         private void DoPushArtifact()
         {
             System.Diagnostics.Debug.WriteLine("Pushing data to collaboration");
-
-            string name = this.artifactNameTB.Text.Trim();
             Type type = (Type)this.archetypesLB.SelectedItem;
             string archetype = "org.xowl.platform.kernel.artifacts.ArtifactArchetypeFree";
             //FIXME: ensure unicity of version for the same name and within the same base
+            string baseUri = (string) Properties.Settings.Default["baseUri"];
+            string name = type.Name.ToLower();
+            string baseArtifact = baseUri + name;
             string version = this.artifactVersionTB.Text.Trim();
-            string baseArtifact, superseded, parameters;
-            if (this.existingBABtn.Checked)
+            string parameters;
+            if (this.supersededLB.SelectedIndex == -1)
             {
-                baseArtifact = Uri.EscapeDataString(this.baseArtifactsLB.SelectedItem.ToString());
-                superseded = this.supersededLB.SelectedItem.ToString();
-                parameters = $"name={name}&base={baseArtifact}&version={version}&archetype={archetype}&superseded={superseded}";
+                parameters = $"name={name}&base={baseArtifact}&version={version}&archetype={archetype}";
             }
             else
             {
-                baseArtifact = Uri.EscapeDataString(this.newBATB.Text);
-                parameters = $"name={name}&base={baseArtifact}&version={version}&archetype={archetype}";
+                string superseded = this.supersededLB.SelectedItem.ToString();
+                parameters = $"name={name}&base={baseArtifact}&version={version}&archetype={archetype}&superseded={superseded}";
             }
             HttpWebRequest xowlReq = (HttpWebRequest)HttpWebRequest.Create(new Uri(XowlUtils.xowlApi + "connectors/generics/sw?" + parameters));
             xowlReq.CookieContainer = XowlUtils.cookies;
@@ -122,30 +105,6 @@ namespace xOwl_Excel_Connector
             this.Close();
         }
 
-        private void ExistingBase_Click(object sender, EventArgs e)
-        {
-            this.baseArtifactsLB.Enabled = true;
-            this.newBATB.Enabled = false;
-            this.supersededLB.Enabled = false;
-        }
-
-        private void NewBase_Click(object sender, EventArgs e)
-        {
-            this.baseArtifactsLB.Enabled = false;
-            this.newBATB.Enabled = true;
-            this.supersededLB.Enabled = false;
-        }
-
-        private void BaseArtifact_Selected(object sender, EventArgs e)
-        {
-            string selectedBA = this.baseArtifactsLB.Text;
-            List<Artifact> filteredArtifacts = this.artifacts.Where<Artifact>(a => string.Equals(a.Base, selectedBA)).ToList<Artifact>();
-            this.supersededLB.DataSource = filteredArtifacts;
-            this.supersededLB.DisplayMember = "supersededDisplay";
-            this.supersededLB.ValueMember = "identifier";
-            this.supersededLB.Enabled = true;
-        }
-
         private string ToJsonLD(Type type)
         {
             Type genericClass = typeof(JsonLdDelegate<>);
@@ -162,6 +121,16 @@ namespace xOwl_Excel_Connector
             sb.Append(((Identifiable)res).ToJsonLD());
             sb.Append("]}");
             return sb.ToString();
+        }
+
+        private void ArchetypeSelected(object sender, EventArgs e)
+        {
+            Type type = (Type)this.archetypesLB.SelectedItem;
+            string baseArtifact = (string)Properties.Settings.Default["baseUri"] + type.Name.ToLower();
+            var filteredArtifacts = from a in artifacts where a.Base.Equals(baseArtifact) select a;
+            this.supersededLB.DataSource = filteredArtifacts.ToList<Artifact>();
+            this.supersededLB.DisplayMember = "Version";
+            this.supersededLB.Enabled = true;
         }
     }
 }

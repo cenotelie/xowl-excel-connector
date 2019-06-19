@@ -44,6 +44,8 @@
             this.badAddressError = new System.Windows.Forms.ErrorProvider(this.components);
             this.badLoginError = new System.Windows.Forms.ErrorProvider(this.components);
             this.badPasswordError = new System.Windows.Forms.ErrorProvider(this.components);
+            this.baseUriLabel = new System.Windows.Forms.Label();
+            this.baseUriTB = new System.Windows.Forms.TextBox();
             this.prefLayoutPane.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.badAddressError)).BeginInit();
@@ -65,17 +67,20 @@
             this.prefLayoutPane.Controls.Add(this.activitiApiRtb, 1, 1);
             this.prefLayoutPane.Controls.Add(this.loginRtb, 1, 2);
             this.prefLayoutPane.Controls.Add(this.passwordRtb, 1, 3);
-            this.prefLayoutPane.Controls.Add(this.tableLayoutPanel1, 1, 4);
+            this.prefLayoutPane.Controls.Add(this.baseUriLabel, 0, 4);
+            this.prefLayoutPane.Controls.Add(this.baseUriTB, 1, 4);
+            this.prefLayoutPane.Controls.Add(this.tableLayoutPanel1, 1, 5);    
             this.prefLayoutPane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.prefLayoutPane.Location = new System.Drawing.Point(0, 0);
             this.prefLayoutPane.Name = "prefLayoutPane";
-            this.prefLayoutPane.RowCount = 5;
-            this.prefLayoutPane.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.prefLayoutPane.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.prefLayoutPane.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.prefLayoutPane.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.prefLayoutPane.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.prefLayoutPane.Size = new System.Drawing.Size(484, 162);
+            this.prefLayoutPane.RowCount = 6;
+            this.prefLayoutPane.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.prefLayoutPane.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.prefLayoutPane.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.prefLayoutPane.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.prefLayoutPane.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.prefLayoutPane.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.prefLayoutPane.Size = new System.Drawing.Size(484, 228);
             this.prefLayoutPane.TabIndex = 0;
             // 
             // xowlLabel
@@ -83,7 +88,7 @@
             this.xowlLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.xowlLabel.AutoSize = true;
             this.xowlLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.xowlLabel.Location = new System.Drawing.Point(3, 8);
+            this.xowlLabel.Location = new System.Drawing.Point(3, 9);
             this.xowlLabel.Name = "xowlLabel";
             this.xowlLabel.Size = new System.Drawing.Size(142, 16);
             this.xowlLabel.TabIndex = 1;
@@ -94,7 +99,7 @@
             this.activitiLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.activitiLabel.AutoSize = true;
             this.activitiLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.activitiLabel.Location = new System.Drawing.Point(3, 40);
+            this.activitiLabel.Location = new System.Drawing.Point(3, 43);
             this.activitiLabel.Name = "activitiLabel";
             this.activitiLabel.Size = new System.Drawing.Size(110, 16);
             this.activitiLabel.TabIndex = 3;
@@ -105,7 +110,7 @@
             this.loginLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.loginLabel.AutoSize = true;
             this.loginLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.loginLabel.Location = new System.Drawing.Point(3, 72);
+            this.loginLabel.Location = new System.Drawing.Point(3, 77);
             this.loginLabel.Name = "loginLabel";
             this.loginLabel.Size = new System.Drawing.Size(41, 16);
             this.loginLabel.TabIndex = 5;
@@ -116,7 +121,7 @@
             this.passwdLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.passwdLabel.AutoSize = true;
             this.passwdLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.passwdLabel.Location = new System.Drawing.Point(3, 104);
+            this.passwdLabel.Location = new System.Drawing.Point(3, 111);
             this.passwdLabel.Name = "passwdLabel";
             this.passwdLabel.Size = new System.Drawing.Size(68, 16);
             this.passwdLabel.TabIndex = 7;
@@ -126,7 +131,7 @@
             // 
             this.collabAddrRtb.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.collabAddrRtb.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.collabAddrRtb.Location = new System.Drawing.Point(182, 5);
+            this.collabAddrRtb.Location = new System.Drawing.Point(182, 6);
             this.collabAddrRtb.Name = "collabAddrRtb";
             this.collabAddrRtb.Size = new System.Drawing.Size(269, 22);
             this.collabAddrRtb.TabIndex = 2;
@@ -136,7 +141,7 @@
             // 
             this.activitiApiRtb.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.activitiApiRtb.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.activitiApiRtb.Location = new System.Drawing.Point(182, 37);
+            this.activitiApiRtb.Location = new System.Drawing.Point(182, 40);
             this.activitiApiRtb.Name = "activitiApiRtb";
             this.activitiApiRtb.Size = new System.Drawing.Size(269, 22);
             this.activitiApiRtb.TabIndex = 4;
@@ -146,7 +151,7 @@
             // 
             this.loginRtb.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.loginRtb.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.loginRtb.Location = new System.Drawing.Point(182, 69);
+            this.loginRtb.Location = new System.Drawing.Point(182, 74);
             this.loginRtb.Name = "loginRtb";
             this.loginRtb.Size = new System.Drawing.Size(131, 22);
             this.loginRtb.TabIndex = 6;
@@ -156,7 +161,7 @@
             // 
             this.passwordRtb.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.passwordRtb.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.passwordRtb.Location = new System.Drawing.Point(182, 101);
+            this.passwordRtb.Location = new System.Drawing.Point(182, 108);
             this.passwordRtb.Name = "passwordRtb";
             this.passwordRtb.PasswordChar = '*';
             this.passwordRtb.Size = new System.Drawing.Size(131, 22);
@@ -171,7 +176,7 @@
             this.tableLayoutPanel1.Controls.Add(this.saveBtn, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.cancelBtn, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(182, 131);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(182, 139);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -214,12 +219,31 @@
             // 
             this.badPasswordError.ContainerControl = this;
             // 
+            // baseUriLabel
+            // 
+            this.baseUriLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.baseUriLabel.AutoSize = true;
+            this.baseUriLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.baseUriLabel.Location = new System.Drawing.Point(3, 191);
+            this.baseUriLabel.Name = "baseUriLabel";
+            this.baseUriLabel.Size = new System.Drawing.Size(66, 16);
+            this.baseUriLabel.TabIndex = 10;
+            this.baseUriLabel.Text = "Base URI";
+            // 
+            // baseUriTB
+            // 
+            this.baseUriTB.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.baseUriTB.Location = new System.Drawing.Point(182, 189);
+            this.baseUriTB.Name = "baseUriTB";
+            this.baseUriTB.Size = new System.Drawing.Size(269, 20);
+            this.baseUriTB.TabIndex = 11;
+            // 
             // PrefForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
-            this.ClientSize = new System.Drawing.Size(484, 162);
+            this.ClientSize = new System.Drawing.Size(484, 228);
             this.Controls.Add(this.prefLayoutPane);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -254,5 +278,7 @@
         private System.Windows.Forms.ErrorProvider badLoginError;
         private System.Windows.Forms.ErrorProvider badPasswordError;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label baseUriLabel;
+        private System.Windows.Forms.TextBox baseUriTB;
     }
 }

@@ -19,10 +19,12 @@ namespace xOwl_Excel_Connector
                 string activitiApi = this.activitiApiRtb.Text.Trim();//REST API
                 string login = this.loginRtb.Text.Trim();
                 string password = this.passwordRtb.Text.Trim();
+                string baseUri = this.baseUriTB.Text.Trim();
                 Properties.Settings.Default["xowlAddress"] = collabAddr;
                 Properties.Settings.Default["activitiApi"] = activitiApi;
                 Properties.Settings.Default["xowlLogin"] = login;
                 Properties.Settings.Default["xowlPassword"] = password;
+                Properties.Settings.Default["baseUri"] = baseUri;
                 Properties.Settings.Default.Save();
                 this.Close();
             }
@@ -34,6 +36,7 @@ namespace xOwl_Excel_Connector
             this.activitiApiRtb.Text = (string)Properties.Settings.Default["activitiApi"];
             this.loginRtb.Text = (string)Properties.Settings.Default["xowlLogin"];
             this.passwordRtb.Text = (string)Properties.Settings.Default["xowlPassword"];
+            this.baseUriTB.Text = (string)Properties.Settings.Default["baseUri"];
         }
 
         private void CancelBtn_Click(object sender, EventArgs e)

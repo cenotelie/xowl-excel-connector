@@ -70,5 +70,17 @@ namespace xOwl_Excel_Connector.Properties {
                 this["activitiApi"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string baseUri {
+            get {
+                return ((string)(this["baseUri"]));
+            }
+            set {
+                this["baseUri"] = value;
+            }
+        }
     }
 }

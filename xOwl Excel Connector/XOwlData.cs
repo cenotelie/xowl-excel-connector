@@ -11,34 +11,12 @@ namespace xOwl_Excel_Connector
         public string Type { get; set; }
         public string Identifier { get; set; }
         public string Name { get; set; }
-        private string _base;
-
-        public string Base
-        {
-            get
-            {
-                return this._base;
-            }
-            set
-            {
-                this._base = value;
-            }
-        }
-
+        public string Base { get; set; }
         public string Version { get; set; }
         public string From { get; set; }
         public string Creation { get; set; }
         public string Archetype { get; set; }
         public string Superseded { get; set; }
-
-        public string ArtifactQualifiedName
-        {
-            get
-            {
-                return this.Base + "/" + this.Name + " [" + this.Version + "]";
-            }
-        }
-
     }
 
     public abstract class Identifiable

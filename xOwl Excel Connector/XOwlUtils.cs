@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -230,11 +229,6 @@ namespace xOwl_Excel_Connector
                 return RetrieveArtifacts(live);
             }
 
-        }
-
-        public static string ArtifactToBase(Artifact a)
-        {
-            return a.Base;
         }
 
         public static string ToSparqlQuery(Type type, Artifact artifact)
