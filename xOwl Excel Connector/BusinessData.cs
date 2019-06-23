@@ -126,19 +126,6 @@ namespace BusinessData
     public class ActuatorKeyCharacteristics : Identifiable
     {
         /*
-		Cartouche Identification
-		*/
-        /*
-        [PushConfiguration(Position = new int[] { 7, 2 })] //Expected column B
-        public string Programme { get; set; }
-        [PushConfiguration(Position = new int[] { 8, 2 })]
-        public string Author { get; set; }
-        [PushConfiguration(Position = new int[] { 9, 2 })]
-        public string Date { get; set; }
-        [PushConfiguration(Position = new int[] { 10, 2 })]
-        public string Version { get; set; }
-        */
-        /*
 		Cartouche Actuator Key characteristics Aileron
 		*/
         //Power lane
@@ -248,7 +235,7 @@ namespace BusinessData
     /// Power_ram_sizing.xlsx
     /// Feuille Schema LP symetrique 1 
     /// </summary>
-    [BusinessClass(BaseUri = "http://xowl.org/powerramsizing/schemalpsymetrique#", Position = "Schema LP symetrique 1")]
+    [BusinessClass(BaseUri = "http://xowl.org/powerramsizing/schemalpsymetrique#", Position = "Schema LP symetrique 1", ProcessId = "collins_process", TaskId = "schema_lp")]
     public class PowerRamSizingSchemaLPSymetrique : Identifiable
     {
         /*
@@ -301,7 +288,7 @@ namespace BusinessData
         public double R13 { get; set; }
     }
 
-    [BusinessClass(BaseUri = "http://xowl.org/aileron/param_spec#", Position = "Paramètre spec", ProcessId = "collins_process", TaskId = "static_perf")]
+    [BusinessClass(BaseUri = "http://xowl.org/aileron/param_spec#", Position = "Paramètre spec", ProcessId = "collins_process", TaskId = "params_spec")]
     public class ParametreSpec : Identifiable
     {
         [PushConfiguration(Position = new int[] { 10, 5 })]
@@ -337,5 +324,29 @@ namespace BusinessData
         [PushConfiguration(Position = new int[] { 35, 5 })]
         [ActuatorConfiguration(Position = new int[] { 33, 2 })]
         public double PressionRetourNominale { get; set; }
+    }
+
+    [BusinessClass(BaseUri = "http://xowl.org/aileron/section_bloc_hyd#", Position = " section bloc hyd", ProcessId = "collins_process", TaskId = "hydraulic_block")]
+    public class HydraulicBlockSection : Identifiable
+    {
+        [PushConfiguration(Position = new int[] { 9, 3 })]
+        public double VitesseMaxServo { get; set; }
+        [PushConfiguration(Position = new int[] { 10, 3 })]
+        public double TempFluide { get; set; }
+        [PushConfiguration(Position = new int[] { 15, 3 })]
+        public double SectionVerin { get; set; }
+        [PushConfiguration(Position = new int[] { 16, 3 })]
+        public double Skydrol { get; set; }
+        [PushConfiguration(Position = new int[] { 17, 3 })]
+        public double PressureDropCoeff { get; set; }
+        [PushConfiguration(Position = new int[] { 22, 3 })]
+        public double DiametrePercageActif { get; set; }
+        [PushConfiguration(Position = new int[] { 23, 3 })]
+        public int NombreRestricationsActif { get; set; }
+        [PushConfiguration(Position = new int[] { 26, 3 })]
+        public double DiametrePercageAmorti { get; set; }
+        [PushConfiguration(Position = new int[] { 27, 3 })]
+        public int NombreRestricationsAmorti { get; set; }
+
     }
 }
