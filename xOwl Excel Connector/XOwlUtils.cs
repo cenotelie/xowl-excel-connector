@@ -141,7 +141,7 @@ namespace xOwl_Excel_Connector
                     {
                         cellConfiguration = property.GetCustomAttribute<StaticPerformanceConfiguration>();//TODO
                     }
-                    else if (worksheet.Name.Equals("section bloc hyd"))
+                    else if (worksheet.Name.Equals(" section bloc hyd"))
                     {
                         cellConfiguration = property.GetCustomAttribute<HydraulicBlockConfiguration>();
                     }
