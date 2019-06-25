@@ -288,7 +288,7 @@ namespace BusinessData
         public double R13 { get; set; }
     }
 
-    [BusinessClass(BaseUri = "http://xowl.org/aileron/param_spec#", Position = "Paramètre spec", ProcessId = "collins_process", TaskId = "params_spec")]
+    [BusinessClass(BaseUri = "http://xowl.org/aileron/param_spec#", Position = "Paramètre spec")]
     public class ParametreSpec : Identifiable
     {
         [PushConfiguration(Position = new int[] { 10, 5 })]
@@ -314,30 +314,30 @@ namespace BusinessData
         [PushConfiguration(Position = new int[] { 30, 3 })]
         public double Position { get; set; }
         [PushConfiguration(Position = new int[] { 30, 5 })]
-        [ActuatorConfiguration(Position = new int[] { 29, 2 })]
         public double Effort { get; set; }
         [PushConfiguration(Position = new int[] { 30, 7 })]
         public double Temperature { get; set; }
         [PushConfiguration(Position = new int[] { 34, 5 })]
-        [ActuatorConfiguration(Position = new int[] { 32, 2 })]
         public double PressionAlimentationNominale { get; set; }
         [PushConfiguration(Position = new int[] { 35, 5 })]
-        [ActuatorConfiguration(Position = new int[] { 33, 2 })]
         public double PressionRetourNominale { get; set; }
     }
 
     [BusinessClass(BaseUri = "http://xowl.org/aileron/section_bloc_hyd#", Position = " section bloc hyd", ProcessId = "collins_process", TaskId = "hydraulic_block")]
-    public class HydraulicBlockSection : Identifiable
+    public class HydraulicBlockSection : Identifiable //FIXME: check mappings
     {
         [PushConfiguration(Position = new int[] { 9, 3 })]
         public double VitesseMaxServo { get; set; }
         [PushConfiguration(Position = new int[] { 10, 3 })]
         public double TempFluide { get; set; }
         [PushConfiguration(Position = new int[] { 15, 3 })]
+        [ActuatorConfiguration(Position = new int[] { 33, 2 })]
         public double SectionVerin { get; set; }
         [PushConfiguration(Position = new int[] { 16, 3 })]
+        [ActuatorConfiguration(Position = new int[] { 29, 2 })]
         public double Skydrol { get; set; }
         [PushConfiguration(Position = new int[] { 17, 3 })]
+        [ActuatorConfiguration(Position = new int[] { 32, 2 })]
         public double PressureDropCoeff { get; set; }
         [PushConfiguration(Position = new int[] { 22, 3 })]
         public double DiametrePercageActif { get; set; }

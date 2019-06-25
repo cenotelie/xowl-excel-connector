@@ -88,6 +88,12 @@ namespace xOwl_Excel_Connector
                 System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
                 string r = sr.ReadToEnd().Trim();
                 System.Diagnostics.Debug.WriteLine(r);
+                xowlReq = (HttpWebRequest)HttpWebRequest.Create(new Uri(XowlUtils.xowlApi + "connectors/generics/pull"));
+                xowlReq.CookieContainer = XowlUtils.cookies;
+                xowlReq.ContentType = "application/ld+json";
+                xowlReq.Accept = "application/json";
+                xowlReq.Method = "POST";
+                resp = (HttpWebResponse)xowlReq.GetResponse();
             }
             catch (WebException ex)
             {
