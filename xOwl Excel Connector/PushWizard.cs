@@ -46,15 +46,17 @@ namespace xOwl_Excel_Connector
         {
             if (this.ValidateChildren())
             {
-                this.DoPushArtifact();
+                Type type = (Type)this.archetypesLB.SelectedItem;
+               this.DoPushArtifact(type);
+                ActivitiProcessManager pm = new ActivitiProcessManager();
+                pm.CompleteTaskForData(type);
                 this.Close();
             }
         }
 
-        private void DoPushArtifact()
+        private void DoPushArtifact(Type type)
         {
             System.Diagnostics.Debug.WriteLine("Pushing data to collaboration");
-            Type type = (Type)this.archetypesLB.SelectedItem;
             string archetype = "org.xowl.platform.kernel.artifacts.ArtifactArchetypeFree";
             //FIXME: ensure unicity of version for the same name and within the same base
             string baseUri = (string) Properties.Settings.Default["baseUri"];
@@ -74,7 +76,7 @@ namespace xOwl_Excel_Connector
             HttpWebRequest xowlReq = (HttpWebRequest)HttpWebRequest.Create(new Uri(XowlUtils.xowlApi + "connectors/generics/sw?" + parameters));
             xowlReq.CookieContainer = XowlUtils.cookies;
             xowlReq.ContentType = "application/ld+json";
-            xowlReq.Accept = "application/json";
+            //xowlReq.Accept = "application/json";
             xowlReq.Method = "POST";
             string body = this.ToJsonLD(type);
             byte[] bytes = Encoding.UTF8.GetBytes(body);
@@ -95,15 +97,11 @@ namespace xOwl_Excel_Connector
                 xowlReq.Method = "POST";
                 resp = (HttpWebResponse)xowlReq.GetResponse();
             }
-            catch (WebException ex)
+            catch (Exception ex)
             {
                 //TODO: take into account the code of the exception to execute appropriate actions
-                XowlUtils.Connect();
-                //DoPushArtifact();//FIXME: improve management of cookies
+                System.Diagnostics.Debug.WriteLine(ex.Message);
             }
-            //FIXME: improve scheduling of notifications
-            ActivitiProcessManager pm = new ActivitiProcessManager();
-            pm.CompleteTaskForData(type);
         }
 
         private void Cancel_Click(object sender, EventArgs e)

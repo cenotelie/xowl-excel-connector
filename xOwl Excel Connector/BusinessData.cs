@@ -6,6 +6,18 @@ using xOwl_Excel_Connector;
 /// </summary>
 namespace BusinessData
 {
+
+    [BusinessClass(BaseUri = "http://ecollab.fr/data#", Position = "None")]
+    public class Component : Identifiable
+    {
+        [SpecConfiguration(Position = new int[] { 11, 4 })]
+        public int Pin2Pin { get; set; }
+        [SpecConfiguration(Position = new int[] { 13, 4 })]
+        public double ExtensionStroke { get; set; } //(balanced/unbalanced sections)
+        [SpecConfiguration(Position = new int[] { 14, 4 })]
+        public double RetractionStroke { get; set; }
+    }
+
     /// <summary>
     /// Spec EHSA_v1.xslx
     /// Feuille Spec
@@ -348,5 +360,19 @@ namespace BusinessData
         [PushConfiguration(Position = new int[] { 27, 3 })]
         public int NombreRestricationsAmorti { get; set; }
 
+    }
+
+    [BusinessClass(BaseUri = "http://xowl.org/aileron/bom#", Position = "BOM", ProcessId = "collins_process", TaskId = "global_mass")]
+    public class BOM : Identifiable //FIXME: check mappings
+    {
+        [PushConfiguration(Position = new int[] { 3, 4 })]
+        public double globalMass { get; set; }
+    }
+
+    [BusinessClass(BaseUri = "http://xowl.org/aileron/mtbf#", Position = "MTBF", ProcessId = "collins_process", TaskId = "failure_rate")]
+    public class MTBF : Identifiable //FIXME: check mappings
+    {
+        [PushConfiguration(Position = new int[] { 22, 4 })]
+        public double rate { get; set; }
     }
 }

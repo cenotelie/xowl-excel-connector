@@ -130,7 +130,11 @@ namespace xOwl_Excel_Connector
                     property = properties[i];
                     value = property.GetValue(t);
                     //FIXME: avoid hard coding this
-                    if (worksheet.Name.Equals("Donnees"))
+                    if (worksheet.Name.Equals("Spec"))
+                    {
+                        cellConfiguration = property.GetCustomAttribute<SpecConfiguration>();
+                    }
+                    else if (worksheet.Name.Equals("Donnees"))
                     {
                         cellConfiguration = property.GetCustomAttribute<PowerRamDataConfiguration>();
                     } else if (worksheet.Name.Equals("Actuator Key characteristics"))
@@ -237,9 +241,15 @@ namespace xOwl_Excel_Connector
             string className = type.Name;
             string baseUri = GetBaseUri(type);
             PropertyInfo[] properties = type.GetProperties().OrderBy(p => p.MetadataToken).ToArray();
-            sb.Append("SELECT DISTINCT * WHERE { GRAPH <");
-            sb.Append(artifact.Identifier);
-            sb.Append("> { ?");
+            sb.Append("SELECT DISTINCT * WHERE { GRAPH ");
+            if (artifact == null)
+            {
+                sb.Append("?g");
+            } else
+            {
+                sb.Append("<" + artifact.Identifier + ">");
+            }
+            sb.Append(" { ?");
             sb.Append(className.ToLower());
             sb.Append(" a <");
             sb.Append(baseUri + className);

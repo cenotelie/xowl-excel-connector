@@ -32,7 +32,11 @@ namespace xOwl_Excel_Connector
             CredentialCache credentialCache = new CredentialCache();
             credentialCache.Add(uri, "Basic", new NetworkCredential(xowlLogin, xowlPassword));
             activitiReq.Credentials = credentialCache;
-            //activitiReq.PreAuthenticate = true;
+            activitiReq.PreAuthenticate = true;
+            String encoded = System.Convert.ToBase64String(Encoding.GetEncoding("iso-8859-1").GetBytes(xowlLogin + ":" + xowlPassword));
+            activitiReq.Headers.Add("Authorization", "Basic " + encoded);
+            activitiReq.ContentType = "application/json";
+            activitiReq.ContentLength = 0;
             activitiReq.Accept = "application/json";
             activitiReq.Method = "GET";
             try
@@ -46,6 +50,7 @@ namespace xOwl_Excel_Connector
                     string url = result.data[0].url;
                     activitiReq = (HttpWebRequest)HttpWebRequest.Create(url);
                     activitiReq.Credentials = credentialCache;
+                    activitiReq.Headers.Add("Authorization", "Basic " + encoded);
                     activitiReq.ContentType = "application/json";
                     activitiReq.Method = "POST";
                     string body = "{ \"action\":\"complete\" }";
@@ -56,7 +61,7 @@ namespace xOwl_Excel_Connector
                     os.Close();
                     resp = (HttpWebResponse)activitiReq.GetResponse();
                 }
-            } catch (WebException ex)
+            } catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("Process Notification Failed");
             }

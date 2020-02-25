@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using eCollab_excel_api;
+using xOwl_Annotations;
 
 namespace xOwl_Excel_Connector
 {

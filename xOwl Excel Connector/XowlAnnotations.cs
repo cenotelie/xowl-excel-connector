@@ -22,6 +22,10 @@ namespace xOwl_Annotations
     {
     }
 
+    public class SpecConfiguration : CellConfiguration
+    {
+    }
+
     //FIXME: temporary solutions - try to use tuples instead => (worksheetname, row, col)
     public class PowerRamDataConfiguration : CellConfiguration
     {
